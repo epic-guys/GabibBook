@@ -1,0 +1,27 @@
+mat-toolbar{
+    img{
+        //avoid image stretching and keep it with some padding
+        height: 80%;
+        width: auto;
+    }
+
+    .spacer {
+        flex: 1 1 auto;
+      }
+      
+}
+
+.color-red{
+    color: #AA3333;
+}
+
+.color-blue{
+    color: #3333AA;
+}
+
+.color-yellow{
+    color: #AAAA33;
+}
+.color-green{
+    color: #33AA33;
+}

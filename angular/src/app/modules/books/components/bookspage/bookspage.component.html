@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<app-searchbar (search)="onSearchButtonPressed($event)" inputData="{{this.searchInput}}"
+></app-searchbar>
+<div class="items-container">
+    <div class="items">
+        <app-book-card *ngFor="let item of books" [book]="item" />
+    </div>
+</div>
+<div class="paginator-footer">
+    <app-paginator
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (pageChange)="onPageChange($event)"
+    ></app-paginator>
+</div>

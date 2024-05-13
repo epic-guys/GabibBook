@@ -1,0 +1,13 @@
+<p>
+    <mat-form-field appearance="outline">
+        <mat-icon matPrefix matRipple (click)="onSearchFilterPressed($event)">
+            filter_list
+        </mat-icon>
+        <mat-label>Search your book</mat-label>
+        <input matInput placeholder="Placeholder" #searchInput (keydown.enter)="onSearchButtonPressed()"/>
+        <mat-icon matSuffix matRipple (click)="onSearchButtonPressed()" style="cursor: pointer;">
+            search
+        </mat-icon>
+    </mat-form-field>
+</p>
+  

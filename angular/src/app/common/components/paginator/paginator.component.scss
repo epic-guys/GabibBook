@@ -1,0 +1,17 @@
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 20px 10px;
+}
+
+p{
+    margin: 0;
+    font-size: smaller;
+}
+
+mat-card{
+    align-items:flex-start;
+    justify-content: center;
+}

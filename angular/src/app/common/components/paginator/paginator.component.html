@@ -1,0 +1,19 @@
+<mat-card>
+    <div class="row">
+        <div class="col-md-6">
+            <button mat-stroked-button (click)="onPreviousPage()">
+                <mat-icon matPrefix>keyboard_arrow_left</mat-icon>
+                <p>Previous</p>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <p>Page {{currentPage}} of {{totalPages}}</p>
+        </div>
+        <div class="col-md-6">
+            <button mat-stroked-button (click)="onNextPage()">
+                <p>Next</p>
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-card>

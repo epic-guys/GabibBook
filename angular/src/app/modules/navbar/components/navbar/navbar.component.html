@@ -1,0 +1,16 @@
+<mat-toolbar color="white">
+    <mat-toolbar-row>
+        <img src="/assets/logo.jpg" alt="logo" onclick="window.location.href='/'" style="cursor: pointer;"/>
+        <span class="spacer"></span>
+        <span #signin>
+            <button mat-stroked-button routerLink="/login" *ngIf="!this.LoggedIn">
+                <mat-icon>person</mat-icon>
+                <span>Sign in</span>
+            </button>
+            <button mat-stroked-button routerLink="/profile" *ngIf="this.LoggedIn">
+                <mat-icon>person</mat-icon>
+                <span>Your name</span>
+            </button>
+        </span>
+    </mat-toolbar-row>
+</mat-toolbar>

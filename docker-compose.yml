@@ -1,0 +1,55 @@
+version: '3.8'
+mantainer: 'Epic Guys Dev Team'
+
+services:
+  api:
+    container_name: gabibbook-api
+    build: api
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - api-data:/app
+      - node-modules-api:/app/node_modules
+
+  fontend:
+    container_name: gabibbook-frontend
+    build: frontend
+    ports:
+      - '80:80'
+    depends_on:
+      - api
+    volumes:
+      - fontend-data:/app
+      - node-modules-frontend:/app/node_modules
+
+  db:
+    image: mongo
+    container_name: gabibbook-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - '27017:27017'
+
+volumes:
+  mongo-data:
+    driver: local
+  api-data:
+    driver: local
+  frontend-data:
+    driver: local
+  node-modules-api:
+    driver: local
+  node-modules-frontend:
+    driver: local

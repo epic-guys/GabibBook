@@ -1,0 +1,12 @@
+.items-container{
+    margin: 20px 10%;
+    height: auto;
+
+    .items{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+    }
+}

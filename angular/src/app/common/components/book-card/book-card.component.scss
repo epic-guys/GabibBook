@@ -1,0 +1,41 @@
+mat-card{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    width: 320px;
+    height: 600px;
+
+    mat-card-title{
+        font-size: 1.5rem;
+        font-weight: bold;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    mat-card-subtitle{
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    mat-card-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    img{
+        align-self: center;
+        width: 200px;
+        height: 300px;
+        object-fit: cover;
+    }
+}
