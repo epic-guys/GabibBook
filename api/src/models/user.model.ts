@@ -6,7 +6,6 @@ export enum Role {
 }
 
 export interface UserType {
-     id : mongoose.Schema.Types.UUID
      name: string
      surname: string
      nickname: string
@@ -16,7 +15,6 @@ export interface UserType {
 }
 
 const userSchema = new Schema<UserType>({
-     id: { type: mongoose.Schema.Types.UUID, required: true, unique: true},
      name: { type: String, required: true },
      surname: { type: String, required: true },
      nickname: { type: String, required: true },

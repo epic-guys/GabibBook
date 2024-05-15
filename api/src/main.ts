@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from './logger';
 import mongoose from 'mongoose';
+import { seedUser } from './seeds/user.seed';
 
 const app = express();
 
@@ -21,9 +22,7 @@ if(!process.env.JWT_PRIVATE_KEY) {
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
      logger.info('✅ Connected to MongoDB');
-     // test connection to database
-     // seedUser().then(() => seedTables())
-     // seedMenuItems().then(() => seedOrders())
+     seedUser();
  }).catch((err: Error) => {
      logger.error('❌ MongoDB connection error: [' + err + ']')
      process.exit(1)
