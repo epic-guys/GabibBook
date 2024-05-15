@@ -1,0 +1,14 @@
+{
+  "name": "gabibbook",
+  "version": "1.0.0",
+  "description": "A web application, including a server with REST-style APIs and a SPA front-end, that allows students to buy and sell used university textbooks by creating and bidding on auctions.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "workspaces": [
+      "angular",
+      "api"
+  ],
+  "license": "AGPL-3.0"
+}
