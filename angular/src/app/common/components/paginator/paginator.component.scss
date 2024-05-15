@@ -15,3 +15,22 @@ mat-card{
     align-items:flex-start;
     justify-content: center;
 }
+
+.rightbutton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row-reverse;
+    mat-icon{
+        margin: 0 !important;
+    }
+}
+
+mat-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 0 10%;
+}
