@@ -1,0 +1,49 @@
+{
+    "users": [
+        {
+            "uuid": 1,
+            "name": "John Doe",
+            "email": "",
+            "role": "admin"
+        }
+    ],
+    "books": [
+        {
+            "uuid": 1,
+            "owner": "UUID of user",
+            "title": "The Hobbit",
+            "isbn": "9780547928227",
+            "author": "J.R.R. Tolkien",
+            "max_offer": "9.99",
+            "by": "UUID of user",
+            "cover": "https://via.placeholder.com/250x350",
+            "min_offer": "5.99",
+            "reserve_price": "7.99",
+            "open_date": "2020-01-01",
+            "close_date": "2020-01-31",
+            "degree_course": "Computer Science"
+        }
+    ],
+    "chats":[
+        {
+            "uuid": 1,
+            "book": "UUID of book",
+            "owner": "UUID of user",
+            "messages": [
+                {
+                    "uuid": 1,
+                    "sender": "username",
+                    "message": "Hello, I am interested in your book",
+                    "timestamp": "2020-01-01"
+                },
+                {
+                    "uuid": 2,
+                    "sender": "username",
+                    "message": "Can you send me more details?",
+                    "timestamp": "2020-01-01"
+                }
+            ],
+            "buyer": "UUID of user | null"
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 <mat-card>
     <div class="row">
         <div class="col-md-6">
-            <button mat-stroked-button (click)="onPreviousPage()">
+            <button mat-stroked-button (click)="onPreviousPage()" [disabled]="currentPage === 1">
                 <mat-icon matPrefix>keyboard_arrow_left</mat-icon>
                 <p>Previous</p>
             </button>
@@ -10,7 +10,7 @@
             <p>Page {{currentPage}} of {{totalPages}}</p>
         </div>
         <div class="col-md-6">
-            <button mat-stroked-button (click)="onNextPage()">
+            <button class="rightbutton" mat-stroked-button (click)="onNextPage()" [disabled]="currentPage === totalPages">
                 <p>Next</p>
                 <mat-icon>keyboard_arrow_right</mat-icon>
             </button>

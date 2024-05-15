@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Book } from '../../classes/book';
 
@@ -10,9 +11,14 @@ import { Book } from '../../classes/book';
 export class BookCardComponent {
   @Input() book!: Book;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   getCover(): string {
     return `url(${this.book.cover})`;
+  }
+
+  goToBookDetails(): void {
+    console.log(`Navigating to book details for book with ID: ${this.book['uuid']}`);
+    this.router.navigate([`/books/${this.book['uuid']}`]);    
   }
 }
