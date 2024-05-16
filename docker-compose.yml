@@ -18,7 +18,7 @@ services:
       - api-data:/app
       - node-modules-api:/app/node_modules
 
-  fontend:
+  frontend:
     container_name: gabibbook-frontend
     build: frontend
     ports:

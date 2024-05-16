@@ -1,18 +1,24 @@
-import { registration, login, getUser, updateUser, deleteUser, getAllUsers } from '../controllers/user.controller';
+import {Request, Response, Router} from 'express';
+import { registration, login, getUserByEmail, updateUser, deleteUser, getAllUsers } from '../controllers/user.controller';
 
-const router = require('express')();
+const userRouter = Router();
 
-router.post('/register', registration);
+userRouter.post('/login', login);
 
-router.post('/login', login);
+userRouter.get('/:email', async (req: Request, res: Response) => {
+    let user = await getUserByEmail(req.params.email);
+    if (user == null) {
+        return res.status(200).json(user);
+    }
+    else {
+        return res.status(404).json({ message: 'User not found' });
+    }
+});
 
-router.get('/:id', getUser);
+userRouter.put('/:id', updateUser);
 
-router.put('/:id', updateUser);
+userRouter.delete('/:id', deleteUser);
 
-router.delete('/:id', deleteUser);
+userRouter.get('/', getAllUsers);
 
-router.get('/', getAllUsers);
-
-export default router;
-module.exports = router;
+export default userRouter;
