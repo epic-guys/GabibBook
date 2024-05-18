@@ -23,4 +23,4 @@ const chatSchema = new Schema<ChatType>({
      messages: [{ type: Array, required: true }]
 })
 
-export const User: Model<ChatType> = model("Chat", chatSchema)
+export const Chat: Model<ChatType> = model("Chat", chatSchema)
