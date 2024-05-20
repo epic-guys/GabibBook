@@ -16,7 +16,7 @@ export async function validateBook(req: Request, res: Response, next: Function) 
           close_date: Joi.date().iso().min(Joi.ref('open_date'))
      });
 
-     const postSchema = Joi.object(baseSchema).required();
+     const postSchema = baseSchema.fork(Object.keys(baseSchema.describe().keys), (schema) => schema.required());
 
      const schema = req.method === 'POST' ? postSchema : baseSchema;
 

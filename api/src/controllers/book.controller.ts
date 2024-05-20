@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Book } from '../models/book.model';
+import logger from '../logger';
 
 export async function getBook(req: Request, res: Response) {
      let book = await Book.findById(req.params.id).exec();
@@ -18,27 +19,15 @@ export async function getBookList(req: Request, res: Response) {
 }
 
 export async function createBook(req: Request, res: Response) {
-     const book = new Book({
-          owner: req.body.owner,
-          title: req.body.title,
-          isbn: req.body.isbn,
-          author: req.body.author,
-          current_offer: req.body.current_offer,
-          start_price: req.body.start_price,
-          reserve_price: req.body.reserve_price,
-          cover: req.body.cover,
-          degree_course: req.body.degree_course,
-          open_date: req.body.open_date,
-          close_date: req.body.close_date
-     });
-
-     try {
-          await book.save();
-     } catch (err: any) {
-          return res.status(400).json({ message: err.message });
-     }
-
-     return res.status(201).json(book);
+     const book = new Book(req.body);
+     book.save()
+          .then(() => {
+               return res.status(200).json(book);
+          })
+           .catch((err) => {
+               logger.error(err.message);
+               return res.status(400).json({ message: err.message });
+          });
 }
 
 export async function updateBook(req: Request, res: Response) {

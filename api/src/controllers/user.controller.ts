@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
-import {HydratedDocument} from 'mongoose'
-import { User, UserType } from '../models/user.model'
+import { User } from '../models/user.model'
+import logger from '../logger';
+import mongoose from 'mongoose';
 
 export async function registration(req: Request, res: Response) {
     //TODO
@@ -25,7 +26,16 @@ export async function getUserById(req: Request, res: Response) {
 
 
 export async function createUser(req: Request, res: Response) {
-    //TODO
+    const user = new User({...req.body, _id: new mongoose.Types.ObjectId()});
+    logger.info(user);
+    user.save()
+        .then(() => {
+            return res.status(200).json(user);
+        })
+        .catch((err) => {
+            logger.error(err.message);
+            return res.status(400).json({ message: err.message });
+        });
 }
 
 
@@ -40,7 +50,7 @@ export async function deleteUser(req: Request, res: Response) {
 }
 
 export async function getAllUsers(req: Request, res: Response) {
-    let user = await User.find().exec();
-    if (!user) return res.status(404).json({ message: 'Error in query' });
-    else return res.status(200).json(user);
+    let users= await User.find().exec();
+    if (!users) return res.status(404).json({ message: 'Error in query' });
+    else return res.status(200).json(users);
 }

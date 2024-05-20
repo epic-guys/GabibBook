@@ -1,7 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { getBook, updateBook, deleteBook, getBookList, createBook } from '../controllers/book.controller';
 import { validateBook } from '../middleware/book.middleware';
-import mongoose from 'mongoose';
 
 const paginator = require('../paginator');
 
@@ -42,7 +41,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
      }
 });
 
-router.post('/create', validateBook, async (req: Request, res: Response) => {
+router.post('/', validateBook, async (req: Request, res: Response) => {
      try {
           return await createBook(req, res);
      }
