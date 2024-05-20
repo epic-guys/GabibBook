@@ -1,7 +1,7 @@
 import mongoose, { Schema, Model, model } from "mongoose"
 
 export interface BookType  {
-     owner: mongoose.Schema.Types.ObjectId
+     owner: mongoose.Types.ObjectId
      title: string
      isbn: string
      author: string

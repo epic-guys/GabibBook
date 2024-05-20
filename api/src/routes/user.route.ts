@@ -1,24 +1,54 @@
 import {Request, Response, Router} from 'express';
-import { registration, login, getUserByEmail, updateUser, deleteUser, getAllUsers } from '../controllers/user.controller';
+import { registration, login, getUserByEmail, createUser, updateUser, deleteUser, getAllUsers } from '../controllers/user.controller';
 
 const userRouter = Router();
+
+userRouter.post('/registration', registration);
 
 userRouter.post('/login', login);
 
 userRouter.get('/:email', async (req: Request, res: Response) => {
-    let user = await getUserByEmail(req.params.email);
-    if (user == null) {
-        return res.status(200).json(user);
+    try {
+        return await getUserByEmail(req, res);
+   } catch(err: any) {
+        res.status(500).json({ message: 'Internal Server Error' });
+   }
+});
+
+userRouter.post('/', async (req: Request, res: Response) => {
+    try {
+        return await createUser(req, res);
     }
-    else {
-        return res.status(404).json({ message: 'User not found' });
+    catch(err: any) {
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
-userRouter.put('/:id', updateUser);
+userRouter.put('/:id', async (req: Request, res: Response) => {
+    try {
+        return await updateUser(req, res);
+    }
+    catch(err: any) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
-userRouter.delete('/:id', deleteUser);
+userRouter.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        return await deleteUser(req, res);
+    }
+    catch(err: any) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
-userRouter.get('/', getAllUsers);
+userRouter.get('/', async (req: Request, res: Response) => {
+    try {
+        return await getAllUsers(req, res);
+    }
+    catch(err: any) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 export default userRouter;

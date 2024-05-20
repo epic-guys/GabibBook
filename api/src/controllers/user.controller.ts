@@ -10,54 +10,37 @@ export async function login(req: Request, res: Response) {
     //TODO
 }
 
-
-/**
- * @returns The User if it exists, null otherwise
- */
-export async function getUserByEmail(email: string): Promise<HydratedDocument<UserType>> {
-    let user = await User.findOne({'email': email}).exec();
-    if (user == null) throw "User not found";
-    else return user;
+export async function getUserByEmail(req: Request, res: Response) {
+    let user = await User.findOne({'email': req.params.email}).exec();
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    else return res.status(200).json(user);
 }
 
 
-export async function getUserById(id: string): Promise<HydratedDocument<UserType>> {
-    let user = await User.findById(id).exec();
-    if (user == null) throw "User not found";
-    else return user;
+export async function getUserById(req: Request, res: Response) {
+    let user = await User.findById(req.params.id).exec();
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    else return res.status(200).json(user);
 }
 
 
-export async function createUser(user: UserType): Promise<HydratedDocument<UserType>> {
-    let newUser = new User(user);
-    return newUser.save();
+export async function createUser(req: Request, res: Response) {
+    //TODO
 }
 
 
 export async function updateUser(req: Request, res: Response) {
-    try {
-        // TODO
-    } catch (error) {
-        return res.status(500).json({ message: error });
-    }
+    //TODO
 }
 
 export async function deleteUser(req: Request, res: Response) {
-    try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user)
-            return res.status(404).json({ message: 'User not found' });
-        return res.status(200).json({ message: 'User deleted' });
-    } catch (error) {
-        return res.status(500).json({ message: error });
-    }
+    let user = await User.findByIdAndDelete(req.params.id).exec();
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    else return res.status(200).json({ message: 'User deleted' });
 }
 
 export async function getAllUsers(req: Request, res: Response) {
-     try {
-        const users = await User.find();
-        return res.status(200).json(users);
-     } catch (error) {
-        return res.status(500).json({ message: error });
-     }
+    let user = await User.find().exec();
+    if (!user) return res.status(404).json({ message: 'Error in query' });
+    else return res.status(200).json(user);
 }

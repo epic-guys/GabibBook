@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Book, BookType } from '../models/book.model';
-import exp from 'constants';
+import { Book } from '../models/book.model';
 
 export async function getBook(req: Request, res: Response) {
-     let book = await Book.findById(req.params.id);
+     let book = await Book.findById(req.params.id).exec();
      if (!book) return res.status(404).json({ message: 'Book not found' });
      else return res.status(200).json(book);
 }
@@ -20,7 +18,6 @@ export async function getBookList(req: Request, res: Response) {
 }
 
 export async function createBook(req: Request, res: Response) {
-     //TODO
      const book = new Book({
           owner: req.body.owner,
           title: req.body.title,
