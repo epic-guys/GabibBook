@@ -4,6 +4,7 @@ import { validateBook } from '../middleware/book.middleware';
 import { Server as IOServer } from 'socket.io';
 import {Book} from '../models/book.model';
 import {User} from '../models/user.model';
+import {io, notifyBook} from '../socket';
 const paginator = require('../paginator');
 
 const router = Router();
@@ -72,6 +73,7 @@ router.post('/:id/offer', async (req: Request<{id: string}, any, { value: number
         book.current_offer = offer;
 
         await book.save();
+        notifyBook(book._id.toHexString(), offer.value);
         res.status(200).json({message: 'Successfully offered'});
     }
     else {
@@ -84,7 +86,6 @@ interface BookConnection {
 }
 
 let bookConnections: BookConnection = {};
-
 
 
 export default router;

@@ -16,6 +16,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import config from './config';
 import { getUserById } from './controllers/user.controller';
 import { seedBooks } from './seeds/book.seed';
+import { io } from './socket';
 
 const app = express();
 
@@ -68,8 +69,11 @@ let jwtOptions = {
 //     }
 // }));
 
-app.listen(process.env.API_PORT, () => {
+let httpServer = app.listen(process.env.API_PORT, () => {
     logger.info('🔴 API server started');
 });
 
+io.attach(httpServer);
+
 export default app;
+
