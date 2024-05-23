@@ -1,11 +1,19 @@
 import mongoose, { Schema, Model, model } from "mongoose"
 
+export interface OfferType {
+    user?: mongoose.Types.ObjectId,
+    value: number,
+    timestamp?: Date
+}
+
+
 export interface BookType  {
+     _id?: mongoose.Types.ObjectId
      owner: mongoose.Types.ObjectId
      title: string
      isbn: string
      author: string
-     current_offer: number
+     current_offer: OfferType
      start_price: number
      reserve_price: number
      cover: string
@@ -19,7 +27,11 @@ const bookSchema = new Schema<BookType>({
      title: { type: String, required: true },
      isbn: { type: String, required: true },
      author: { type: String, required: true },
-     current_offer: { type: Number, required: true },
+     current_offer: new Schema<OfferType>({
+         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+         value: { type: Number, required: true },
+         timestamp: { type: Date}
+     }),
      start_price: { type: Number, required: true },
      reserve_price: { type: Number, required: true },
      cover: { type: String, required: true },
@@ -28,4 +40,4 @@ const bookSchema = new Schema<BookType>({
      close_date: { type: Date, required: true },
 })
 
-export const Book: Model<BookType> = model("BookType", bookSchema)
+export const Book: Model<BookType> = model("Book", bookSchema)
