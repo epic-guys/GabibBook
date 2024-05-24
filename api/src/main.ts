@@ -1,26 +1,25 @@
 import express from 'express';
 import logger from './logger';
-import mongoose, {HydratedDocument} from 'mongoose';
+import mongoose  from 'mongoose';
 import { seedUsers } from './seeds/user.seed';
 import userRouter from './routes/user.route';
 import bookRouter from './routes/book.route';
 import chatRouter from './routes/chat.route';
 import authRouter from './routes/auth.route'
-import passport from 'passport';
-import { BasicStrategy } from 'passport-http';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { UserType } from './models/user.model';
-import { getUserByEmail } from './controllers/user.controller';
-import argon2 from 'argon2';
-import { JwtPayload } from 'jsonwebtoken';
 import config from './config';
-import { getUserById } from './controllers/user.controller';
 import { seedBooks } from './seeds/book.seed';
 import { io } from './socket';
+import passport from 'passport';
+import { BasicStrategy } from 'passport-http';
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
+import { JwtPayload } from 'jsonwebtoken';
+import { UserType, User } from './models/user.model';
+import argon2 from 'argon2';
 
 const app = express();
 
 app.use(express.json());
+
 
 mongoose.connect(config.mongodbUri).then(() => {
     logger.info('🟢 The database is connected.');
@@ -36,19 +35,20 @@ app.use('/book', bookRouter);
 app.use('/chat', chatRouter);
 app.use('/auth', authRouter);
 
-//TODO controllare come gestire la nuova chiamata a getUserByEmail
-// passport.use(new BasicStrategy(
-//     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
-//         let user: HydratedDocument<UserType>;
-//         try {
-//             user = await getUserByEmail(email);
-//             let valid = await argon2.verify(user.password_hash, password);
-//             if (valid) done(null, user);
-//             else done("Password not correct");
-//         } catch (e) {
-//             done(e);
-//         }
-// }));
+passport.use(new BasicStrategy(
+    async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
+        try {
+            let user = await User.findOne({ email: email }).exec();
+            if (user == null) {
+                throw "User not found";
+            }
+            let valid = await argon2.verify(user.password_hash, password);
+            if (valid) done(null, user);
+            else done("Password not correct");
+        } catch (e) {
+            done(e);
+        }
+}));
 
 let jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -56,18 +56,20 @@ let jwtOptions = {
     issuer: 'epic-guys.org',
 };
 
-//TODO controllare come gestire la nuova chiamata di getUserById
-// passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {
-//     // TODO assicurarsi che sia in millisecondi (vero, Java?)
-//     // Se non c'è la data di scadenza, si fa coalesce con 0, che è sempre minore dell'epoch attuale
-//     if (jwtPayload.exp ?? 0 < Date.now()) done("Expired JWT");
-//     try {
-//         let user = await getUserById(jwtPayload._id);
-//         done(null, user);
-//     } catch (e) {
-//         done(e);
-//     }
-// }));
+passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {
+    // TODO assicurarsi che sia in millisecondi (vero, Java?)
+    // Se non c'è la data di scadenza, si fa coalesce con 0, che è sempre minore dell'epoch attuale
+    if (jwtPayload.exp ?? 0 < Date.now()) done("Expired JWT");
+    try {
+        let user = await User.findById(jwtPayload._id).exec();
+        if (user == null) {
+            throw "User not found";
+        }
+        done(null, user);
+    } catch (e) {
+        done(e);
+    }
+}));
 
 let httpServer = app.listen(process.env.API_PORT, () => {
     logger.info('🔴 API server started');
