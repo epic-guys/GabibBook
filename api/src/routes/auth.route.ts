@@ -37,7 +37,7 @@ authRouter.get('/login',
                    let payload = {
                         _id: (req.user as HydratedDocument<UserType>)._id
                     };
-                    let newJwt = jwt.sign(payload, config.jwtSecret, { 'expiresIn': '6 hours' });
+                    let newJwt = jwt.sign(payload, config.jwtSecret, { expiresIn: '6 hours', issuer: 'epic-guys.org' });
                     res.status(200).json({jwt: newJwt});
                 }
 );

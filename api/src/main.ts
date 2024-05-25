@@ -57,9 +57,6 @@ let jwtOptions = {
 };
 
 passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {
-    // TODO assicurarsi che sia in millisecondi (vero, Java?)
-    // Se non c'è la data di scadenza, si fa coalesce con 0, che è sempre minore dell'epoch attuale
-    if (jwtPayload.exp ?? 0 < Date.now()) done("Expired JWT");
     try {
         let user = await User.findById(jwtPayload._id).exec();
         if (user == null) {
