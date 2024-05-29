@@ -1,22 +1,29 @@
-import {Socket} from 'socket.io';
-import { bookIO } from '../socket';
+import {Namespace, Server, Socket} from 'socket.io';
+import {OfferType} from '../models/book.model';
 
-function bookRoom(bookId: string): string {
-    return 'book:' + bookId;
+
+export class BookSocket {
+    private io: Server;
+    private bookIO: Namespace;
+
+    constructor(io: Server) {
+        this.io = io;
+        this.bookIO = this.io.of('/book');
+
+        this.bookIO.on('connection', (socket: Socket) => {
+            socket.on('trackPrice', (message) => {
+                socket.join('book:' + message.book);
+                socket.emit('trackPrice', 'sottoscritto a ' + message.book);
+            });
+        });
+    }
+
+    private bookRoom(bookId: string): string {
+        return 'book:' + bookId;
+    }
+
+    notifyBook(bookId: string, offer: OfferType) {
+        this.bookIO.to(this.bookRoom(bookId)).emit('priceUpdate', offer);
+    }
 }
-
-export function notifyBookIO(bookId: string, price: number) {
-    bookIO.to(bookRoom(bookId)).emit('priceUpdate', price);
-}
-
-bookIO.on('connection', (socket: Socket) => {
-
-    socket.emit('hello', 'world!');
-
-    socket.on('message', (message) => {
-        // message = JSON.parse(message);
-        socket.join('book:' + message.book);
-        socket.emit('message', 'sottoscritto a ' + message.book);
-    });
-});
 

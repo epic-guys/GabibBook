@@ -53,7 +53,7 @@ router.post('/', validateBook, async (req: Request, res: Response) => {
      }
 });
 
-router.post('/:id/offer', async (req: Request<{id: string}, any, { value: number }>, res: Response) => {
+router.post('/:id/offer', passport.authenticate('jwt', {session: false}), async (req: Request<{id: string}, any, { value: number }>, res: Response) => {
     try {
         return createOffer(req, res);
     } catch (err: any) {
