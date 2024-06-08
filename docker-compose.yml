@@ -1,33 +1,32 @@
-version: '3.8'
-mantainer: 'Epic Guys Dev Team'
-
 services:
   api:
-    container_name: gabibbook-api
     build: api
+    container_name: gabibbook-api
     environment:
       - MONGODB_URI=${MONGODB_URI}
-      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
-      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
-      - PORT=3000
+      - API_PORT=${API_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - MONGODB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGODB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - '3000:3000'
     depends_on:
       - db
-    volumes:
-      - api-data:/app
-      - node-modules-api:/app/node_modules
+    networks:
+      api_net:
+        ipv4_address: 172.16.1.5
+      database_net:
+        ipv4_address: 172.16.4.80
 
-  frontend:
-    container_name: gabibbook-frontend
-    build: frontend
-    ports:
-      - '80:80'
-    depends_on:
-      - api
-    volumes:
-      - fontend-data:/app
-      - node-modules-frontend:/app/node_modules
+#  frontend:
+#    container_name: gabibbook-frontend
+#    build: frontend
+#    ports:
+#      - '80:80'
+#    depends_on:
+#      - api
+#    volumes:
+#      - node-modules-frontend:/app/node_modules
 
   db:
     image: mongo
@@ -41,15 +40,29 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - '27017:27017'
+    networks:
+      database_net:
+        ipv4_address: 172.16.4.20
 
 volumes:
   mongo-data:
     driver: local
   api-data:
     driver: local
-  frontend-data:
-    driver: local
   node-modules-api:
     driver: local
   node-modules-frontend:
     driver: local
+
+networks:                
+    api_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.1.0/24
+
+    database_net:
+        ipam:
+            driver: default
+            config: 
+                - subnet: 172.16.4.0/24

@@ -19,7 +19,7 @@ if(!process.env.JWT_SECRET) {
 }
 
 export default {
-    jwtSecret: process.env.JWT_SECRET,
-    apiPort: process.env.API_PORT,
-    mongodbUri: process.env.MONGODB_URI
+     jwtSecret: process.env.JWT_SECRET,
+     apiPort: process.env.API_PORT,
+     mongodbUri: process.env.MONGODB_URI
 };
