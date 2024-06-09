@@ -1,11 +1,10 @@
 #!/bin/bash
-
-#source the environment variables from the .env file
-
 set -a
 
 if [ -f .env ]; then
-    echo "[INFO] .env file found, you should remove it before running this script"
+    echo "[INFO] .env file found, sourcing and building the docker containers"
+    source .env
+    $(cat .env | grep -v '^#' | xargs)
     goto build
 else
     echo "[INFO] No .env file found, creating one..."
@@ -41,6 +40,9 @@ MONGODB_URI="mongodb://$MONGODB_USERNAME:$MONGODB_PASSWORD@$MONGODB_HOST:$MONGOD
 
 echo "MONGODB_URI=$MONGODB_URI" >> .env
 
+build:
+
+echo "[INFO] Checking if the mongo-init.js file exists"
 if [ -f mongo-init.js ]; then
     echo "[WARNING] mongo-init.js file found, removing it before generating a new one"
     rm mongo-init.js
@@ -66,6 +68,5 @@ echo $mongo_init > mongo-init.js
 echo "[INFO] Sourcing the environment variables"
 source .env
 
-build:
 echo "[INFO] Building the docker containers"
 docker-compose up --build
