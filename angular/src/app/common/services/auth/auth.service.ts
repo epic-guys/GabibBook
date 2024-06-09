@@ -17,7 +17,12 @@ export class AuthService {
   }
 
   login(data: { username: string, password: string }) {
-    return this.httpClient.post(environment.apiBaseUrl + '/token/generate', data);
+    return this.httpClient.get(environment.apiBaseUrl + '/auth/login', {
+        headers: {
+          'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
+        }
+      }
+    );
   }
 
   isAuthenticated() {
@@ -31,21 +36,9 @@ export class AuthService {
       return true;
   }
 
-  public canRefresh() {
-      const auth = this.localStorageService.getAuth();
-      return auth && auth.refreshToken;
-  }
-
-  refreshToken(token: string) {
-    return this.httpClient.post(environment.apiBaseUrl + '/token/refresh', {
-      refresh_token: token
-    }, {});
-  }
-
   logout() {
       this.localStorageService.removeAuth();
-      //this.router.navigate(['/login']); 
-      //TODO: Redirect to login page, not implemented since there is no login system
+      this.router.navigate(['/']); 
   }
 
 }

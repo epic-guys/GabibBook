@@ -7,7 +7,6 @@ import {EventEmitter, Injectable} from '@angular/core';
 export class AuthUtilsService {
 
   public tokenExpiredEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public tokenRefreshedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() {}
 

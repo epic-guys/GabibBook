@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Book } from '../../classes/book';
+import { Book } from '../../models/book';
 
 @Component({
   selector: 'app-book-card',

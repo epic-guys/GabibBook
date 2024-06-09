@@ -20,7 +20,6 @@ export class LocalStorageService {
     return this.localStorage.get(this.KEY_AUTH) || null;
   }
 
-
   removeAuth() {
     this.localStorage.remove(this.KEY_AUTH);
   }
@@ -34,9 +33,24 @@ export class LocalStorageService {
     this.localStorage.set(this.KEY_AUTH, auth);
   }
 
+  decodeToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
   getRole() {
     const auth = this.getAuth();
-    return auth ? auth.role : ROLE_VIEWER;
+    if (auth) {
+      return this.decodeToken(auth.accessToken).role;
+    }
+    return null;
+  }
+
+  getUserName() {
+    const auth = this.getAuth();
+    if (auth) {
+      return this.decodeToken(auth.accessToken).username;
+    }
+    return null;
   }
 }
 

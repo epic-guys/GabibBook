@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
-<app-searchbar (search)="onSearchButtonPressed($event)" inputData="{{this.searchInput}}"
+<app-loader *ngIf="ajaxLoading"></app-loader>
+<app-searchbar (search)="onSearchButtonPressed($event)" [inputData]="searchInput"
 ></app-searchbar>
 <div class="items-container">
     <div class="items">

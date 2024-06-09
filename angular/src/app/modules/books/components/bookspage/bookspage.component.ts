@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Book } from 'src/app/common/classes/book';
+import { Book } from 'src/app/common/models/book';
+import { BookService } from 'src/app/common/services/books/book.service.service';
 
 @Component({
   selector: 'app-bookspage',
@@ -8,36 +9,55 @@ import { Book } from 'src/app/common/classes/book';
 })
 export class BookspageComponent {
 
-  searchInput: String = '';
+  ajaxLoading: boolean = false;
+  searchInput: string = '';
   currentPage: number = 1;
   totalPages: number = 1;
 
-  books: Book[] = [
-    {
-      uuid: "1",
-      title: "The Hobbit",
-      isbn: "9780547928227",
-      author: "J.R.R. Tolkien",
-      price: "9.99",
-      cover: "https://via.placeholder.com/250x350"
-    },
-  ];
+  books: Book[] = [];
 
-  constructor() {
+  constructor(
+    private booksService: BookService,
+  ) {
     const urlParams = new URLSearchParams(window.location.search);
     this.searchInput = urlParams.get('search') || '';
   }
 
+  ngOnInit(){
+    this.triggerSearch();
+  }
+
   onSearchButtonPressed(event: String): void {
     window.history.pushState({}, '', `?search=${event}`);
-    //TODO: make the actual search
+    this.triggerSearch();
   }
 
   onPageChange(page: Event): void {
-    //TODO: TEST THIS, IT MIGHT NOT WORK 
     const tmp = (page.target as HTMLButtonElement).value;
     this.currentPage = parseInt(tmp);
-    //TODO: make the actual search
+    this.triggerSearch();
+  }
+
+  triggerSearch(): void {
+    this.ajaxLoading = true;
+
+    const observer = {
+      next: (res: any) => {
+        this.ajaxLoading = false;
+        console.log(res);
+        this.books = res.data;
+        this.totalPages = res.totalPages;
+      },
+      error: (error: any) => {
+        this.ajaxLoading = false;
+        console.error(error);
+      },
+      complete: () => {
+        this.ajaxLoading = false;
+      }
+    }
+
+    this.booksService.searchBooks(this.searchInput, this.currentPage, 10).subscribe(observer);
   }
 
 }

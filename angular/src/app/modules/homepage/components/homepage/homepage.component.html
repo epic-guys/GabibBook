@@ -1,9 +1,11 @@
 <app-navbar></app-navbar>
 <app-searchbar (search)="onSearchButtonPressed($event)"
 ></app-searchbar>
+
 <div class="recent-container">
     <h2>Recently Added</h2>
     <div class="recent-items">
+        <app-loader color="#ff0000" position="relative" *ngIf="ajaxLoading"></app-loader>
         <app-book-card *ngFor="let item of books" [book]="item" />
     </div>
 </div>
