@@ -17,7 +17,7 @@ export async function getBookList(req: Request, res: Response) {
 
      const books = await Book.find().skip(skip).limit(size).exec();
      if (!books) return res.status(404).json({ message: 'Books not found' });
-     else return res.status(200).json(books);
+     else return res.status(200).json({data: books, totalPages: size, page: page});
 }
 
 export async function createBook(req: Request, res: Response) {

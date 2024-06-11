@@ -30,9 +30,9 @@ mongoose.connect(config.mongodbUri).then(() => {
     process.exit(1);
  });
 
-app.use('/user', userRouter);
-app.use('/book', bookRouter);
-app.use('/chat', chatRouter);
+app.use('/users', userRouter);
+app.use('/books', bookRouter);
+app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 
 passport.use(new BasicStrategy(
