@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',

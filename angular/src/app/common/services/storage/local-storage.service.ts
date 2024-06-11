@@ -20,7 +20,7 @@ export class LocalStorageService {
     return this.localStorage.get(this.KEY_AUTH) || null;
   }
 
-  removeAuth() {
+  public removeAuth() {
     this.localStorage.remove(this.KEY_AUTH);
   }
 

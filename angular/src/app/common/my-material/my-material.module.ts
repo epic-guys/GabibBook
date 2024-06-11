@@ -11,13 +11,15 @@ import { MatRippleModule } from '@angular/material/core';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     MatRippleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
     ],
   exports: [
     MatToolbarModule,
@@ -29,7 +31,8 @@ import { MatCardModule } from '@angular/material/card';
     MatRipple,
     MatDialogModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
   ]
 })
 export class MyMaterialModule { }

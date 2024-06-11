@@ -1,0 +1,32 @@
+.container{
+    margin-left: 20px;
+    min-width: 100%;
+
+    h3{
+        font-size: 250%;
+        margin: 0;
+        margin-top: 5%;
+    }
+
+    .info{
+        .row{
+            margin-left: 20px;
+            p{
+                font-size: 150%;
+            }
+            .prop{
+                font-weight: bold;
+            }
+    
+            display: flex;
+            justify-content:last baseline;
+            gap: 10px;
+            flex-direction: row;   
+        }
+    }
+    
+    .payment{
+        margin-top: 5%;
+    }
+}
+

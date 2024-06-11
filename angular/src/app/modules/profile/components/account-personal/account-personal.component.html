@@ -1,0 +1,33 @@
+<div class="container">
+    <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
+    <div class="info" *ngIf="!ajaxLoading">
+        <h3>Personal Information</h3>
+        <div class="row">
+            <p class="prop">Name: </p>
+            <p class="value">{{user.name}}</p>
+        </div>
+        <div class="row">
+            <p class="prop">Email: </p>
+            <p class="value">{{user.email}}</p>
+        </div>
+        <div class="row">
+            <p class="prop">Address: </p>
+            <p class="value">{{user.address}}</p>
+        </div>
+        <div class="row">
+            <p class="prop">City: </p>
+            <p class="value">{{user.city}}</p>
+        </div>
+        <div class="row">
+            <p class="prop">Nation: </p>
+            <p class="value">{{user.nation}}</p>
+        </div>
+        <div class="row">
+            <button mat-raised-button color="primary" (click)="edit()">Edit</button>
+        </div>
+    </div>
+    <div class="payment" *ngIf="!ajaxLoading">
+        <h3>Payment Methods</h3>
+        <app-payment-methods></app-payment-methods>
+    </div>
+</div>

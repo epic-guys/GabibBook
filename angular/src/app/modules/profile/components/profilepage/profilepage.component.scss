@@ -1,0 +1,19 @@
+.container{
+    margin: 20px;
+    //occupy the whole height considering the header
+    height: calc(93% - 40px);
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 40px);
+    .menu-container{
+        display: flex;
+        justify-content: space-between;
+        width: 40%;
+        margin-left: 3%;
+        border-right: 1px solid #a0a0a0;
+        height: 100%;
+    }
+    .page-container{
+        width: 57%;
+    }
+}

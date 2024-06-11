@@ -1,0 +1,20 @@
+<h1>Your Account</h1>
+<div class="list-holder">
+    <mat-nav-list>
+        <mat-list-item [activated]="isActive('/profile/personal')" (click)="navigate('/profile/personal')" [ngClass]="{'active': isActive('/profile/personal')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon matListItemIcon>person</mat-icon>
+            <p>personal info</p>
+        </mat-list-item>
+        <mat-list-item [activated]="isActive('/profile/orders')" (click)="navigate('profile/orders')" [ngClass]="{'active': isActive('/profile/orders')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon matListItemIcon>shopping_cart</mat-icon>
+            <p>orders</p>
+        </mat-list-item>
+        <mat-list-item [activated]="isActive('/profile/auctions')" (click)="navigate('/profile/auctions')" [ngClass]="{'active': isActive('/profile/auctions')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon matListItemIcon>sell</mat-icon>
+            <p>Auctions</p>
+        </mat-list-item>
+    </mat-nav-list>
+</div>
+<div class="bottom">
+    <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+</div>

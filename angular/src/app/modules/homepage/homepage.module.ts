@@ -7,7 +7,7 @@ import { SearchModule } from '../search/search.module';
 import { ComponentsModule } from '../../common/components/components.module';
 
 import { MyMaterialModule } from 'src/app/common/my-material/my-material.module';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
