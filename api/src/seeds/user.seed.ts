@@ -27,28 +27,24 @@ export async function seedUsers(): Promise<void> {
                     name: 'visa',
                     number: '1234567890',
                     expiration: '12/22',
-                    type: 'visa',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'mastercard',
                     number: '0987654321',
                     expiration: '12/23',
-                    type: 'mastercard',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'amex',
                     number: '1357924680',
                     expiration: '12/24',
-                    type: 'amex',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'discover',
                     number: '2468013579',
                     expiration: '12/25',
-                    type: 'discover',
                     fullName: 'John Doe'
                   }
               ],
@@ -69,28 +65,24 @@ export async function seedUsers(): Promise<void> {
                     name: 'visa',
                     number: '1234567890',
                     expiration: '12/22',
-                    type: 'visa',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'mastercard',
                     number: '0987654321',
                     expiration: '12/23',
-                    type: 'mastercard',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'amex',
                     number: '1357924680',
                     expiration: '12/24',
-                    type: 'amex',
                     fullName: 'John Doe'
                   },
                   {
                     name: 'discover',
                     number: '2468013579',
                     expiration: '12/25',
-                    type: 'discover',
                     fullName: 'John Doe'
                   }
               ],

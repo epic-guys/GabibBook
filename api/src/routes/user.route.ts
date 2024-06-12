@@ -2,60 +2,19 @@ import {Request, Response, Router} from 'express';
 import { registration, login, getUserByEmail, createUser, updateUser, deleteUser, getAllUsers, getUserById } from '../controllers/user.controller';
 import passport from 'passport';
 import {UserType} from '../models/user.model';
+import {validateUser} from '../middleware/user.middleware';
 
 const userRouter = Router();
 
-userRouter.post('/registration', registration);
+userRouter.get('/:id', passport.authenticate('jwt', { session: false }), getUserById);
 
-userRouter.post('/login', login);
+// TODO remove?
+userRouter.post('/', validateUser, createUser);
 
-userRouter.get('/:id',
-               passport.authenticate('jwt', { session: false }),
-               async (req: Request<{id: string}, any, any>, res: Response) => {
-                   try {
-                       // if (!req.user._id || req.user._id !== req.params.id) {
-                       //     res.status(403).json({ message: 'Forbidden' });
-                       // }
-                       return await getUserById(req, res);
-                   } catch(err: any) {
-                       res.status(500).json({ message: 'Internal Server Error' });
-                   }
-});
+userRouter.put('/:id', validateUser, updateUser);
 
-userRouter.post('/', async (req: Request, res: Response) => {
-    try {
-        return await createUser(req, res);
-    }
-    catch(err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.delete('/:id', passport.authenticate('jwt', {session:false}), deleteUser);
 
-userRouter.put('/:id', async (req: Request, res: Response) => {
-    try {
-        return await updateUser(req, res);
-    }
-    catch(err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-userRouter.delete('/:id', async (req: Request, res: Response) => {
-    try {
-        return await deleteUser(req, res);
-    }
-    catch(err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-userRouter.get('/', async (req: Request, res: Response) => {
-    try {
-        return await getAllUsers(req, res);
-    }
-    catch(err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.get('/', passport.authenticate('jwt', {session: false}), getAllUsers);
 
 export default userRouter;
