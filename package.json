@@ -1,0 +1,21 @@
+{
+  "name": "gabibbook",
+  "version": "1.0.0",
+  "description": "A web application, including a server with REST-style APIs and a SPA front-end, that allows students to buy and sell used university textbooks by creating and bidding on auctions.",
+  "scripts": {
+    "api": "npx nodemon api/src/main.ts"
+  },
+  "author": "",
+  "workspaces": [
+    "angular",
+    "api"
+  ],
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3",
+    "ts-node": "^10.9.2"
+  }
+}

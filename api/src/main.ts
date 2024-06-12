@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 
 
-mongoose.connect(config.mongodbUri).then(() => {
+mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
     seedUsers();
     seedBooks();
@@ -42,8 +42,11 @@ passport.use(new BasicStrategy(
             if (user == null) {
                 throw "User not found";
             }
-            let valid = await argon2.verify(user.password_hash, password);
-            if (valid) done(null, user);
+            let valid = await argon2.verify(user.passwordHash!, password);
+            if (valid) {
+                delete user.passwordHash;
+                done(null, user);
+            }
             else done("Password not correct");
         } catch (e) {
             done(e);
@@ -58,7 +61,7 @@ let jwtOptions = {
 
 passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {
     try {
-        let user = await User.findById(jwtPayload._id).exec();
+        let user = await User.findById(jwtPayload._id).select('-passwordHash').exec();
         if (user == null) {
             throw "User not found";
         }
@@ -73,6 +76,7 @@ let httpServer = app.listen(process.env.API_PORT, () => {
 });
 
 io.attach(httpServer);
+mongoose.set('debug', true);
 
 export default app;
 

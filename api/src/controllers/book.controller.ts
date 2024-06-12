@@ -3,6 +3,7 @@ import { Book } from '../models/book.model';
 import logger from '../logger';
 import {User, UserType} from '../models/user.model';
 import { bookSocket } from '../socket';
+import mongoose from 'mongoose';
 
 export async function getBook(req: Request, res: Response) {
      let book = await Book.findById(req.params.id).exec();
@@ -11,13 +12,55 @@ export async function getBook(req: Request, res: Response) {
 }
 
 export async function getBookList(req: Request, res: Response) {
-     const size = Number(req.query.size);
-     const page = Number(req.query.page);
+     const size = Number(req.query.size ?? 50);
+     const page = Number(req.query.page ?? 1)
      const skip = size * (page - 1);
 
-     const books = await Book.find().skip(skip).limit(size).exec();
+     let search = req.query.search?.toString();
+     if (!search) search = "";
+
+     const isbnRegex = /ISBN::(?<isbn>\d*);?/;
+     const minRegex = /MIN::(?<min>\d*);?/;
+     const maxRegex = /MAX::(?<max>\d*);?/;
+     const authorRegex = /AUTHOR::(?<author>[^;]*);?/;
+ 
+     const isbnMatch = search.match(isbnRegex);
+     const minMatch = search.match(minRegex);
+     const maxMatch = search.match(maxRegex);
+     const authorMatch = search.match(authorRegex);
+
+     const isbn = isbnMatch ? isbnMatch.groups?.isbn : undefined;
+     const min = minMatch ? minMatch.groups?.min : undefined;
+     const max = maxMatch ? maxMatch.groups?.max : undefined;
+     const author = authorMatch ? authorMatch.groups?.author : undefined;
+
+     search = search.replace(isbnRegex, "");
+     search = search.replace(minRegex, "");
+     search = search.replace(maxRegex, "");
+     search = search.replace(authorRegex, "");
+
+     let whereConditions: any = {
+         ...(isbn && {isbn: isbn}),
+         ...((min || max) && {price: { $gte: min, $lte: max }}),
+         ...(author && {author: {$regex: '.*' + author + '.*', $options: 'i'}}),
+         ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}})
+     };
+
+     logger.info("Searching books with following where conditions: " + JSON.stringify(whereConditions));
+     
+     const books = await Book.find({}).skip(skip).where(whereConditions).limit(size).exec();
+     let totalPages; 
+     logger.info("Books length: " + books.length + ", size: " + size + ", page: " + page);
+     if (books.length < size) {
+        totalPages = page;
+     }
+     else {
+        const totalBooks = await Book.find({}).where(whereConditions).countDocuments().exec();
+        totalPages = Math.ceil(totalBooks / size);
+     }
+     logger.info("Found books: " + books.length);
      if (!books) return res.status(404).json({ message: 'Books not found' });
-     else return res.status(200).json({data: books, totalPages: size, page: page});
+     else return res.status(200).json({data: books, totalPages: totalPages, page: page});
 }
 
 export async function createBook(req: Request, res: Response) {

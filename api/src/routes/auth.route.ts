@@ -18,8 +18,12 @@ authRouter.post('/register', async (req: Request, res: Response) => {
             surname: req.body.surname,
             nickname: req.body.nickname,
             email: req.body.email,
+            address: req.body.address,
+            city: req.body.city,
+            nation: req.body.nation,
+            paymentMethods: [],
             role: req.body.role,
-            password_hash: passwordHash
+            passwordHash: passwordHash
         };
         
         await register(user);
@@ -34,8 +38,13 @@ authRouter.post('/register', async (req: Request, res: Response) => {
 authRouter.get('/login',
                passport.authenticate('basic', {session: false}),
                (req: Request, res: Response) => {                  
+                   let user = req.user as HydratedDocument<UserType>;
                    let payload = {
-                        _id: (req.user as HydratedDocument<UserType>)._id
+                        _id: user._id,
+                        role: user.role,
+                        nickname: user.nickname,
+                        name: user.name,
+                        surname: user.surname
                     };
                     let newJwt = jwt.sign(payload, config.jwtSecret, { expiresIn: '6 hours', issuer: 'epic-guys.org' });
                     res.status(200).json({jwt: newJwt});

@@ -1,5 +1,5 @@
 import {Namespace, Server, Socket} from 'socket.io';
-import {OfferType} from '../models/book.model';
+import {Book, OfferType} from '../models/book.model';
 
 
 export class BookSocket {
@@ -11,9 +11,22 @@ export class BookSocket {
         this.bookIO = this.io.of('/book');
 
         this.bookIO.on('connection', (socket: Socket) => {
-            socket.on('trackPrice', (message) => {
-                socket.join('book:' + message.book);
-                socket.emit('trackPrice', 'sottoscritto a ' + message.book);
+            socket.on('trackPrice', async (message) => {
+                let bookId = message?.book;
+                if (!bookId) {
+                    socket.emit('error', 'Book not specified');
+                    return;
+                }
+
+                let book = await Book.findById(bookId).exec();
+                if (!book) {
+                    socket.emit('error', 'Book not found');
+                    return;
+                }
+
+                socket.join('book:' + bookId);
+                socket.emit('trackPrice', 'sottoscritto a ' + bookId);
+                this.notifyBook(bookId, book.current_offer);
             });
         });
     }

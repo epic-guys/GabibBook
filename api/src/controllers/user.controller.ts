@@ -20,8 +20,14 @@ export async function getUserByEmail(req: Request, res: Response) {
 
 export async function getUserById(req: Request, res: Response) {
     let user = await User.findById(req.params.id).exec();
+
     if (!user) return res.status(404).json({ message: 'User not found' });
-    else return res.status(200).json(user);
+
+    delete user.passwordHash;
+    user.paymentMethods.forEach((paymentMethod) => {
+        paymentMethod.number = paymentMethod.number.slice(-4);
+    });
+    return res.status(200).json(user);
 }
 
 
