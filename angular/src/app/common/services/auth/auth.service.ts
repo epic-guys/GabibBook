@@ -30,15 +30,15 @@ export class AuthService {
       const now = new Date().getTime();
 
       if (!auth || now > auth.expirationTimestamp) {
-          this.logout();
+          //this.logout();
           return false;
       }
       return true;
   }
 
   logout() {
-      this.localStorageService.removeAuth();
-      this.router.navigate(['/']); 
+      //this.localStorageService.removeAuth();
+      //this.router.navigate(['/']); 
   }
 
 }

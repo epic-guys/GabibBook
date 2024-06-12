@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Book } from 'src/app/common/models/book';
-import { BookService } from 'src/app/common/services/books/book.service.service';
+import { BookService } from 'src/app/common/services/books/book.service';
 
 @Component({
   selector: 'app-bookspage',
@@ -29,12 +29,12 @@ export class BookspageComponent {
 
   onSearchButtonPressed(event: String): void {
     window.history.pushState({}, '', `?search=${event}`);
+    this.searchInput = String(event);
     this.triggerSearch();
   }
 
-  onPageChange(page: Event): void {
-    const tmp = (page.target as HTMLButtonElement).value;
-    this.currentPage = parseInt(tmp);
+  onPageChange(page: number): void {
+    this.currentPage = page;
     this.triggerSearch();
   }
 
@@ -44,7 +44,6 @@ export class BookspageComponent {
     const observer = {
       next: (res: any) => {
         this.ajaxLoading = false;
-        console.log(res);
         this.books = res.data;
         this.totalPages = res.totalPages;
       },
@@ -57,7 +56,7 @@ export class BookspageComponent {
       }
     }
 
-    this.booksService.searchBooks(this.searchInput, this.currentPage, 10).subscribe(observer);
+    this.booksService.searchBooks(this.searchInput, this.currentPage, 1).subscribe(observer);
   }
 
 }

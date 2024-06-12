@@ -21,6 +21,7 @@ export class PaginatorComponent {
   onNextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.pageChanged.emit(this.currentPage + 1);
+      console.log
     }
   }
 

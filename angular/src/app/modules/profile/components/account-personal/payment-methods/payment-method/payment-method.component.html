@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="card" *ngIf="paymentMethod" [ngClass]="paymentMethod.name">
+        <div class="data">
+            <p class="number">
+                <span><div *ngFor="let i of [].constructor(12);" class="circle"></div></span>
+                <span class="numbers">{{paymentMethod.number}}</span>
+            </p>
+            <p class="expiration">
+                {{paymentMethod.expiration}}
+            </p>
+        </div>
+        <div class="logo">
+            <img [src]="'assets/card-logos/' + paymentMethod.type + '-logo.png'">
+        </div>
+        <div class="action">
+            <button mat-icon-button class="edit" (click)="editFunc()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="delete" (click)="deleteFunc()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="add" *ngIf="!paymentMethod">
+        <p>
+            Add a new payment method
+        </p>
+    </div>
+</div>

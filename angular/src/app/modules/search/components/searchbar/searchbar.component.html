@@ -4,7 +4,7 @@
             filter_list
         </mat-icon>
         <mat-label>Search your book</mat-label>
-        <input matInput placeholder="Placeholder" #searchInput (keydown.enter)="onSearchButtonPressed()"/>
+        <input matInput #searchInput (keydown.enter)="onSearchButtonPressed()" value="{{this.inputData}}"/>
         <mat-icon matSuffix matRipple (click)="onSearchButtonPressed()" style="cursor: pointer;">
             search
         </mat-icon>

@@ -1,5 +1,6 @@
 export const environment = {
-    apiBaseUrl: 'http://localhost:3000',
+    apiBaseUrl: 'http://192.168.245.86:3000',
     TOKEN_LIFETIME: 30000,
-    production: false
+    production: false,
+    LASTBOOKS: 50
 };

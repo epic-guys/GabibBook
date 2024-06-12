@@ -3,8 +3,11 @@ export interface Book {
     title: string;
     isbn: string;
     author: string;
-    price: string;
+    current_offer: {
+        value: number;
+        currency: string;
+    }
     cover: string;
 
-    [key: string]: string;
+    [key: string]: any;
 }

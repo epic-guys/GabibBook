@@ -1,1 +1,4 @@
-<p>payment-methods works!</p>
+<div class="container">
+    <app-payment-method [paymentMethod]="null"></app-payment-method>
+    <app-payment-method *ngFor="let paymentMethod of paymentMethods" [paymentMethod]="paymentMethod"></app-payment-method>
+</div>

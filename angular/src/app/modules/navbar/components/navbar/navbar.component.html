@@ -9,7 +9,7 @@
             </button>
             <button mat-stroked-button routerLink="/profile" *ngIf="this.LoggedIn">
                 <mat-icon>person</mat-icon>
-                <span>Your name</span>
+                <span>{{this.username}}</span>
             </button>
         </span>
     </mat-toolbar-row>

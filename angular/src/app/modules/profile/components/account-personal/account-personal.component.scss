@@ -1,11 +1,11 @@
 .container{
     margin-left: 20px;
     min-width: 100%;
+    min-height: 90%;
 
     h3{
         font-size: 250%;
         margin: 0;
-        margin-top: 5%;
     }
 
     .info{
@@ -26,7 +26,16 @@
     }
     
     .payment{
-        margin-top: 5%;
+        width: 100%;
+        padding-top: 5%;
+        h3{
+            font-size: 250%;
+        }
+        .holder{
+            padding-top: 5%;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
     }
 }
 

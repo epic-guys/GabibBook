@@ -1,0 +1,124 @@
+.container {
+
+    .card{
+        width: 200px;
+        height: 100px;
+
+        max-height: 100px;
+        min-height: 100px;
+
+        border: 1px solid #000;
+        padding: 10px;
+        border-radius: 5px;
+
+        .data{
+            p{
+                font-weight: bold;
+                color: #ffffff;
+            &.number{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                span{
+                    font-size: larger;
+                }
+            }
+
+                span{
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    div{
+                        //make a circle
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 100%;
+                        display: inline-block;
+                        margin: 0 1px;
+                        background-color: #ffffff;
+                    }
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .logo{
+            img{
+                width: 50px;
+            }
+            
+            height: 100px;
+            position: relative;
+            top: -80px;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            
+        }
+    }
+
+    .card.visa {
+        background: linear-gradient(130deg, #4a65eb, #fff);
+    }
+
+    .card.mastercard {
+        background: linear-gradient(130deg, #3d3d3d, #fff);
+    }
+
+    .card.amex {
+        background: linear-gradient(130deg, #4cb3f3, #fff);
+    }
+
+    .card.discover {
+        background: linear-gradient(130deg, #ff6f00, #fff);
+    }
+
+    .add{
+        width: 200px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid #000;
+        padding: 10px;
+        border-radius: 5px;
+    }
+}
+
+
+.container:hover {
+    .action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: -160%;
+        z-index: 100;
+        button{
+            margin: 5px;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+        }
+    }
+}
+
+.action {
+    display: none;
+    
+    button {
+        border-radius: 100%;
+        &.edit {
+            background-color: #9ca5dc;
+            color: #fff;
+        }
+
+        &.delete {
+            background-color: #d26b6b;
+            color: #fff;
+        }
+    }
+}

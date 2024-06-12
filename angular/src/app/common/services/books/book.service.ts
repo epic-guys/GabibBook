@@ -12,10 +12,10 @@ export class BookService {
   ) { }
 
   getRecentBooks() {
-    //not implemented
+    return this.http.get(`${environment.apiBaseUrl}/books?last=${environment.LASTBOOKS}`);
   }
 
   searchBooks(searchString: string, page: number, size: number) {
-    return this.http.get(`${environment.apiBaseUrl}/book?search=${searchString}&page=${page}&size=${size}`);
+    return this.http.get(`${environment.apiBaseUrl}/books?search=${searchString}&page=${page}&size=${size}`);
   }
 }

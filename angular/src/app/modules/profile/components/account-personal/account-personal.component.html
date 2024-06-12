@@ -28,6 +28,8 @@
     </div>
     <div class="payment" *ngIf="!ajaxLoading">
         <h3>Payment Methods</h3>
-        <app-payment-methods></app-payment-methods>
+        <div class="holder">
+            <app-payment-methods [paymentMethods]="this.user.paymentMethods" (delete)="deletePaymentMethod($event)" (edit)="editPaymentMethod($event)" (add)="addPaymentMethod($event)"></app-payment-methods>
+        </div>
     </div>
 </div>

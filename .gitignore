@@ -35,6 +35,9 @@ yarn-error.log
 testem.log
 /typings
 
+#I don't think we have the permission to post the images of the card logos
+angular/src/assets/card-logos/*
+
 # System files
 .DS_Store
 Thumbs.db

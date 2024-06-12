@@ -10,10 +10,11 @@ import { LoginModule } from './modules/login/login.module';
 import { RegisterModule } from './modules/register/register.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { NotFoundModule } from './modules/not-found/not-found.module';
+import { TokenInterceptor } from './common/interceptors/token.interceptor';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

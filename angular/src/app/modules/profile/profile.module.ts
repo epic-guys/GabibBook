@@ -10,6 +10,7 @@ import { AccountOrdersComponent } from './components/account-orders/account-orde
 import { AccountAuctionsComponent } from './components/account-auctions/account-auctions.component';
 import { PaymentMethodsComponent } from './components/account-personal/payment-methods/payment-methods.component';
 import { ComponentsModule } from 'src/app/common/components/components.module';
+import { PaymentMethodComponent } from './components/account-personal/payment-methods/payment-method/payment-method.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ComponentsModule } from 'src/app/common/components/components.module';
     AccountPersonalComponent,
     AccountOrdersComponent,
     AccountAuctionsComponent,
-    PaymentMethodsComponent
+    PaymentMethodsComponent,
+    PaymentMethodComponent
   ],
   imports: [
     CommonModule,

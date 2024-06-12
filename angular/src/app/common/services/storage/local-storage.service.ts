@@ -34,13 +34,18 @@ export class LocalStorageService {
   }
 
   decodeToken(token: string) {
-    return JSON.parse(atob(token.split('.')[1]));
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
 
   getRole() {
     const auth = this.getAuth();
     if (auth) {
-      return this.decodeToken(auth.accessToken).role;
+      return this.decodeToken(auth.accessToken.jwt).role;
     }
     return null;
   }
@@ -48,7 +53,15 @@ export class LocalStorageService {
   getUserName() {
     const auth = this.getAuth();
     if (auth) {
-      return this.decodeToken(auth.accessToken).username;
+      return this.decodeToken(auth.accessToken.jwt).nickname;
+    }
+    return null;
+  }
+
+  getUserId() {
+    const auth = this.getAuth();
+    if (auth) {
+      return this.decodeToken(auth.accessToken.jwt)._id;
     }
     return null;
   }

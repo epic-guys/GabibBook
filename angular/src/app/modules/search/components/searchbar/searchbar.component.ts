@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
@@ -10,7 +10,7 @@ import { searchFilters } from '../../../../common/classes/searchFilters';
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss']
 })
-export class SearchbarComponent implements AfterViewInit{
+export class SearchbarComponent{
   @Input() inputData: string = "";
   @Output() search = new EventEmitter<string>();
   @ViewChild('searchInput') searchInput!: ElementRef;
@@ -21,10 +21,6 @@ export class SearchbarComponent implements AfterViewInit{
   AUTHOR: string = "";
   
   constructor(private dialog: MatDialog) { }
-
-  ngAfterViewInit(): void {
-    this.searchInput.nativeElement.value = this.inputData;
-  }
 
   onSearchButtonPressed(): void {
     if(this.searchInput.nativeElement.value === "") {
