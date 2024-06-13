@@ -32,6 +32,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     seedUsers();
     seedBooks();
  }).catch((err: Error) => {
+    logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);
     process.exit(1);
  });
@@ -85,4 +86,3 @@ io.attach(httpServer);
 mongoose.set('debug', true);
 
 export default app;
-

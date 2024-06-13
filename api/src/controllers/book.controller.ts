@@ -69,7 +69,7 @@ export async function createBook(req: Request, res: Response) {
           .then(() => {
                return res.status(200).json(book);
           })
-           .catch((err) => {
+          .catch((err) => {
                logger.error(err.message);
                return res.status(400).json({ message: err.message });
           });
@@ -101,9 +101,14 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
 }
 
 export async function updateBook(req: Request, res: Response) {
-     //TODO
+     console.log(req.body);
 }
 
 export async function deleteBook(req: Request, res: Response) {
-     //TODO
+     let book = await Book.findById(req.params.id).exec();
+     if (!book) return res.status(404).json({ message: 'Book not found' });
+     else {
+          book.deleteOne();
+          return res.status(200).json({ message: 'Book deleted' });
+     }
 }
