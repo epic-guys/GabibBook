@@ -42,3 +42,7 @@ Thumbs.db
 # Env files
 .env
 mongo-init.js
+
+# files which are not compatible with our license
+api/seed-data/books/covers/*
+!api/seed-data/books/covers/.placeholder

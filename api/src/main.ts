@@ -29,8 +29,8 @@ app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next:
 
 mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
-    seedUsers();
-    seedBooks();
+    await seedUsers();
+    await seedBooks(); //this has to be synchronous now
  }).catch((err: Error) => {
     logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);
