@@ -10,7 +10,6 @@ export interface PaymentMethod {
     name: string
     fullName: string
     number: string
-    type: string
     expiration: string
 }
 
@@ -43,7 +42,6 @@ const userSchema = new Schema<UserType>({
         name: { type: String, required: true },
         fullName: { type: String, required: true },
         number: { type: String, required: true },
-        type: { type: String, required: true },
         expiration: { type: String, required: true },
     })]
 })

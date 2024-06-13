@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import logger from './logger';
 import mongoose  from 'mongoose';
 import { seedUsers } from './seeds/user.seed';
@@ -41,6 +41,13 @@ app.use('/users', userRouter);
 app.use('/books', bookRouter);
 app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
+
+// Only for debugging
+// In production it's better to not return the whole error object
+app.use((err: Error, req: Request, res: Response, next: any) => {
+    logger.error(err);
+    res.status(500).json({ message: err });
+});
 
 passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
