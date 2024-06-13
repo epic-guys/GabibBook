@@ -1,5 +1,5 @@
 import {Request, Response, Router} from 'express';
-import { registration, login, getUserByEmail, createUser, updateUser, deleteUser, getAllUsers, getUserById } from '../controllers/user.controller';
+import { updateUser, deleteUser, getAllUsers, getUserById, createUser } from '../controllers/user.controller';
 import passport from 'passport';
 import {UserType} from '../models/user.model';
 import {validateUser} from '../middleware/user.middleware';

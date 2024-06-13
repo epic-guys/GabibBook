@@ -4,7 +4,6 @@ set -a
 if [ -f .env ]; then
     echo "[INFO] .env file found, sourcing and building the docker containers"
     source .env
-    $(cat .env | grep -v '^#' | xargs)
     goto build
 else
     echo "[INFO] No .env file found, creating one..."
@@ -36,8 +35,14 @@ else
 fi
 
 echo "[INFO] Environment variables set, generating the MONGODB_URI"
-MONGODB_URI="mongodb://$MONGODB_USERNAME:$MONGODB_PASSWORD@$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend&authSource=$MONGO_INITDB_DATABASE"
 
+if [ -z "$MONGODB_USERNAME" ] && [ -z "$MONGODB_PASSWORD" ]; then
+    MONGODB_URI="mongodb://$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend"
+else
+    MONGODB_URI="mongodb://$MONGODB_USERNAME:$MONGODB_PASSWORD@$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend\&authSource=$MONGO_INITDB_DATABASE"
+fi
+
+sed -i '/MONGODB_URI/d' .env
 echo "MONGODB_URI=$MONGODB_URI" >> .env
 
 build:

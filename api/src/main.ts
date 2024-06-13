@@ -20,12 +20,19 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next: () => void) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
     seedUsers();
     seedBooks();
  }).catch((err: Error) => {
+    logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);
     process.exit(1);
  });
@@ -86,4 +93,3 @@ io.attach(httpServer);
 mongoose.set('debug', true);
 
 export default app;
-
