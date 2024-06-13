@@ -4,7 +4,6 @@ set -a
 if [ -f .env ]; then
     echo "[INFO] .env file found, sourcing and building the docker containers"
     source .env
-    $(cat .env | grep -v '^#' | xargs)
     goto build
 else
     echo "[INFO] No .env file found, creating one..."
