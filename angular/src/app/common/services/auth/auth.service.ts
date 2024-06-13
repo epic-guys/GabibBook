@@ -37,8 +37,8 @@ export class AuthService {
   }
 
   logout() {
-      //this.localStorageService.removeAuth();
-      //this.router.navigate(['/']); 
+      this.localStorageService.removeAuth();
+      this.router.navigate(['/']); 
   }
 
 }

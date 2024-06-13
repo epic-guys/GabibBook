@@ -11,14 +11,9 @@ import { Book } from '../../models/book';
 export class BookCardComponent {
   @Input() book!: Book;
 
-  constructor(private router: Router) { }
-
-  getCover(): string {
-    return `url(${this.book.cover})`;
-  }
+  constructor(private router: Router) {}
 
   goToBookDetails(): void {
-    console.log(`Navigating to book details for book with ID: ${this.book['uuid']}`);
-    this.router.navigate([`/books/${this.book['uuid']}`]);    
+    this.router.navigate([`/books/${this.book['_id']}`]);    
   }
 }

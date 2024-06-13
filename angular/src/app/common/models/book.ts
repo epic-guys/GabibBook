@@ -5,7 +5,7 @@ export interface Book {
     author: string;
     current_offer: {
         value: number;
-        currency: string;
+        id: string;
     }
     cover: string;
 

@@ -5,7 +5,7 @@ mat-card{
     justify-content: space-between;
     padding: 30px;
     width: 320px;
-    height: 600px;
+    height: 550px;
     cursor: pointer;
 
     mat-card-title{
@@ -35,8 +35,11 @@ mat-card{
 
     img{
         align-self: center;
-        width: 200px;
-        height: 300px;
+        width: 250px;
         object-fit: cover;
+    }
+
+    img.notfound{
+        height: 100%;
     }
 }

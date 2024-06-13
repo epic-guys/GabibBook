@@ -1,1 +1,16 @@
-<p>book-details works!</p>
+<app-navbar></app-navbar>
+<app-loader *ngIf="ajaxLoading" color="#ff0000"></app-loader>
+<div class="container" *ngIf="book && !ajaxLoading">
+    <div class="image-container">
+        <img [src]="book.cover" alt="Book Image">
+    </div>
+    <div class="details-container">
+        <h1>{{book.title}}</h1>
+        <p>Author: {{book.author}}</p>
+        <p>Price: {{book.current_offer.value}}</p>
+        <p>ISBN: {{book.isbn}}</p>
+    </div>
+    <div class="chat-container">
+        <!--app-chat [book]="book"></app-chat-->
+    </div>
+</div>

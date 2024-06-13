@@ -2,8 +2,14 @@
     <mat-card-title> {{book.title}} </mat-card-title>
     <mat-card-subtitle> {{book.author}} </mat-card-subtitle>
     
-        <img src="{{book.cover}}" alt="Book Image">
-    
+        <img 
+            [src]="book['cover']"
+            alt="book image"
+            class="book-image" 
+            [ngClass]="{
+                'notfound': !book['cover'].startsWith('http') && !book['cover'].startsWith('data:image')
+            }"
+            /> 
     <mat-card-footer>
         <p>Current offer: {{book.current_offer.value}}$</p>
     </mat-card-footer>

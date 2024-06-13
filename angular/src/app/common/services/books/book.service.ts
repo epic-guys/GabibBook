@@ -18,4 +18,8 @@ export class BookService {
   searchBooks(searchString: string, page: number, size: number) {
     return this.http.get(`${environment.apiBaseUrl}/books?search=${searchString}&page=${page}&size=${size}`);
   }
+
+  getBook(id: string) {
+    return this.http.get(`${environment.apiBaseUrl}/books/${id}`);
+  }
 }
