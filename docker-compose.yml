@@ -36,7 +36,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
     volumes:
-      - mongo-data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - '27017:27017'
@@ -45,8 +44,6 @@ services:
         ipv4_address: 172.16.4.20
 
 volumes:
-  mongo-data:
-    driver: local
   api-data:
     driver: local
   node-modules-api:

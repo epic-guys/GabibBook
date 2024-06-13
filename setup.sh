@@ -35,8 +35,14 @@ else
 fi
 
 echo "[INFO] Environment variables set, generating the MONGODB_URI"
-MONGODB_URI="mongodb://$MONGODB_USERNAME:$MONGODB_PASSWORD@$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend&authSource=$MONGO_INITDB_DATABASE"
 
+if [ -z "$MONGODB_USERNAME" ] && [ -z "$MONGODB_PASSWORD" ]; then
+    MONGODB_URI="mongodb://$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend"
+else
+    MONGODB_URI="mongodb://$MONGODB_USERNAME:$MONGODB_PASSWORD@$MONGODB_HOST:$MONGODB_PORT/$MONGO_INITDB_DATABASE?appName=Backend\&authSource=$MONGO_INITDB_DATABASE"
+fi
+
+sed -i '/MONGODB_URI/d' .env
 echo "MONGODB_URI=$MONGODB_URI" >> .env
 
 build:
