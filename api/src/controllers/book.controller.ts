@@ -82,6 +82,12 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
         res.status(404).send({message: 'Book not found'})
         return;
     }
+
+    if (book.close_date < new Date()) {
+        res.status(400).json({message: 'Book auction has ended'});
+        return;
+    }
+
     if (!book.current_offer || book!.current_offer.value < req.body.value) {
         let offer = {
             value: req.body.value,

@@ -54,14 +54,15 @@ passport.use(new BasicStrategy(
         try {
             let user = await User.findOne({ email: email }).exec();
             if (user == null) {
-                throw "User not found";
+                done(null, undefined);
+                return;
             }
             let valid = await argon2.verify(user.passwordHash!, password);
             if (valid) {
                 delete user.passwordHash;
                 done(null, user);
             }
-            else done("Password not correct");
+            else done(null, undefined);
         } catch (e) {
             done(e);
         }
