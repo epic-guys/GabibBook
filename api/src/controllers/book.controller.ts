@@ -64,7 +64,7 @@ export async function getBookList(req: Request, res: Response) {
 }
 
 export async function createBook(req: Request, res: Response) {
-     const book = new Book(req.body);
+     const book = new Book({...req.body, owner: (req.user as UserType)._id});
      book.save()
           .then(() => {
                return res.status(200).json(book);

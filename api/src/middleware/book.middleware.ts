@@ -7,7 +7,6 @@ export async function validateBook(req: Request, res: Response, next: Function) 
           title: Joi.string().min(2).max(50),
           isbn: Joi.string().pattern(new RegExp('^[0-9]{13}$')),
           author: Joi.string().min(2).max(50),
-          current_offer: Joi.number().min(0.01),
           start_price: Joi.number().min(0.01),
           reserve_price: Joi.number().min(Joi.ref('start_price')),
           cover: Joi.string().min(2),

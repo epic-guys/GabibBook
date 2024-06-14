@@ -17,7 +17,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), validateBoo
 
 router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteBook);
 
-router.post('/', validateBook, passport.authenticate('jwt', { session: false }), createBook);
+router.post('/', passport.authenticate('jwt', { session: false }), validateBook, createBook);
 
 router.post('/:id/offer',
      passport.authenticate('jwt', { session: false }),
