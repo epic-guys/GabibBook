@@ -56,7 +56,7 @@ export class BookspageComponent {
       }
     }
 
-    this.booksService.searchBooks(this.searchInput, this.currentPage, 1).subscribe(observer);
+    this.booksService.searchBooks(this.searchInput, this.currentPage, 20).subscribe(observer);
   }
 
 }
