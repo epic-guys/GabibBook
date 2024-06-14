@@ -1,4 +1,4 @@
-import {required} from "joi"
+import { required } from "joi"
 import mongoose, { Schema, Model, model } from "mongoose"
 
 export enum Role {
@@ -7,11 +7,11 @@ export enum Role {
 }
 
 export interface PaymentMethod {
-    name: string
-    fullName: string
-    number: string
-    expiration: string
-    type: string
+     name: string
+     fullName: string
+     number: string
+     expiration: string
+     type: string
 }
 
 export interface UserType {
@@ -36,15 +36,16 @@ const userSchema = new Schema<UserType>({
      email: { type: String, required: true, unique: true },
      passwordHash: { type: String, required: true },
      address: { type: String, required: true },
-     city: { type: String, required: true},
+     city: { type: String, required: true },
      nation: { type: String, required: true },
      role: { type: String, enum: Object.values(Role), required: true },
      paymentMethods: [new Schema<PaymentMethod>({
-        name: { type: String, required: true },
-        fullName: { type: String, required: true },
-        number: { type: String, required: true },
-        expiration: { type: String, required: true },
-    })]
+          name: { type: String, required: true },
+          fullName: { type: String, required: true },
+          number: { type: String, required: true },
+          expiration: { type: String, required: true },
+          type: { type: String, required: true }
+     })]
 })
 
 export const User: Model<UserType> = model("User", userSchema)
