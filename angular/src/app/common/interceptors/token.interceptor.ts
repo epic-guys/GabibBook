@@ -15,29 +15,41 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     public localStorageService: LocalStorageService,
     public authService: AuthService
-  ) {}
+  ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const auth = this.localStorageService.getAuth();
-    const token = auth ? auth.accessToken.jwt : null;
+    if (!(request.url.includes('login') || request.url.includes('register'))) {
+      const auth = this.localStorageService.getAuth();
+      const token = auth ? auth.accessToken.jwt : null;
 
-    if (token) {
+      if (token) {
         request = request.clone({
-            setHeaders: {
-                'Content-Type': 'application/json; charset=utf-8',
-                Accept: 'application/json',
-                Authorization: `Bearer ${token}`
-            }
+          setHeaders: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`
+          }
         });
-    } else {
-      request = request.clone({
-            setHeaders: {
-                'Content-Type': 'application/json; charset=utf-8',
-                Accept: 'application/json'
-            }
+      } else {
+        request = request.clone({
+          setHeaders: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Accept: 'application/json'
+          }
         });
+      }
     }
 
-    return next.handle(request);
+    return next.handle(
+      request
+    ).pipe(
+      catchError((error) => {
+        console.error('Error from token interceptor', error);
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 }
