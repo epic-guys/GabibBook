@@ -11,6 +11,7 @@ export interface PaymentMethod {
     fullName: string
     number: string
     expiration: string
+    type: string
 }
 
 export interface UserType {

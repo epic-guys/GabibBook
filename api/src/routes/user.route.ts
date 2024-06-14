@@ -8,9 +8,6 @@ const userRouter = Router();
 
 userRouter.get('/:id', passport.authenticate('jwt', { session: false }), getUserById);
 
-// TODO remove?
-userRouter.post('/', validateUser, createUser);
-
 userRouter.put('/:id', validateUser, updateUser);
 
 userRouter.delete('/:id', passport.authenticate('jwt', {session:false}), deleteUser);

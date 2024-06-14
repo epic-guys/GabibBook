@@ -1,6 +1,6 @@
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import logger from './logger';
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 import { seedUsers } from './seeds/user.seed';
 import userRouter from './routes/user.route';
 import bookRouter from './routes/book.route';
@@ -31,11 +31,11 @@ mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
- }).catch((err: Error) => {
+}).catch((err: Error) => {
     logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);
     process.exit(1);
- });
+});
 
 app.use('/users', userRouter);
 app.use('/books', bookRouter);
@@ -66,7 +66,7 @@ passport.use(new BasicStrategy(
         } catch (e) {
             done(e);
         }
-}));
+    }));
 
 let jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
