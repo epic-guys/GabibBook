@@ -1,16 +1,49 @@
 <app-navbar></app-navbar>
 <app-loader *ngIf="ajaxLoading" color="#ff0000"></app-loader>
 <div class="container" *ngIf="book && !ajaxLoading">
-    <div class="image-container">
-        <img [src]="book.cover" alt="Book Image">
-    </div>
-    <div class="details-container">
-        <h1>{{book.title}}</h1>
-        <p>Author: {{book.author}}</p>
-        <p>Price: {{book.current_offer.value}}</p>
-        <p>ISBN: {{book.isbn}}</p>
+    <div class="left">
+        <div class="top">
+            <div class="image-container">
+                <img [src]="book.cover" alt="Book Image">
+            </div>
+            <div class="details-container">
+                <h1 class="title">{{book.title}}</h1>
+                <p class="author">Author: {{book.author}}</p>
+                <p>ISBN: <code>{{book.isbn}}</code></p>
+                <p>Degree Course: {{book.degree_course}}</p>
+                <div class="ends-in">
+                    <p class="countdown">{{ends_in | unixToHumanDate }}</p>
+                    <p>Until the end</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="action" *ngIf="isLoggedIn">
+                <!--offer-card [price]="book.current_offer.value" [isCurrentUser]="book.current_offer.user.id === user.id"></offer-card-->
+            </div>
+            <div class="login" *ngIf="!isLoggedIn">
+                <div>
+                    <p>You have to be logged in to post an offer!</p>
+                    <p>Login to Gabibook to discover thousands of books auctioned by students like you everyday!</p>
+                </div>
+                <button mat-raised-button color="primary" routerLink="/login">Login</button>
+            </div>
+        </div>
     </div>
     <div class="chat-container">
+        <h1>Chat:</h1>
+        <p>
+            Messaggio dal venditore:
+            <span>Mi piacciono i piedi</span>
+        </p>
+        <p>
+            Messaggio dall'acquirente:
+            <span>Io ho i piedi</span>
+        </p>
+        <p>
+            Messaggio dal venditore:
+            <span>Perfetto, allora possiamo fare affari</span>
+        </p>
         <!--app-chat [book]="book"></app-chat-->
     </div>
 </div>

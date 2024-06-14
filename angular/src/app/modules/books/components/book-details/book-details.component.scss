@@ -1,73 +1,121 @@
-.container{
+.container {
     margin: 20px 5%;
     height: 88%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 
-    .image-container{
+    div.left {
+        width: 70%;
         height: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        border-right: #191919 1px solid;
 
-        img{
+        .top {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
-
-    .details-container{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-
-        .title{
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .author{
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .description{
-            font-size: 1.2rem;
-            margin-top: 20px;
-        }
-
-        .actions{
+            height: 40%;
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            flex-direction: row;
 
-            button{
-                padding: 10px 20px;
-                font-size: 1rem;
-                font-weight: bold;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
+            .image-container {
+                display: flex;
+                justify-content: center;
+                align-items: first baseline;
+                max-width: 40%;
+                height: 100%;
+
+                img {
+                    max-height: 100%;
+                }
             }
 
-            .edit{
-                background-color: #f0ad4e;
-                color: white;
-            }
+            .details-container {
+                height: 100%;
+                padding: 0 20px;
+                display: flex;
+                flex-direction: column;
 
-            .delete{
-                background-color: #d9534f;
-                color: white;
+                * {
+                    margin-top: 0;
+                }
+
+                .title {
+                    font-size: 3rem;
+                    color: #191919;
+                }
+
+                .author {
+                    font-size: 1.5rem;
+                    color: #707070;
+                }
+
+                .isbn {
+                    font-size: 1rem;
+                }
+
+                .ends-in {
+                    color: #707070;
+
+                    .countdown {
+                        font-size: 1.5rem;
+                        color: #ff0000;
+                        margin-bottom: 0;
+                    }
+                }
             }
         }
+
+        .bottom {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+
+            .login {
+                display: flex;
+                flex-direction: column;
+                font-size: 2rem;
+                color: #707070;
+
+                border: #191919 1px solid;
+                border-radius: 10px;
+
+                margin-right: 10%;
+
+                padding: 20px;
+
+                div {
+                    p {
+                        text-align: center;
+                        margin: 0;
+                    }
+                }
+
+                button {
+                    margin-top: 20px;
+                    width: 50%;
+                    align-self: center;
+                    background-color: #ff0000;
+                    color: white;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #ff3333;
+                    }
+
+                }
+            }
+        }
+
     }
 
-    .chat-container{
+    .chat-container {
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        //justify-content: space-between;
     }
 }

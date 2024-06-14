@@ -8,6 +8,8 @@ export interface Book {
         id: string;
     }
     cover: string;
+    degree_course: string;
+    close_date: string;
 
     [key: string]: any;
 }

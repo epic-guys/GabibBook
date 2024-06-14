@@ -9,11 +9,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchModule } from '../search/search.module';
 import { NavbarModule } from '../navbar/navbar.module';
 import { ComponentsModule } from 'src/app/common/components/components.module';
+import { UnixToHumanDatePipe } from 'src/app/common/pipes/unix-to-human-date.pipe';
+import { OfferCardComponent } from './components/book-details/offer-card/offer-card.component';
 
 @NgModule({
   declarations: [
     BookspageComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    UnixToHumanDatePipe,
+    OfferCardComponent
   ],
   imports: [
     CommonModule,
