@@ -15,6 +15,8 @@ export async function getBookList(req: Request, res: Response) {
      const page = Number(req.query.page ?? 1)
      const skip = size * (page - 1);
 
+     let owner_id = req.query.owner_id?.toString();
+
      let search = req.query.search?.toString();
      if (!search) search = "";
 
@@ -45,6 +47,8 @@ export async function getBookList(req: Request, res: Response) {
          ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}})
      };
 
+     if(owner_id) whereConditions.owner = owner_id;
+
      logger.info("Searching books with following where conditions: " + JSON.stringify(whereConditions));
      
      const books = await Book.find({}).skip(skip).where(whereConditions).limit(size).exec();
@@ -63,7 +67,7 @@ export async function getBookList(req: Request, res: Response) {
 }
 
 export async function createBook(req: Request, res: Response) {
-     const book = new Book(req.body);
+     const book = new Book({...req.body, owner: (req.user as UserType)._id});
      book.save()
           .then(() => {
                return res.status(200).json(book);
@@ -106,7 +110,19 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
 }
 
 export async function updateBook(req: Request, res: Response) {
-     console.log(req.body);
+     let book = await Book.findById(req.params.id).exec();
+     if (!book) return res.status(404).json({ message: 'Book not found' });
+     else {
+          book.set(req.body);
+          book.save()
+               .then(() => {
+                    return res.status(200).json(book);
+               })
+               .catch((err) => {
+                    logger.error(err.message);
+                    return res.status(400).json({ message: err.message });
+               });
+     }
 }
 
 export async function deleteBook(req: Request, res: Response) {
