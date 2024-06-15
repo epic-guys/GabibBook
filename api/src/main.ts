@@ -77,7 +77,8 @@ let jwtOptions = {
 passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {
     try {
         let user = await User.findById(jwtPayload._id).select('-passwordHash').exec();
-        if (user == null) {
+
+        if (user == null || user.enabled == false) {
             throw "User not found";
         }
         done(null, user);

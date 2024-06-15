@@ -3,7 +3,6 @@ import { Book } from '../models/book.model';
 import logger from '../logger';
 import {User, UserType} from '../models/user.model';
 import { bookSocket } from '../socket';
-import mongoose from 'mongoose';
 
 export async function getBook(req: Request, res: Response) {
      let book = await Book.findById(req.params.id).exec();

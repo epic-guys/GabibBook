@@ -38,6 +38,15 @@ export async function validateUser(req: Request, res: Response, next: Function) 
     next();
 }
 
+export async function isSameUser(req: Request, res: Response, next: Function) {
+    const user = req.user as UserType;
+
+    //This hecks if the user is the same as the one being requested, if not return 404 (to avoid user enumeration)
+    if (req.params.id !== user._id!.toString()) return res.status(404).json({ message: 'User not found' });
+
+    next();
+}
+
 export async function validatePassword(req: Request, res: Response, next: Function) {
     const { value, error } = passwordSchema.validate(req.body, { stripUnknown: true });
     req.body = value;

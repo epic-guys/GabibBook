@@ -25,6 +25,7 @@ export interface UserType {
      city: string
      nation: string
      role: Role
+     enabled?: boolean
      paymentMethods: PaymentMethod[] | []
 }
 
@@ -39,6 +40,7 @@ const userSchema = new Schema<UserType>({
      city: { type: String, required: true },
      nation: { type: String, required: true },
      role: { type: String, enum: Object.values(Role), required: true },
+     enabled: { type: Boolean, default: false },
      paymentMethods: [new Schema<PaymentMethod>({
           name: { type: String, required: true },
           fullName: { type: String, required: true },

@@ -8,6 +8,7 @@
         "address": "Via da Qua 69",
         "city": "Mestre",
         "nation": "Fantabosco",
+        "enabled": true,
         "paymentMethods": [
             {
                 "name": "visa",
@@ -49,6 +50,7 @@
         "address": "Via delle vie, 42 interno 0",
         "city": "Manfredonia",
         "nation": "Principato di Foggia",
+        "enabled": true,
         "paymentMethods": [
             {
                 "name": "visa",

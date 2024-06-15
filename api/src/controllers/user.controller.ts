@@ -47,9 +47,3 @@ export async function deleteUser(req: Request, res: Response) {
     if (!user) return res.status(404).json({ message: 'User not found' });
     else return res.status(200).json({ message: 'User deleted' });
 }
-
-export async function getAllUsers(req: Request, res: Response) {
-    let users = await User.find().exec();
-    if (!users) return res.status(404).json({ message: 'Error in query' });
-    else return res.status(200).json(users);
-}
