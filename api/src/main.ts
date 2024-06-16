@@ -71,7 +71,7 @@ passport.use(new BasicStrategy(
 let jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.jwtSecret,
-    issuer: 'epic-guys.org',
+    issuer: config.jwtIssuer
 };
 
 passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (error: any, user?: UserType) => void) => {

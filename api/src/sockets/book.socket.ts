@@ -25,7 +25,7 @@ export class BookSocket {
                 }
 
                 socket.join('book:' + bookId);
-                socket.emit('trackPrice', 'sottoscritto a ' + bookId);
+                socket.emit('trackPrice', {message: 'sottoscritto a ' + bookId});
                 this.notifyBook(bookId, book.current_offer);
             });
         });
@@ -36,7 +36,10 @@ export class BookSocket {
     }
 
     notifyBook(bookId: string, offer: OfferType) {
-        this.bookIO.to(this.bookRoom(bookId)).emit('priceUpdate', offer);
+        this.bookIO.to(this.bookRoom(bookId)).emit('priceUpdate', {
+            bookId: bookId,
+            offer: offer
+        });
     }
 }
 
