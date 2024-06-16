@@ -19,11 +19,6 @@ export class PaymentMethodComponent {
     this.edit.emit(this.paymentMethod);
   }
 
-  ngOnInit() {
-    console.log('PaymentMethodComponent')
-    console.log(this.paymentMethod)
-  }
-
   deleteFunc() {
     console.log('Delete')
     alert('Delete not implemented')

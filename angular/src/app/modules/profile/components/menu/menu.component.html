@@ -7,11 +7,11 @@
         </mat-list-item>
         <mat-list-item [activated]="isActive('/profile/orders')" (click)="navigate('profile/orders')" [ngClass]="{'active': isActive('/profile/orders')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
             <mat-icon matListItemIcon>shopping_cart</mat-icon>
-            <p>orders</p>
+            <p>My Orders</p>
         </mat-list-item>
         <mat-list-item [activated]="isActive('/profile/auctions')" (click)="navigate('/profile/auctions')" [ngClass]="{'active': isActive('/profile/auctions')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
             <mat-icon matListItemIcon>sell</mat-icon>
-            <p>Auctions</p>
+            <p>My Auctions</p>
         </mat-list-item>
     </mat-nav-list>
 </div>
