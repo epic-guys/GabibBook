@@ -15,6 +15,7 @@ import { Auth } from 'src/app/common/models/account/account';
 export class LoginComponent {
 
   ajaxLoading: boolean = false;
+  invalidCreds: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -43,6 +44,7 @@ export class LoginComponent {
   onSubmit() {
     if(this.loginForm.valid) {
       this.ajaxLoading = true;
+      this.invalidCreds = false;
 
 
       const observer = {
@@ -54,6 +56,8 @@ export class LoginComponent {
         },
         error: (error: any) => {
           this.ajaxLoading = false;
+          this.invalidCreds = true;
+
           console.error(error);
         },
         complete: () => {

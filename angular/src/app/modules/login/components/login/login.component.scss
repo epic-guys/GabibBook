@@ -11,6 +11,8 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
         .header{
+            display: flex;
+            flex-direction: column;
             text-align: center;
             margin-bottom: 20px;
 
@@ -39,5 +41,64 @@
             font-weight: 500;
             color: #333;
         }
+
+        .row{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+
+            .loginButton{
+                width: 48%;
+                color: #fff;
+                background-color: #bd1010;
+                transition: 0.3s;
+                text-align: center;
+
+                &:disabled{
+                    background-color: #ccc;
+                    color: #fff;
+                }
+            }
+
+            .forgot-password{
+                font-size: 12px;
+                font-weight: 500;
+                color: #333;
+                cursor: pointer;
+            }
+        
+        }
+    }
+}
+
+.error{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: red;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 900px) {
+
+    .login-card{
+        width: 80% !important;
+    }
+
+    .row{
+        flex-direction: column;
+        gap: 10px;
+
+        .loginButton{
+            width: 100% !important;
+            margin-top: 10px;
+        }
+
+        .forgot-password{
+            text-align: center;
+        }
+
     }
 }

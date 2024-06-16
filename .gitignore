@@ -37,6 +37,9 @@ testem.log
 
 #I don't think we have the permission to post the images of the card logos
 angular/src/assets/card-logos/*
+angular/src/assets/404.jpg
+angular/src/assets/login-header.jpg
+angular/src/assets/forgot-password.jpg
 
 # System files
 .DS_Store
