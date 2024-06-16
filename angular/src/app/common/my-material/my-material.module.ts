@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatRippleModule,
     MatDialogModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule
     ],
   exports: [
     MatToolbarModule,
@@ -35,7 +37,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatGridListModule,
     MatCardModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule
   ]
 })
 export class MyMaterialModule { }

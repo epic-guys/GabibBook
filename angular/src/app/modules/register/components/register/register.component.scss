@@ -21,15 +21,18 @@
             }
         }
 
-        .body{
-            .form-group{
-                display: flex;
-                flex-direction: column;
+        form{
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            
+            mat-form-field{
+                width: calc(50% - 5px);
             }
-        }label{
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
+            
+            mat-form-field.full{
+                width: 100%;
+            }
         }
 
         input{
@@ -39,5 +42,31 @@
             font-weight: 500;
             color: #333;
         }
+
+        button{
+            border: 1px solid #333;
+            margin: 0 10px;
+        }
+
+        .regButton{
+            background-color: #bd1010;
+            color: #fff;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .container{
+            height: auto;
+        }
+        .register-card{
+            width: 100%;
+
+            form{
+                mat-form-field{
+                    width: 100%;
+                }
+            }
+        }
+        
     }
 }
