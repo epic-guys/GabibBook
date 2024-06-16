@@ -17,8 +17,16 @@ export class TokenInterceptor implements HttpInterceptor {
     public authService: AuthService
   ) { }
 
+  excludedUrls = [
+    'login',
+    'register',
+    'forgot-password',
+  ];
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!(request.url.includes('login') || request.url.includes('register'))) {
+    if (!(
+      this.excludedUrls.some(url => request.url.includes(url))
+    )) {
       const auth = this.localStorageService.getAuth();
       const token = auth ? auth.accessToken.jwt : null;
 
@@ -44,8 +52,8 @@ export class TokenInterceptor implements HttpInterceptor {
       request
     ).pipe(
       catchError((error) => {
-        console.error('Error from token interceptor', error);
-        if (error.status === 401) {
+        if (error.status === 401 && this.authService.isAuthenticated()) {
+          console.error('Token expired');
           this.authService.logout();
         }
         return throwError(() => new Error(error.message));

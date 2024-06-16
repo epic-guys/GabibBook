@@ -12,6 +12,10 @@ export const isLoggedGuard: CanActivateFn = (route, state) => {
     console.log('User is not logged in');
     router.navigate(['/login']);
   }
+  else{
+    console.log('User is logged in');
+  }
+  
   return canActivate;
 };
 
