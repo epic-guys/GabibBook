@@ -6,12 +6,18 @@ import { Request, Response } from "express";
 import mongoose, { HydratedDocument } from "mongoose";
 import config from "../config";
 
-export async function register(req: Request, res: Response, next: any) {
+export async function register(req: Request, res: Response) {
     let passwordHash = await argon2.hash(req.body.password);
     delete req.body.password;
-    let user: UserType = { ...req.body, passwordHash: passwordHash, _id: new mongoose.Types.ObjectId() };
+    let role = 'user';
+
+    if(req.body.accesscode){
+        role = 'moderator';
+    }
+
+    let user: UserType = { ...req.body, role: role, enabled: true, passwordHash: passwordHash, _id: new mongoose.Types.ObjectId() };
     try {
-        await User.create(user);
+        user = await User.create(user);
         res.status(201).json({ message: 'User added' });
     } catch (e: any) {
         if (e.code === 11000) {
@@ -20,6 +26,8 @@ export async function register(req: Request, res: Response, next: any) {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
+    //not good
+    return res.send(user);
 }
 
 export async function login(req: Request, res: Response) {

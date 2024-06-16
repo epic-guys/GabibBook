@@ -2,11 +2,18 @@ import { Request, Response, Router } from 'express';
 import { register, login, requestPasswordReset, resetPassword } from '../controllers/auth.controller';
 import passport from 'passport';
 import { validateUser } from '../middleware/user.middleware';
-
+import { useCode } from '../middleware/invite.middleware';
 
 const authRouter = Router();
 
-authRouter.post('/register', validateUser, register);
+authRouter.post('/register', validateUser, useCode, async (req: Request, res: Response) => {
+    try {
+        return register(req, res);
+    }
+    catch (e) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 authRouter.get('/login', passport.authenticate('basic', { session: false }), async (req: Request, res: Response) => {
     try {
