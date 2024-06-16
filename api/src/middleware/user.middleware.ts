@@ -25,12 +25,17 @@ const paymentMethodSchema = Joi.object({
 export async function validateUser(req: Request, res: Response, next: Function) {
     // All fields are required with POST, and the password field is required
     // This is because POST is used only when registering
+
+    let accessCode = (req.body as any).accessCode;
+
     const postSchema = baseSchema.fork(Object.keys(baseSchema.describe().keys), (schema) => schema.required()).append({password: passwordSchema});
 
     const schema = req.method === 'POST' ? postSchema : baseSchema;
 
     const { value, error } = schema.validate(req.body, { stripUnknown: true });
     req.body = value;
+
+    if(accessCode) req.body.accessCode = accessCode;
 
     if (error) return res.status(400).json({ message: error.details[0].message });
 
