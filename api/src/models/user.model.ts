@@ -33,7 +33,7 @@ const userSchema = new Schema<UserType>({
      _id: { type: mongoose.Schema.Types.ObjectId, auto: false },
      name: { type: String, required: true },
      surname: { type: String, required: true },
-     nickname: { type: String, required: true },
+     nickname: { type: String, required: true, unique: true },
      email: { type: String, required: true, unique: true },
      passwordHash: { type: String, required: true },
      address: { type: String, required: true },
