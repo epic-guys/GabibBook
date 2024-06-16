@@ -43,7 +43,10 @@ export async function updateUser(req: Request, res: Response) {
 }
 
 export async function deleteUser(req: Request, res: Response) {
-    let user = await User.findByIdAndDelete(req.params.id).exec();
+    let user = await User.findById(req.params.id).where('enabled').equals(true).exec();
     if (!user) return res.status(404).json({ message: 'User not found' });
-    else return res.status(200).json({ message: 'User deleted' });
+    
+    user.enabled = false;
+    await user.save();
+    return res.status(200).json({ message: 'User deleted' });
 }

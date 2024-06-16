@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import e, {Request, Response} from "express";
 import Joi from "joi";
 import {UserType} from "../models/user.model";
 
@@ -64,3 +64,11 @@ export async function validatePaymentMethod(req: Request, res: Response, next: F
 
     next();
 } 
+
+export async function isSameUserOrModerator(req: Request, res: Response, next: Function) {
+    const user = req.user as UserType;
+
+    const role = user.role;
+    if (role === 'moderator') return next();
+    isSameUser(req, res, next);
+}
