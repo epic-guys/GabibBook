@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { AuthUtilsService } from 'src/app/common/services/auth/auth-utils.service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/common/services/storage/local-storage.service';
 

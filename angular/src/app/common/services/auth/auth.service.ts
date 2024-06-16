@@ -25,6 +25,10 @@ export class AuthService {
     );
   }
 
+  register(data: { username: string, password: string }) {
+    return this.httpClient.post(environment.apiBaseUrl + '/auth/register', data);
+  }
+
   isAuthenticated() {
       const auth = this.localStorageService.getAuth();
       const now = new Date().getTime();
@@ -41,4 +45,15 @@ export class AuthService {
       this.router.navigate(['/']); 
   }
 
+  requestPasswordReset(data: { email: string }) {
+    return this.httpClient.post(environment.apiBaseUrl + '/auth/request-reset-password', data);
+  }
+
+  confirmPasswordReset(token: string, data: { password: string }) {
+    return this.httpClient.post(environment.apiBaseUrl + '/auth/reset-password', data, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+  }
 }

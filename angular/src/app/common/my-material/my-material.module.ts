@@ -12,6 +12,7 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angula
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -19,7 +20,8 @@ import { MatListModule } from '@angular/material/list';
     CommonModule,
     MatRippleModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
     ],
   exports: [
     MatToolbarModule,
@@ -32,7 +34,8 @@ import { MatListModule } from '@angular/material/list';
     MatDialogModule,
     MatGridListModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
   ]
 })
 export class MyMaterialModule { }
