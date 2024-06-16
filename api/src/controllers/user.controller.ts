@@ -39,7 +39,19 @@ export async function createUser(req: Request, res: Response) {
 
 
 export async function updateUser(req: Request, res: Response) {
-    //TODO
+    let user = await User.findById(req.params.id).exec();
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    else {
+        user.set(req.body);
+        user.save()
+            .then(() => {
+                return res.status(200).json(user);
+            })
+            .catch((err) => {
+                logger.error(err.message);
+                return res.status(400).json({ message: err.message });
+            });
+    }
 }
 
 export async function deleteUser(req: Request, res: Response) {

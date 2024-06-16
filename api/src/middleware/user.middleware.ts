@@ -10,7 +10,6 @@ const baseSchema = Joi.object({
     address: Joi.string().min(2),
     city: Joi.string().min(2),
     nation: Joi.string().min(2),
-    role: Joi.string().valid('student', 'moderator')
 });
 
 const passwordSchema = Joi.string().min(8).required();
