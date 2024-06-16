@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import { updateUser, deleteUser, getUserById, createUser } from '../controllers/user.controller';
+import { updateUser, deleteUser, getUserById } from '../controllers/user.controller';
 import passport from 'passport';
-import { validateUser, isSameUser } from '../middleware/user.middleware';
+import { validateUser, isSameUser, isSameUserOrModerator } from '../middleware/user.middleware';
 
 const userRouter = Router();
 
@@ -26,6 +26,15 @@ userRouter.put('/:id', passport.authenticate('jwt', { session: false }),
         }
     }
 );
-userRouter.delete('/:id', passport.authenticate('jwt', { session: false }), deleteUser);
+userRouter.delete('/:id', passport.authenticate('jwt', { session: false }),
+    isSameUserOrModerator,
+    async (req: Request<{ id: string }, any, any>, res: Response) => {
+        try {
+            return await deleteUser(req,res);
+        } catch (err: any) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
+);
 
 export default userRouter;
