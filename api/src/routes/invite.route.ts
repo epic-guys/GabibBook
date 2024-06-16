@@ -1,13 +1,16 @@
 import { Router } from 'express';
-import { createInvite } from '../controllers/invite.controller';
+import { createInvite, getInvite, deleteInvite } from '../controllers/invite.controller';
+import passport from 'passport';
+import { authorize } from '../middleware/authorization.middleware';
+import { Role } from '../models/user.model';
 
 
-const inviteRoute = Router();
+const inviteRouter = Router();
 
-inviteRoute.get('/');
+inviteRouter.get('/', passport.authenticate('jwt', { session: false }), authorize([Role.Moderator]), getInvite);
 
-inviteRoute.post('/', createInvite);
+inviteRouter.post('/', passport.authenticate('jwt', { session: false }), authorize([Role.Moderator]), createInvite);
 
-inviteRoute.delete('/');
+inviteRouter.delete('/', passport.authenticate('jwt', { session: false }), authorize([Role.Moderator]), deleteInvite);
 
-export default inviteRoute;
+export default inviteRouter;

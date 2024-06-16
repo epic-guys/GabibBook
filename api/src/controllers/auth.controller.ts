@@ -5,15 +5,13 @@ import { User, UserType } from "../models/user.model";
 import { Request, Response } from "express";
 import mongoose, { HydratedDocument } from "mongoose";
 import config from "../config";
+import { Role } from "../models/user.model";
 
 export async function register(req: Request, res: Response) {
     let passwordHash = await argon2.hash(req.body.password);
     delete req.body.password;
-    let role = 'user';
 
-    if(req.body.accesscode){
-        role = 'moderator';
-    }
+    let role = req.body.accesscode ? Role.Moderator : Role.Student;
 
     let user: UserType = { ...req.body, role: role, enabled: true, passwordHash: passwordHash, _id: new mongoose.Types.ObjectId() };
     try {
@@ -26,8 +24,6 @@ export async function register(req: Request, res: Response) {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
-    //not good
-    return res.send(user);
 }
 
 export async function login(req: Request, res: Response) {

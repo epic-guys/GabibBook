@@ -26,6 +26,7 @@ userRouter.put('/:id', passport.authenticate('jwt', { session: false }),
         }
     }
 );
+
 userRouter.delete('/:id', passport.authenticate('jwt', { session: false }),
     isSameUserOrModerator,
     async (req: Request<{ id: string }, any, any>, res: Response) => {
