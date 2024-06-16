@@ -25,7 +25,7 @@ export class BookSocket {
                 }
 
                 socket.join('book:' + bookId);
-                socket.emit('trackPrice', {message: 'sottoscritto a ' + bookId});
+                socket.emit('trackPrice', {message: 'subsribed to book ' + bookId});
                 this.notifyBook(bookId, book.current_offer);
             });
         });

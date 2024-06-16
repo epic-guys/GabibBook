@@ -82,5 +82,18 @@
             }
         ],
         "role": "student"
+    },
+    {
+        "name": "Pietro",
+        "surname": "Smusi",
+        "nickname": "pietrosmusi",
+        "email": "pietro.smusi@arma3.com",
+        "passwordHash": "mynameispietro",
+        "address": "Via delle vie, 42 interno 0",
+        "city": "Manfredonia",
+        "nation": "Principato di Foggia",
+        "enabled": true,
+        "paymentMethods": [],
+        "role": "student"
     }
 ]

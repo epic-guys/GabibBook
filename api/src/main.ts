@@ -16,6 +16,7 @@ import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { UserType, User } from './models/user.model';
 import argon2 from 'argon2';
+import {seedChats} from './seeds/chat.seed';
 
 const app = express();
 
@@ -32,6 +33,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
+    await seedChats();
 }).catch((err: Error) => {
     logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);

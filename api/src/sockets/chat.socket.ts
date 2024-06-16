@@ -2,7 +2,7 @@ import {Namespace, Server, Socket} from "socket.io";
 import { JwtPayload, verify } from "jsonwebtoken";
 import config from "../config";
 import {User, UserType} from "../models/user.model";
-import {Book} from "../models/book.model";
+import {Book, BookType} from "../models/book.model";
 import {Chat} from "../models/chat.model";
 import {Request, Response} from "express";
 import passport from "passport";
@@ -20,19 +20,21 @@ export class ChatSocket {
 
 
         this.chatIO.on('connection', (socket: Socket) => {
-            let user: UserType;
-            try {
-            }
-            catch (err: any) {
-                socket.emit('error', 'Authentication failed');
-            }   
-
 
             socket.on('subscribeChat', async (event: any) => {
                 try {
-                   let chat = await Chat.findOne({ book: event.bookId }).exec();
-                   // receiveMessage is from the perspective of the client, it's the client that receives the messages
-                   socket.emit('receiveMessage', chat!.messages);
+                   let chat = await Chat.findOne({ book: event.chatId }).populate<{book: BookType}>('book').exec();
+                   // If 'buyer' is not set, then the chat is public
+                   // If 'buyer' is set, then only the buyer and the owner can access the chat
+                    if (!chat?.buyer || chat?.buyer === socket.data['user']._id || chat?.book.owner === socket.data['user']._id) {
+                        // receiveMessage is from the perspective of the client, it's the client that receives the messages
+                        socket.emit('receiveMessage', chat!.messages);
+                    }
+                    else {
+                        throw new Error('Forbidden');
+                        return;
+                    }
+
                 } catch (err: any) {
                     socket.emit('error', err);
                 }
