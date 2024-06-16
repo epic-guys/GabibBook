@@ -23,10 +23,11 @@ export async function createInvite(req: Request, res: Response) {
     }
 }
 
-export async function getInvite(req: Request, res: Response) {
+export async function getInvites(req: Request, res: Response) {
     let user = req.user as UserType;
     try {
-        let invites = await Invite.find({ id_mod: user._id }).exec();
+        const now = new Date();
+        let invites = await Invite.find({ id_mod: user._id, expiresDate: { $gte: now }}).exec();
         res.status(200).json(invites);
     } catch (err: any) {
         logger.error(err.message);
