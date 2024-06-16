@@ -5,7 +5,8 @@ import { seedUsers } from './seeds/user.seed';
 import userRouter from './routes/user.route';
 import bookRouter from './routes/book.route';
 import chatRouter from './routes/chat.route';
-import authRouter from './routes/auth.route'
+import authRouter from './routes/auth.route';
+import inviteRouter from './routes/invite.route';
 import config from './config';
 import { seedBooks } from './seeds/book.seed';
 import { io } from './socket';
@@ -41,6 +42,7 @@ app.use('/users', userRouter);
 app.use('/books', bookRouter);
 app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
+app.use('/invites', inviteRouter);
 
 // Only for debugging
 // In production it's better to not return the whole error object
