@@ -1,6 +1,7 @@
 import e, {Request, Response} from "express";
 import Joi from "joi";
 import {UserType} from "../models/user.model";
+import logger from "../logger";
 
 const baseSchema = Joi.object({
     name: Joi.string().min(2).max(50),
@@ -26,16 +27,18 @@ export async function validateUser(req: Request, res: Response, next: Function) 
     // All fields are required with POST, and the password field is required
     // This is because POST is used only when registering
 
-    let accessCode = (req.body as any).accessCode;
+    let accessCode = (req.body as any).accesscode;
 
     const postSchema = baseSchema.fork(Object.keys(baseSchema.describe().keys), (schema) => schema.required()).append({password: passwordSchema});
 
-    const schema = req.method === 'POST' ? postSchema : baseSchema;
+    let schema = req.method === 'POST' ? postSchema : baseSchema;
+
+    if(accessCode) schema = schema.fork(['address', 'city', 'nation'], (schema) => schema.optional());
 
     const { value, error } = schema.validate(req.body, { stripUnknown: true });
     req.body = value;
 
-    if(accessCode) req.body.accessCode = accessCode;
+    if(accessCode) req.body.accesscode = accessCode;
 
     if (error) return res.status(400).json({ message: error.details[0].message });
 

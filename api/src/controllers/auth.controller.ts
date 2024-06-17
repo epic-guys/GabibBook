@@ -6,12 +6,16 @@ import { Request, Response } from "express";
 import mongoose, { HydratedDocument } from "mongoose";
 import config from "../config";
 import { Role } from "../models/user.model";
+import logger from "../logger";
 
 export async function register(req: Request, res: Response) {
     let passwordHash = await argon2.hash(req.body.password);
     delete req.body.password;
 
     let role = req.body.accesscode ? Role.Moderator : Role.Student;
+
+    if(!req.body.accesscode && (!req.body.address || !req.body.city || !req.body.nation))
+        return res.status(400).json({ message: 'Missing required fields' });
 
     let user: UserType = { ...req.body, role: role, enabled: true, passwordHash: passwordHash, _id: new mongoose.Types.ObjectId() };
     try {
