@@ -34,6 +34,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
     await seedChats();
+    mongoose.set('debug', true);
 }).catch((err: Error) => {
     logger.error(config.mongodbUri);
     logger.error(`🔴 Unable to connect to the database: ${err}`);
@@ -46,11 +47,9 @@ app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 app.use('/invites', inviteRouter);
 
-// Only for debugging
-// In production it's better to not return the whole error object
-app.use((err: Error, req: Request, res: Response, next: any) => {
+app.use((err: any, req: Request, res: Response, next: any) => {
     logger.error(err);
-    res.status(500).json({ message: err });
+    res.status(err?.status ?? 500).json({ message: err?.message ?? 'Internal Server Error'});
 });
 
 passport.use(new BasicStrategy(
@@ -71,6 +70,7 @@ passport.use(new BasicStrategy(
             done(e);
         }
     }));
+
 
 let jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -96,6 +96,5 @@ let httpServer = app.listen(process.env.API_PORT, () => {
 });
 
 io.attach(httpServer);
-mongoose.set('debug', true);
 
 export default app;

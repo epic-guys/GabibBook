@@ -3,6 +3,7 @@ import { register, login, requestPasswordReset, resetPassword } from '../control
 import passport from 'passport';
 import { validateUser } from '../middleware/user.middleware';
 import { useCode } from '../middleware/invite.middleware';
+import config from '../config';
 
 const authRouter = Router();
 
@@ -15,7 +16,7 @@ authRouter.post('/register', validateUser, useCode, async (req: Request, res: Re
     }
 });
 
-authRouter.get('/login', passport.authenticate('basic', { session: false }), async (req: Request, res: Response) => {
+authRouter.get('/login', passport.authenticate('basic', config.passportOptions), async (req: Request, res: Response) => {
     try {
         return login(req, res);
     }
@@ -33,7 +34,7 @@ authRouter.post('/request-reset-password', async (req: Request, res: Response) =
     }
 });
 
-authRouter.post('/reset-password', passport.authenticate('jwt', { session: false }), async (req: Request, res: Response) => {
+authRouter.post('/reset-password', passport.authenticate('jwt', config.passportOptions), async (req: Request, res: Response) => {
     try{
         return resetPassword(req, res);
     }

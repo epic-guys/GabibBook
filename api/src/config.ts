@@ -1,5 +1,6 @@
 import { configDotenv } from "dotenv";
 import logger from "./logger";
+import passport from "passport";
 
 configDotenv();
 
@@ -22,5 +23,10 @@ export default {
      jwtSecret: process.env.JWT_SECRET,
      apiPort: process.env.API_PORT,
      mongodbUri: process.env.MONGODB_URI,
-     jwtIssuer: 'epic-guys.org'
+     jwtIssuer: 'epic-guys.org',
+     passportOptions: {
+         session: false,
+         failWithError: true
+     }
 };
+

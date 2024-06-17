@@ -11,7 +11,6 @@ export async function seedChats(): Promise<void> {
   let chats = JSON.parse(fs.readFileSync('seed-data/chats/chats.json', 'utf8'));
   for (let i = 0; i < chats.length; i++) {
 
-      logger.info(`🔍 Looking for user with nickname ${chats[i].owner}`);
       let owner = await User.findOne({nickname: chats[i].owner});
       if (!owner) {
           throw new Error(`🚫 Could not find user with nickname ${chats[i].owner}`);
@@ -19,7 +18,6 @@ export async function seedChats(): Promise<void> {
       chats[i].owner = owner._id;
 
       for (let j = 0; j < chats[i].messages.length; j++) {
-          logger.info(`🔍 Looking for user with nickname ${chats[i].messages[j].sender}`);
           let sender = await User.findOne({nickname: chats[i].messages[j].sender});
             
 
@@ -31,7 +29,6 @@ export async function seedChats(): Promise<void> {
       }
   }
 
-  logger.info(JSON.stringify(chats));
   await Chat.insertMany(chats);
   logger.info('👥 Chat collection seeded');
 }
