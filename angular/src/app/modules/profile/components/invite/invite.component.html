@@ -1,0 +1,20 @@
+<div class="container">
+    <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
+    <mat-card class="add-card" *ngIf="!adding && !ajaxLoading" (click)="invite()">
+        <mat-icon>add</mat-icon>
+        <h3>Create a new invite for a moderator</h3>
+    </mat-card>
+
+    <mat-card class="add-card" *ngIf="adding">
+        <app-loader color="#909ceb" position="relative"></app-loader>
+    </mat-card>
+
+    <div class="invites-holder">
+        <mat-card class="card" *ngFor="let invite of invites">
+            <p>id: <code (click)="copyCode(invite._id)">{{invite._id}}</code></p>
+            <h3>Expiration: {{invite.expiresDate | date:'medium'}}</h3>
+            <button mat-raised-button color="error">Revoke</button>
+        </mat-card>
+    </div>
+    
+</div>

@@ -4,19 +4,18 @@ import { MyMaterialModule } from 'src/app/common/my-material/my-material.module'
 import { BookspageComponent } from './components/bookspage/bookspage.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { SearchModule } from '../search/search.module';
 import { NavbarModule } from '../navbar/navbar.module';
 import { ComponentsModule } from 'src/app/common/components/components.module';
-import { UnixToHumanDatePipe } from 'src/app/common/pipes/unix-to-human-date.pipe';
 import { OfferCardComponent } from './components/book-details/offer-card/offer-card.component';
+import { PipesModule } from 'src/app/common/pipes/pipes.module';
 
 @NgModule({
   declarations: [
     BookspageComponent,
     BookDetailsComponent,
-    UnixToHumanDatePipe,
     OfferCardComponent
   ],
   imports: [
@@ -25,6 +24,7 @@ import { OfferCardComponent } from './components/book-details/offer-card/offer-c
     NavbarModule,
     SearchModule,
     ComponentsModule,
+    PipesModule,
     RouterModule.forChild([
       {
         path: '',

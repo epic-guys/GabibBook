@@ -5,14 +5,24 @@
             <mat-icon matListItemIcon>person</mat-icon>
             <p>personal info</p>
         </mat-list-item>
-        <mat-list-item [activated]="isActive('/profile/orders')" (click)="navigate('profile/orders')" [ngClass]="{'active': isActive('/profile/orders')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
+        <mat-list-item *ngIf="!isMod" [activated]="isActive('/profile/orders')" (click)="navigate('profile/orders')" [ngClass]="{'active': isActive('/profile/orders')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <mat-icon matListItemIcon>shopping_cart</mat-icon>
             <p>My Orders</p>
         </mat-list-item>
-        <mat-list-item [activated]="isActive('/profile/auctions')" (click)="navigate('/profile/auctions')" [ngClass]="{'active': isActive('/profile/auctions')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}" [routerLinkActiveOptions]="{exact: true}">
+        <mat-list-item *ngIf="!isMod" [activated]="isActive('/profile/auctions')" (click)="navigate('/profile/auctions')" [ngClass]="{'active': isActive('/profile/auctions')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <mat-icon matListItemIcon>sell</mat-icon>
             <p>My Auctions</p>
         </mat-list-item>
+        <mat-list-item *ngIf="isMod" [activated]="isActive('/profile/moderation')" (click)="navigate('/profile/moderation')" [ngClass]="{'active': isActive('/profile/moderation')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon matListItemIcon>security</mat-icon>
+            <p>Moderation</p>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="isMod" [activated]="isActive('/profile/invite')" (click)="navigate('/profile/invite')" [ngClass]="{'active': isActive('/profile/invite')}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon matListItemIcon>people</mat-icon>
+            <p>Invite</p>
+        </mat-list-item>
+
     </mat-nav-list>
 </div>
 <div class="bottom">

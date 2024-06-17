@@ -11,7 +11,10 @@ import { AccountAuctionsComponent } from './components/account-auctions/account-
 import { PaymentMethodsComponent } from './components/account-personal/payment-methods/payment-methods.component';
 import { ComponentsModule } from 'src/app/common/components/components.module';
 import { PaymentMethodComponent } from './components/account-personal/payment-methods/payment-method/payment-method.component';
+import { InviteComponent } from './components/invite/invite.component';
+import { isAdminGuard } from 'src/app/common/guards/is-admin.guard';
 
+import { PipesModule } from 'src/app/common/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +24,14 @@ import { PaymentMethodComponent } from './components/account-personal/payment-me
     AccountOrdersComponent,
     AccountAuctionsComponent,
     PaymentMethodsComponent,
-    PaymentMethodComponent
-  ],
+    PaymentMethodComponent,
+    InviteComponent  ],
   imports: [
     CommonModule,
     NavbarModule,
     ComponentsModule,
     MyMaterialModule,
+    PipesModule,
     RouterModule.forChild([
       {
         path: '',
@@ -43,13 +47,19 @@ import { PaymentMethodComponent } from './components/account-personal/payment-me
             component: AccountPersonalComponent
           },
           {
+
             path: 'orders',
             component: AccountOrdersComponent
           },
           {
             path: 'auctions',
             component: AccountAuctionsComponent
-          }
+          },
+          {
+            canActivate: [isAdminGuard],
+            path: 'invite',
+            component: InviteComponent
+          },
         ]
       }
     ])

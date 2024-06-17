@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../../common/services/storage/local-storage.service';
 
@@ -8,13 +8,12 @@ import { LocalStorageService } from '../../../../common/services/storage/local-s
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
-  //how can I have the current route in the menu component?
-  //I need to know which route is active to highlight the corresponding menu item
-
-  constructor(private router: Router,  private localStorageService: LocalStorageService) { }
+  isMod = false;
+  constructor(private router: Router,  private localStorageService: LocalStorageService) {
+    this.isMod = this.localStorageService.getRole() === 'moderator';
+  }
 
   isActive(route: string) {
-    // /profile should not be active when /profile/personal is active, hence the check for exact match
     return this.router.url === route;
   }
 
