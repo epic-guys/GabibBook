@@ -11,7 +11,7 @@ export async function createInvite(req: Request, res: Response) {
     let invite = new Invite({
         _id: new mongoose.Types.ObjectId(),
         id_mod: user._id,
-        expiresDate: new Date(new Date().getTime() + 24 * 60 * 60 * 7),
+        expiresDate: new Date(new Date().getTime() + 24 * 60 * 60 * 7 * 1000),
     });
 
     try {
