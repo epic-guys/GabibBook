@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Invite } from '../models/invite.model';
 
 export async function useCode(req: Request, res: Response, next: Function) {
-    let accessCode = (req.body as any).accessCode;
+    let accessCode = (req.body as any).accesscode;
     
     if(!accessCode){
         return next();

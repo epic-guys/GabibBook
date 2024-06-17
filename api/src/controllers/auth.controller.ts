@@ -11,7 +11,7 @@ export async function register(req: Request, res: Response) {
     let passwordHash = await argon2.hash(req.body.password);
     delete req.body.password;
 
-    let role = req.body.accessCode ? Role.Moderator : Role.Student;
+    let role = req.body.accesscode ? Role.Moderator : Role.Student;
 
     let user: UserType = { ...req.body, role: role, enabled: true, passwordHash: passwordHash, _id: new mongoose.Types.ObjectId() };
     try {
