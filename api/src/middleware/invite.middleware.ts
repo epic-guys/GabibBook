@@ -4,9 +4,7 @@ import { Invite } from '../models/invite.model';
 export async function useCode(req: Request, res: Response, next: Function) {
     let accessCode = (req.body as any).accesscode;
     
-    if(!accessCode){
-        return next();
-    }
+    if(!accessCode) return next();
 
     const now = new Date();
     let invite = await Invite.findOne({ _id: accessCode, expiresDate: { $gte: now } }).exec();

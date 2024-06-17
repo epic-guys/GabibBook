@@ -5,7 +5,7 @@ import {User, UserType} from '../models/user.model';
 import { bookSocket } from '../socket';
 
 export async function getBook(req: Request, res: Response) {
-     let book = await Book.findById(req.params.id).exec();
+     let book = await Book.findById(req.params.id).select('-reserve_price').exec();
      if (!book) return res.status(404).json({ message: 'Book not found' });
      else return res.status(200).json(book);
 }
@@ -51,7 +51,7 @@ export async function getBookList(req: Request, res: Response) {
 
      logger.info("Searching books with following where conditions: " + JSON.stringify(whereConditions));
      
-     const books = await Book.find({}).skip(skip).where(whereConditions).limit(size).exec();
+     const books = await Book.find({}).select('-reserve_price').skip(skip).where(whereConditions).limit(size).exec();
      let totalPages; 
      logger.info("Books length: " + books.length + ", size: " + size + ", page: " + page);
      if (books.length < size) {

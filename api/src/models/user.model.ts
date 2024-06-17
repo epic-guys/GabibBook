@@ -36,9 +36,9 @@ const userSchema = new Schema<UserType>({
      nickname: { type: String, required: true, unique: true },
      email: { type: String, required: true, unique: true },
      passwordHash: { type: String, required: true },
-     address: { type: String, required: true },
-     city: { type: String, required: true },
-     nation: { type: String, required: true },
+     address: { type: String, required: false },
+     city: { type: String, required: false },
+     nation: { type: String, required: false },
      role: { type: String, enum: Object.values(Role), required: true },
      enabled: { type: Boolean, default: false },
      paymentMethods: [new Schema<PaymentMethod>({
