@@ -44,5 +44,21 @@
         "degree_course": "Italiano",
         "open_date": "2022-09-29T13:30:38.399Z",
         "close_date": "2025-11-06T13:30:38.399Z"
+    },
+    {
+        "owner": "macciocapatonda",
+        "title": "Il mongo al contrario",
+        "author": "Roberto Vannacci",
+        "isbn": "9798854698795",
+        "current_offer": {
+            "value": 0
+        },
+        "start_price": 2,
+        "reserve_price": 20,
+        "cover": "fascio.jpg",
+        "degree_course": "Razzismo",
+        "open_date": "2024-05-10T00:00:00Z",
+        "close_date": "2024-05-20T00:00:00Z",
+        "banned": true
     }
 ]

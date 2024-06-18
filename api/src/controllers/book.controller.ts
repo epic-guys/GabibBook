@@ -5,7 +5,7 @@ import {User, UserType} from '../models/user.model';
 import { bookSocket } from '../socket';
 
 export async function getBook(req: Request, res: Response) {
-     let book = await Book.findById(req.params.id).select('-reserve_price').exec();
+     let book = await Book.findById(req.params.id).select('-reserve_price').where({banned: false}).exec();
      if (!book) return res.status(404).json({ message: 'Book not found' });
      else return res.status(200).json(book);
 }
@@ -22,6 +22,7 @@ export async function getBookList(req: Request, res: Response) {
      let search = req.query.search?.toString();
      if (!search) search = "";
 
+     // Search filtering
      const isbnRegex = /ISBN::(?<isbn>\d*);?/;
      const minRegex = /MIN::(?<min>\d*);?/;
      const maxRegex = /MAX::(?<max>\d*);?/;
@@ -38,31 +39,35 @@ export async function getBookList(req: Request, res: Response) {
      const min = minMatch ? minMatch.groups?.min : undefined;
      const max = maxMatch ? maxMatch.groups?.max : undefined;
      const author = authorMatch ? authorMatch.groups?.author : undefined;
-     if(ownerMatch) owner_id = ownerMatch.groups?.owner;
-     let nickname;
-
-     if(owner_id) {
-          const owner = await User.findOne({username: owner_id}).exec();
-          if(owner) nickname = owner._id;
-     }
+     const owner = ownerMatch ? ownerMatch.groups?.owner : undefined;
 
      search = search.replace(isbnRegex, "");
      search = search.replace(minRegex, "");
      search = search.replace(maxRegex, "");
      search = search.replace(authorRegex, "");
+     search = search.replace(ownerRegex, "");
 
      let whereConditions: any = {
          ...(isbn && {isbn: isbn}),
          ...((min || max) && {price: { $gte: min, $lte: max }}),
          ...(author && {author: {$regex: '.*' + author + '.*', $options: 'i'}}),
          ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}}),
+         // Not working
+         ...(owner && { 'owner.nickname' : {$regex: '.*' + owner + '.*', $options: 'i'}}),
+         banned: false
      };
 
      if(owner_id) whereConditions.owner = owner_id;
 
      logger.info("Searching books with following where conditions: " + JSON.stringify(whereConditions));
      
-     const books = await Book.find({}).select('-reserve_price').skip(skip).where(whereConditions).limit(size).exec();
+     const books = await Book.find({}).
+         select('-reserve_price').
+         skip(skip).
+         populate<{owner: UserType}>('owner', 'nickname').
+         where(whereConditions).limit(size).exec();
+
+     // Response building
      let totalPages; 
      logger.info("Books length: " + books.length + ", size: " + size + ", page: " + page);
      if (books.length < size) {
@@ -90,7 +95,7 @@ export async function createBook(req: Request, res: Response) {
 }
 
 export async function createOffer(req:Request<{id: string}, any, {value: number}>, res: Response) {
-    let book = await Book.findById(req.params.id);
+    let book = await Book.findById(req.params.id).where({banned: false}).exec();
     let user = req.user as UserType;
     if (book == null) {
         res.status(404).send({message: 'Book not found'})
@@ -121,7 +126,7 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
 }
 
 export async function updateBook(req: Request, res: Response) {
-     let book = await Book.findById(req.params.id).exec();
+     let book = await Book.findById(req.params.id).where({banned: false}).exec();
      if (!book) return res.status(404).json({ message: 'Book not found' });
      else {
           book.set(req.body);

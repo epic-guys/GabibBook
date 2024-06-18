@@ -20,6 +20,7 @@ export interface BookType  {
      degree_course: string
      open_date: Date
      close_date: Date
+     banned: boolean
 }
 
 const bookSchema = new Schema<BookType>({
@@ -38,6 +39,8 @@ const bookSchema = new Schema<BookType>({
      degree_course: { type: String, required: true },
      open_date: { type: Date, required: true },
      close_date: { type: Date, required: true },
+     banned: { type: Boolean, required: true, default: false}
 })
+
 
 export const Book: Model<BookType> = model("Book", bookSchema)

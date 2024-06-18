@@ -55,7 +55,7 @@ app.use((err: any, req: Request, res: Response, next: any) => {
 passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
         try {
-            let user = await User.findOne({ email: email }).exec();
+            let user = await User.findOne({ email: email }, '+passwordHash').exec();
             if (user == null) {
                 done(null, undefined);
                 return;
