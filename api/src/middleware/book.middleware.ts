@@ -25,3 +25,15 @@ export async function validateBook(req: Request, res: Response, next: Function) 
 
      next();
 }
+
+export async function validateOffer(req: Request, res: Response, next: Function) {
+     const schema = Joi.object({
+          value: Joi.number().positive().required()
+     });
+
+     const { error } = schema.validate(req.body, { stripUnknown: true });
+
+     if (error) return res.status(400).json({ message: error.details[0].message });
+
+     next();
+}

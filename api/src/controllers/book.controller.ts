@@ -91,7 +91,7 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
         return;
     }
 
-    if (!book.current_offer || book!.current_offer.value < req.body.value) {
+    if (book.current_offer.value < req.body.value) {
         let offer = {
             value: req.body.value,
             user: user._id,

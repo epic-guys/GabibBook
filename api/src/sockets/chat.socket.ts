@@ -3,7 +3,7 @@ import { JwtPayload, verify } from "jsonwebtoken";
 import config from "../config";
 import {User, UserType} from "../models/user.model";
 import {Book, BookType} from "../models/book.model";
-import {Chat} from "../models/chat.model";
+import {Chat, Message} from "../models/chat.model";
 import {Request, Response} from "express";
 import passport from "passport";
 
@@ -40,6 +40,10 @@ export class ChatSocket {
                 }
             });
         });
+    }
+
+    public newMessages(bookId: string, messages: Message[]) {
+        this.chatIO.to(this.chatRoom(bookId)).emit('receiveMessage', messages);
     }
 
     private chatRoom(bookId: string): string {

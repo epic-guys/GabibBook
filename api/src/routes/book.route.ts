@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { getBook, updateBook, deleteBook, getBookList, createBook, createOffer } from '../controllers/book.controller';
-import { validateBook } from '../middleware/book.middleware';
+import { validateBook, validateOffer } from '../middleware/book.middleware';
 import { Server as IOServer } from 'socket.io';
 import passport from 'passport';
 import config from '../config';
@@ -64,8 +64,9 @@ router.post('/',
 });
 
 router.post('/:id/offer',
-     passport.authenticate('jwt', { session: false }),
+     passport.authenticate('jwt', config.passportOptions),
      authorize([Role.Student]),
+     validateOffer,
      async (req: Request<{ id: string }, any, { value: number }>, res: Response) => {
           try {
                return createOffer(req, res);

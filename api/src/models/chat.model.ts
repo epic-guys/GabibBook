@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model, model } from "mongoose"
 
-interface Message {
+export interface Message {
      sender: mongoose.Schema.Types.UUID
      text: string
      date: Date

@@ -35,7 +35,7 @@ const userSchema = new Schema<UserType>({
      surname: { type: String, required: true },
      nickname: { type: String, required: true, unique: true },
      email: { type: String, required: true, unique: true },
-     passwordHash: { type: String, required: true },
+     passwordHash: { type: String, required: true, select: false},
      address: { type: String, required: false },
      city: { type: String, required: false },
      nation: { type: String, required: false },
