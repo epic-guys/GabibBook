@@ -13,7 +13,9 @@ export async function getBook(req: Request, res: Response) {
 export async function getBookList(req: Request, res: Response) {
      const size = Number(req.query.size ?? 50);
      const page = Number(req.query.page ?? 1)
-     const skip = size * (page - 1);
+     let skip = size * (page - 1);
+
+     if(skip < 0) { skip = 0;}
 
      let owner_id = req.query.owner_id?.toString();
 
@@ -24,16 +26,25 @@ export async function getBookList(req: Request, res: Response) {
      const minRegex = /MIN::(?<min>\d*);?/;
      const maxRegex = /MAX::(?<max>\d*);?/;
      const authorRegex = /AUTHOR::(?<author>[^;]*);?/;
+     const ownerRegex = /OWNER::(?<owner>[^;]*);?/;
  
      const isbnMatch = search.match(isbnRegex);
      const minMatch = search.match(minRegex);
      const maxMatch = search.match(maxRegex);
      const authorMatch = search.match(authorRegex);
+     const ownerMatch = search.match(ownerRegex);
 
      const isbn = isbnMatch ? isbnMatch.groups?.isbn : undefined;
      const min = minMatch ? minMatch.groups?.min : undefined;
      const max = maxMatch ? maxMatch.groups?.max : undefined;
      const author = authorMatch ? authorMatch.groups?.author : undefined;
+     if(ownerMatch) owner_id = ownerMatch.groups?.owner;
+     let nickname;
+
+     if(owner_id) {
+          const owner = await User.findOne({username: owner_id}).exec();
+          if(owner) nickname = owner._id;
+     }
 
      search = search.replace(isbnRegex, "");
      search = search.replace(minRegex, "");
@@ -44,7 +55,7 @@ export async function getBookList(req: Request, res: Response) {
          ...(isbn && {isbn: isbn}),
          ...((min || max) && {price: { $gte: min, $lte: max }}),
          ...(author && {author: {$regex: '.*' + author + '.*', $options: 'i'}}),
-         ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}})
+         ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}}),
      };
 
      if(owner_id) whereConditions.owner = owner_id;
