@@ -18,15 +18,16 @@ services:
       database_net:
         ipv4_address: 172.16.4.80
 
-#  frontend:
-#    container_name: gabibbook-frontend
-#    build: frontend
-#    ports:
-#      - '80:80'
-#    depends_on:
-#      - api
-#    volumes:
-#      - node-modules-frontend:/app/node_modules
+  frontend:
+    container_name: gabibbook-frontend
+    build: angular
+    ports:
+      - '80:80'
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+      - node-modules-frontend:/app/node_modules
 
   db:
     image: mongo
