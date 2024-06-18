@@ -146,6 +146,7 @@ export async function deleteBook(req: Request, res: Response) {
      if (!book) return res.status(404).json({ message: 'Book not found' });
      else {
           book.deleteOne();
+          await book.save();
           return res.status(200).json({ message: 'Book deleted' });
      }
 }
