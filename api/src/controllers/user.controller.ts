@@ -10,7 +10,6 @@ export async function getUserByEmail(req: Request, res: Response) {
     else return res.status(200).json(user);
 }
 
-
 export async function getUserById(req: Request, res: Response) {
     let user = await User.findById(req.params.id).exec();
 
@@ -22,7 +21,6 @@ export async function getUserById(req: Request, res: Response) {
     });
     return res.status(200).json(user);
 }
-
 
 export async function createUser(req: Request, res: Response) {
     const user = new User({ ...req.body, _id: new mongoose.Types.ObjectId() });
@@ -36,7 +34,6 @@ export async function createUser(req: Request, res: Response) {
             return res.status(400).json({ message: err.message });
         });
 }
-
 
 export async function updateUser(req: Request, res: Response) {
     let user = await User.findById(req.params.id).exec();
@@ -57,8 +54,18 @@ export async function updateUser(req: Request, res: Response) {
 export async function deleteUser(req: Request, res: Response) {
     let user = await User.findById(req.params.id).where('enabled').equals(true).exec();
     if (!user) return res.status(404).json({ message: 'User not found' });
-    
+
     user.enabled = false;
     await user.save();
     return res.status(200).json({ message: 'User deleted' });
+}
+
+export async function getLastUsers(req: Request, res: Response) {
+    let filter = req.query.filter || '';
+    filter = (filter as string).replace(/[^a-zA-Z0-9]/g, '');
+    
+    let users = await User.find({ role: { $ne: 'moderator' }, enabled: true, nickname: { $regex: filter, $options: 'i' } }).limit(10).select('_id nickname').exec();
+
+    if(!users) {users = []}
+    return res.status(200).json(users);
 }

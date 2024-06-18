@@ -22,7 +22,7 @@ inviteRouter.post('/', passport.authenticate('jwt', config.passportOptions), aut
     } catch (err: any) {
         res.status(500).json({ message: 'Internal Server Error' });
     }
-};
+});
 
 inviteRouter.delete('/', passport.authenticate('jwt', config.passportOptions), authorize([Role.Moderator]), (req: Request, res: Response) => {
     try {
