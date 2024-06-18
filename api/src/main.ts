@@ -17,6 +17,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import { UserType, User } from './models/user.model';
 import argon2 from 'argon2';
 import {seedChats} from './seeds/chat.seed';
+import purchaseRouter from './routes/purchase.route';
 
 const app = express();
 
@@ -34,6 +35,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
     await seedChats();
+    //TODO: seedPurchases();
     mongoose.set('debug', true);
 }).catch((err: Error) => {
     logger.error(config.mongodbUri);
@@ -46,6 +48,7 @@ app.use('/books', bookRouter);
 app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 app.use('/invites', inviteRouter);
+app.use('/purchases', purchaseRouter);
 
 app.use((err: any, req: Request, res: Response, next: any) => {
     logger.error(err);
