@@ -8,7 +8,7 @@ export class BookSocket {
 
     constructor(io: Server) {
         this.io = io;
-        this.bookIO = this.io.of('/book');
+        this.bookIO = this.io.of('/books');
 
         this.bookIO.on('connection', (socket: Socket) => {
             socket.on('trackPrice', async (message) => {
@@ -37,7 +37,7 @@ export class BookSocket {
 
     notifyBook(bookId: string, offer: OfferType) {
         this.bookIO.to(this.bookRoom(bookId)).emit('priceUpdate', {
-            bookId: bookId,
+            _id: bookId,
             offer: offer
         });
     }

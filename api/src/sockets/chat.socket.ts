@@ -14,7 +14,7 @@ export class ChatSocket {
 
     constructor(io: Server) {
         this.io = io;
-        this.chatIO = this.io.of('/chat');
+        this.chatIO = this.io.of('/chats');
         // disable authentication for now
         // this.chatIO.use(this.authenticateMiddleware);
 
