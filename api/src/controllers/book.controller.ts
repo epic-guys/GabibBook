@@ -62,11 +62,14 @@ export async function getBookList(req: Request, res: Response) {
      logger.info("Searching books with following where conditions: " + JSON.stringify(whereConditions));
      
      const books = await Book.find({}).
-         select('-reserve_price').
+         select({
+               reserve_price: 0,
+               offers: { $slice: -1 } //this will return only the last element of the array
+          }
+          ).
          skip(skip).
          populate<{owner: UserType}>('owner', 'nickname').
          where(whereConditions).limit(size).exec();
-
      // Response building
      let totalPages; 
      logger.info("Books length: " + books.length + ", size: " + size + ", page: " + page);

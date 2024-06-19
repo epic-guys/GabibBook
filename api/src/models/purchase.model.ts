@@ -14,6 +14,9 @@ export interface PurchaseType {
     seller_notified: boolean,
     buyer_notified: boolean,
     auction: mongoose.Types.ObjectId,
+    title: string,
+    isbn: string,
+    price: number,
     status: Status,
 }
 
@@ -23,6 +26,9 @@ const purchaseSchema = new mongoose.Schema({
     seller_notified: { type: Boolean, required: true, default: false },
     buyer_notified: { type: Boolean, required: true, default: false },
     auction: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+    title: { type: String, required: true },
+    isbn: { type: String, required: true },
+    price: { type: Number, required: true },
     status: { type: String, required: true, enum: Object.values(Status) }
 });
 

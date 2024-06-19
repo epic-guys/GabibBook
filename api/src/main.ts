@@ -21,6 +21,7 @@ import purchaseRouter from './routes/purchase.route';
 import { Book } from './models/book.model';
 import { Purchase } from './models/purchase.model';
 import { Logger } from 'winston';
+import { log } from 'console';
 
 const cron = require('node-cron');
 const moment = require('moment');
@@ -124,6 +125,9 @@ cron.schedule('* * * * *', async () => { // This will run every minute
                     seller_notified: false,
                     buyer_notified: false,
                     auction: book._id,
+                    title: book.title,
+                    isbn: book.isbn,
+                    price: book.offers.length == 0 ? book.reserve_price : book.offers[book.offers.length - 1].value,
                     status: book.offers.length == 0 ? 'reserve_price_not_met' :  book.offers[book.offers.length - 1].value >= book.reserve_price ? 'sold' : 'reserve_price_not_met'
                 });
         }
