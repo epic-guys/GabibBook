@@ -20,6 +20,7 @@ import { seedChats } from './seeds/chat.seed';
 import purchaseRouter from './routes/purchase.route';
 import { Book } from './models/book.model';
 import { Purchase } from './models/purchase.model';
+import statsRouter from './routes/statistics.route';
 
 const cron = require('node-cron');
 const moment = require('moment');
@@ -54,6 +55,7 @@ app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 app.use('/invites', inviteRouter);
 app.use('/purchases', purchaseRouter);
+app.use('/stats', statsRouter);
 
 passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
