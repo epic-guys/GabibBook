@@ -41,7 +41,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
     await seedChats();
-    //TODO: seedPurchases();
+    //no need to seed purchases, they are created by the cron job
     mongoose.set('debug', true);
 }).catch((err: Error) => {
     logger.error(config.mongodbUri);
@@ -112,7 +112,6 @@ cron.schedule('* * * * *', async () => { // This will run every minute
     logger.info('Cron job running');
     const now = moment().toDate();
     const books = await Book.find({ close_date: { $lte: now }, is_order: false , banned: false}).exec();
-    logger.info('Books found');
 
     const promises = books.map(async (book) => {
         logger.info('Book found');
