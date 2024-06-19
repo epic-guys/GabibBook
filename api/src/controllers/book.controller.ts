@@ -117,7 +117,8 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
         return;
     }
 
-    if (book.offers[book.offers.length -1].value < req.body.value) {
+    let lastOffer = book.offers[book.offers.length - 1]?.value;
+    if ((!lastOffer || lastOffer < req.body.value)) {
         let nf = {
             value: req.body.value,
             user: user._id,
