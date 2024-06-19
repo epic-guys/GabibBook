@@ -18,7 +18,7 @@ statsRouter.get('/offers', passport.authenticate('jwt', config.passportOptions),
         }
     });
 
-statsRouter.get('/auctions', passport.authenticate('jwt', config.passportOptions), authorize([Role.Student]), isSameUser,
+statsRouter.get('/auctions', passport.authenticate('jwt', config.passportOptions), authorize([Role.Moderator]),
     async (req: Request, res: Response) => {
         try {
             return getSuccessfulAuctions(req, res);
