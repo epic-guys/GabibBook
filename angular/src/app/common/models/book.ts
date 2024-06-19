@@ -3,10 +3,8 @@ export interface Book {
     title: string;
     isbn: string;
     author: string;
-    current_offer: {
-        value: number;
-        id: string;
-    }
+    start_price: number;
+    offers: any[];
     cover: string;
     degree_course: string;
     close_date: string;

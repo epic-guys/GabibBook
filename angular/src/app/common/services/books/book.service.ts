@@ -32,4 +32,8 @@ export class BookService {
   deleteBook(id: string) {
     return this.http.delete(`${environment.apiBaseUrl}/books/${id}`);
   }
+
+  bid(bookId: string, price: number) {
+    return this.http.post(`${environment.apiBaseUrl}/books/${bookId}/offer`, {value: price});
+  }
 }

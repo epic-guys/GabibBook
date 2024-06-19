@@ -12,14 +12,14 @@
                 <p>ISBN: <code>{{book.isbn}}</code></p>
                 <p>Degree Course: {{book.degree_course}}</p>
                 <div class="ends-in">
-                    <p class="countdown">{{ends_in | unixToHumanDate }}</p>
+                    <p class="countdown">{{ends_in | unixToHumanDate}}</p>
                     <p>Until the end</p>
                 </div>
             </div>
         </div>
         <div class="bottom">
             <div class="action" *ngIf="isLoggedIn">
-                <!--offer-card [price]="book.current_offer.value" [isCurrentUser]="book.current_offer.user.id === user.id"></offer-card-->
+                <app-offer-card [offer]="lastBid.offer" (onBid)="onBid($event)"></app-offer-card>
             </div>
             <div class="login" *ngIf="!isLoggedIn">
                 <div>

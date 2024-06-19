@@ -11,6 +11,7 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { ComponentsModule } from 'src/app/common/components/components.module';
 import { OfferCardComponent } from './components/book-details/offer-card/offer-card.component';
 import { PipesModule } from 'src/app/common/pipes/pipes.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PipesModule } from 'src/app/common/pipes/pipes.module';
     SearchModule,
     ComponentsModule,
     PipesModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
