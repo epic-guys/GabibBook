@@ -12,6 +12,10 @@ export class AccountAuctionsComponent {
   purchasesAsSellerLoading = true;
   constructor(private purchaseService: PurchaseService, private localstorage: LocalStorageService) { }
 
+  statusChanged(event: any) {
+    console.log(event);
+  }
+
   ngOnInit(){
 
     const uid = this.localstorage.getUserId();

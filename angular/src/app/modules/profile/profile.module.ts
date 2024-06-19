@@ -23,6 +23,7 @@ import { BookCardComponent } from './components/moderation/book-card/book-card.c
 import { BookFilterComponent } from './components/moderation/book-filter/book-filter.component';
 import { FormsModule } from '@angular/forms';
 import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
+import { BookCardAuctionsComponent } from './components/account-auctions/book-card-auctions/book-card-auctions.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
     UserSearchComponent,
     UserCardComponent,
     BookCardComponent,
-    BookFilterComponent
+    BookFilterComponent,
+    BookCardAuctionsComponent
   ],
   imports: [
     CommonModule,

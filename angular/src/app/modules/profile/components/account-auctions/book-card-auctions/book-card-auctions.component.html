@@ -1,0 +1,15 @@
+<mat-card>
+    <div>
+        <div class="body">
+            <h4>
+                {{purchase.title}}
+            </h4>
+            <p>ISBN: <code>{{purchase.isbn}}</code></p>
+            <p>Price: {{purchase.price}}</p>
+        </div>
+
+        <button mat-raised-button (click)="changeStatus()" ngClass="{{purchase.status}}">
+            {{ convertStatus(purchase.status) }}
+        </button>
+    </div>
+</mat-card>

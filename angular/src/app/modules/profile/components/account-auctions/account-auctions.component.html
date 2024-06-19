@@ -1,4 +1,5 @@
 <div class="container">
     <p>account-auctions works!</p>
     <p>{{ purchasesAsSeller | json }}</p>
+    <app-book-card-auctions *ngFor="let auction of purchasesAsSeller" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
 </div>
