@@ -1,23 +1,14 @@
-# Usa un'immagine di Node.js come base
-FROM node:18-alpine
-
-# Imposta la directory di lavoro nell'app
+# Stage 1: Build the Angular application
+FROM node:18 as build
 WORKDIR /app
-
-# Copia il package.json e il package-lock.json nella directory di lavoro
-COPY package*.json ./
-
-# Installa le dipendenze del progetto
-RUN npm install -g @angular/cli && npm install
-
-# Copia tutto il codice nell'attuale directory di lavoro nell'immagine
+COPY package.json package-lock.json ./
+RUN npm install
 COPY . .
+RUN npm run build --prod
 
-# Compila l'applicazione
-RUN ng build
-
-# Espone la porta 4200 all'esterno del contenitore
-EXPOSE 4200
-
-# Avvia l'applicazione
-CMD ["npm", "start"]
+# Stage 2: Serve the application with Nginx
+FROM nginx:1.21.1-alpine
+COPY --from=build /app/dist/gabibbook-frontend /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

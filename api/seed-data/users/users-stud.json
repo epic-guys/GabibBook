@@ -1,0 +1,99 @@
+[
+    {
+        "name": "povero",
+        "surname": "stronzo",
+        "nickname": "rossi.parenzo",
+        "email": "rossi.parenzo@gmail.com",
+        "passwordHash": "user",
+        "address": "Via da Qua 69",
+        "city": "Mestre",
+        "nation": "Fantabosco",
+        "enabled": true,
+        "paymentMethods": [
+            {
+                "name": "visa",
+                "number": "1234567890",
+                "expiration": "12/22",
+                "type": "visa",
+                "fullName": "John Doe"
+            },
+            {
+                "name": "mastercard",
+                "number": "0987654321",
+                "expiration": "12/23",
+                "fullName": "John Doe",
+                "type": "mastercard"
+            },
+            {
+                "name": "amex",
+                "number": "1357924680",
+                "expiration": "12/24",
+                "type": "amex",
+                "fullName": "John Doe"
+            },
+            {
+                "name": "discover",
+                "number": "2468013579",
+                "expiration": "12/25",
+                "type": "discover",
+                "fullName": "John Doe"
+            }
+        ],
+        "role": "student"
+    },
+    {
+        "name": "mario",
+        "surname": "capatonda",
+        "nickname": "macciocapatonda",
+        "email": "mod@utente.com",
+        "passwordHash": "mod",
+        "address": "Via delle vie, 42 interno 0",
+        "city": "Manfredonia",
+        "nation": "Principato di Foggia",
+        "enabled": true,
+        "paymentMethods": [
+            {
+                "name": "visa",
+                "number": "1234567890",
+                "expiration": "12/22",
+                "type": "visa",
+                "fullName": "John Doe"
+            },
+            {
+                "name": "mastercard",
+                "number": "0987654321",
+                "expiration": "12/23",
+                "fullName": "John Doe",
+                "type": "mastercard"
+            },
+            {
+                "name": "amex",
+                "number": "1357924680",
+                "expiration": "12/24",
+                "type": "amex",
+                "fullName": "John Doe"
+            },
+            {
+                "name": "discover",
+                "number": "2468013579",
+                "expiration": "12/25",
+                "type": "discover",
+                "fullName": "John Doe"
+            }
+        ],
+        "role": "student"
+    },
+    {
+        "name": "Pietro",
+        "surname": "Smusi",
+        "nickname": "pietrosmusi",
+        "email": "pietro.smusi@arma3.com",
+        "passwordHash": "mynameispietro",
+        "address": "Via delle vie, 42 interno 0",
+        "city": "Manfredonia",
+        "nation": "Principato di Foggia",
+        "enabled": true,
+        "paymentMethods": [],
+        "role": "student"
+    }
+]
