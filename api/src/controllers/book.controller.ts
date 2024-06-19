@@ -27,7 +27,7 @@ export async function getBookList(req: Request, res: Response) {
      const minRegex = /MIN::(?<min>\d*);?/;
      const maxRegex = /MAX::(?<max>\d*);?/;
      const authorRegex = /AUTHOR::(?<author>[^;]*);?/;
-     const ownerRegex = /OWNER::(?<owner>[^;]*);?/;
+     const ownerRegex =  /OWNER::(?<owner>[^;]*);?/;
  
      const isbnMatch = search.match(isbnRegex);
      const minMatch = search.match(minRegex);
@@ -47,13 +47,20 @@ export async function getBookList(req: Request, res: Response) {
      search = search.replace(authorRegex, "");
      search = search.replace(ownerRegex, "");
 
+
+     // Search owner by nickname
+     let ownerObject = undefined;
+     if (owner) {
+        ownerObject = await User.findOne({nickname: owner}).exec();
+     }
+     
+
      let whereConditions: any = {
          ...(isbn && {isbn: isbn}),
          ...((min || max) && {price: { $gte: min, $lte: max }}),
          ...(author && {author: {$regex: '.*' + author + '.*', $options: 'i'}}),
          ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}}),
-         // Not working
-         ...(owner && { 'owner.nickname' : {$regex: '.*' + owner + '.*', $options: 'i'}}),
+         ...(owner && {owner: ownerObject?._id}),
          banned: false
      };
 
