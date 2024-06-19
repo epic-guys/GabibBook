@@ -26,7 +26,7 @@ export class BookSocket {
 
                 socket.join('book:' + bookId);
                 socket.emit('trackPrice', {message: 'subsribed to book ' + bookId});
-                this.notifyBook(bookId, book.current_offer);
+                this.notifyBook(bookId, book.offers[book.offers.length - 1]);
             });
         });
     }

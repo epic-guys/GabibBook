@@ -5,9 +5,6 @@
         "title": "La sacra bibbia",
         "isbn": "0683957105824",
         "author": "Dio Santissimo in Cielo",
-        "current_offer": {
-            "value": 0
-        },
         "start_price": 10,
         "reserve_price": 20,
         "cover": "bibbia.jpg",
@@ -20,9 +17,6 @@
         "title": "Il Libro della Genesi",
         "isbn": "0683957105824",
         "author": "Dio",
-        "current_offer": {
-            "value": 0
-        },
         "start_price": 100,
         "reserve_price": 200,
         "cover": "genesi_cover.jpg",
@@ -35,24 +29,18 @@
         "title": "Moby dick",
         "isbn": "0683957189824",
         "author": "Melville",
-        "current_offer": {
-            "value": 0
-        },
         "start_price": 100,
         "reserve_price": 200,
         "cover": "dick.jpg",
         "degree_course": "Italiano",
         "open_date": "2022-09-29T13:30:38.399Z",
-        "close_date": "2025-11-06T13:30:38.399Z"
+        "close_date": "2024-06-19T00:40:40.399Z"
     },
     {
         "owner": "macciocapatonda",
         "title": "Il mongo al contrario",
         "author": "Roberto Vannacci",
         "isbn": "9798854698795",
-        "current_offer": {
-            "value": 0
-        },
         "start_price": 2,
         "reserve_price": 20,
         "cover": "fascio.jpg",

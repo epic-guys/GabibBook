@@ -107,17 +107,17 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
         return;
     }
 
-    if (book.current_offer.value < req.body.value) {
-        let offer = {
+    if (book.offers[book.offers.length -1].value < req.body.value) {
+        let nf = {
             value: req.body.value,
             user: user._id,
             timestamp: new Date()
         }
 
-        book.current_offer = offer;
+        book.offers.push(nf);
 
         await book.save();
-        bookSocket.notifyBook(book._id.toHexString(), offer);
+        bookSocket.notifyBook(book._id.toHexString(), nf);
         res.status(200).json({message: 'Successfully offered'});
     }
     else {

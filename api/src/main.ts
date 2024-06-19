@@ -16,8 +16,14 @@ import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { UserType, User } from './models/user.model';
 import argon2 from 'argon2';
-import {seedChats} from './seeds/chat.seed';
+import { seedChats } from './seeds/chat.seed';
 import purchaseRouter from './routes/purchase.route';
+import { Book } from './models/book.model';
+import { Purchase } from './models/purchase.model';
+import { Logger } from 'winston';
+
+const cron = require('node-cron');
+const moment = require('moment');
 
 const app = express();
 
@@ -52,7 +58,7 @@ app.use('/purchases', purchaseRouter);
 
 app.use((err: any, req: Request, res: Response, next: any) => {
     logger.error(err);
-    res.status(err?.status ?? 500).json({ message: err?.message ?? 'Internal Server Error'});
+    res.status(err?.status ?? 500).json({ message: err?.message ?? 'Internal Server Error' });
 });
 
 passport.use(new BasicStrategy(
@@ -99,5 +105,42 @@ let httpServer = app.listen(process.env.API_PORT, () => {
 });
 
 io.attach(httpServer);
+
+logger.info('Cron job starting');
+
+cron.schedule('* * * * *', async () => { // This will run every minute
+    logger.info('Cron job running');
+    const now = moment().toDate();
+    const books = await Book.find({ close_date: { $lte: now }, is_order: false , banned: false}).exec();
+    logger.info('Books found');
+
+    const promises = books.map(async (book) => {
+        logger.info('Book found');
+        
+        try {
+            const purchase =
+                await Purchase.create({
+                    buyer: book.offers.length == 0 ? null : book.offers[book.offers.length - 1].user,
+                    seller: book.owner,
+                    seller_notified: false,
+                    buyer_notified: false,
+                    auction: book._id,
+                    status: book.offers.length == 0 ? 'reserve_price_not_met' :  book.offers[book.offers.length - 1].value >= book.reserve_price ? 'sold' : 'reserve_price_not_met'
+                });
+        }
+        catch (e) {
+            logger.error(e);
+            console.error(e);
+        }
+        
+        logger.info('Book sold');
+        book.is_order = true;
+        await book.save();
+    });
+
+    await Promise.all(promises);
+});
+
+logger.info('Cron job started');
 
 export default app;
