@@ -9,36 +9,40 @@ import { authorize } from '../middleware/authorization.middleware';
 
 const userRouter = Router();
 
-userRouter.get('/', passport.authenticate('jwt', config.passportOptions), authorize([Role.Moderator]), (req: Request, res: Response) => {
-    try {
-        return getLastUsers(req, res);
-    } catch (err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.get('/', passport.authenticate('jwt', config.passportOptions), authorize([Role.Moderator]),
+    async (req: Request, res: Response) => {
+        try {
+            return getLastUsers(req, res);
+        } catch (err: any) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    });
 
-userRouter.get('/:id', passport.authenticate('jwt', config.passportOptions), isSameUser, (req: Request, res: Response) => {
-    try {
-        return getUserById(req, res);
-    } catch (err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.get('/:id', passport.authenticate('jwt', config.passportOptions), isSameUser,
+    async (req: Request, res: Response) => {
+        try {
+            return getUserById(req, res);
+        } catch (err: any) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    });
 
-userRouter.put('/:id', passport.authenticate('jwt', config.passportOptions), isSameUser, validateUser, (req: Request, res: Response) => {
-    try {
-        return updateUser(req, res);
-    } catch (err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.put('/:id', passport.authenticate('jwt', config.passportOptions), isSameUser, validateUser,
+    async (req: Request, res: Response) => {
+        try {
+            return updateUser(req, res);
+        } catch (err: any) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    });
 
-userRouter.delete('/:id', passport.authenticate('jwt', config.passportOptions), isSameUserOrModerator, (req: Request, res: Response) => {
-    try {
-        return deleteUser(req, res);
-    } catch (err: any) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+userRouter.delete('/:id', passport.authenticate('jwt', config.passportOptions), isSameUserOrModerator,
+    async (req: Request, res: Response) => {
+        try {
+            return deleteUser(req, res);
+        } catch (err: any) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    });
 
 export default userRouter;

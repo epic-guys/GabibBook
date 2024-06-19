@@ -1,7 +1,6 @@
-import e, {Request, Response} from "express";
+import {Request, Response} from "express";
 import Joi from "joi";
 import {UserType} from "../models/user.model";
-import logger from "../logger";
 
 const baseSchema = Joi.object({
     name: Joi.string().min(2).max(50),
@@ -23,7 +22,7 @@ const paymentMethodSchema = Joi.object({
     expiration: Joi.string().pattern(/0[1-9]|10|11|12\/[0-9]{2}/).required()
 });
 
-export async function validateUser(req: Request, res: Response, next: Function) {
+export function validateUser(req: Request, res: Response, next: Function) {
     // All fields are required with POST, and the password field is required
     // This is because POST is used only when registering
 
@@ -45,7 +44,7 @@ export async function validateUser(req: Request, res: Response, next: Function) 
     next();
 }
 
-export async function isSameUser(req: Request, res: Response, next: Function) {
+export function isSameUser(req: Request, res: Response, next: Function) {
     const user = req.user as UserType;
 
     //This hecks if the user is the same as the one being requested, if not return 404 (to avoid user enumeration)
@@ -54,7 +53,7 @@ export async function isSameUser(req: Request, res: Response, next: Function) {
     next();
 }
 
-export async function validatePassword(req: Request, res: Response, next: Function) {
+export function validatePassword(req: Request, res: Response, next: Function) {
     const { value, error } = passwordSchema.validate(req.body, { stripUnknown: true });
     req.body = value;
 
@@ -63,7 +62,7 @@ export async function validatePassword(req: Request, res: Response, next: Functi
     next();
 }
 
-export async function validatePaymentMethod(req: Request, res: Response, next: Function) {
+export function validatePaymentMethod(req: Request, res: Response, next: Function) {
     const { value, error } = paymentMethodSchema.validate(req.body, { stripUnknown: true });
     req.body = value;
 
@@ -72,7 +71,7 @@ export async function validatePaymentMethod(req: Request, res: Response, next: F
     next();
 } 
 
-export async function isSameUserOrModerator(req: Request, res: Response, next: Function) {
+export function isSameUserOrModerator(req: Request, res: Response, next: Function) {
     const user = req.user as UserType;
 
     const role = user.role;
