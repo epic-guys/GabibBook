@@ -1,0 +1,17 @@
+.container{
+    margin-left: 20px;
+    margin-right: 20px;
+    
+    
+    app-loader{
+        margin: 20px;
+    }
+
+    
+
+    
+}
+
+:host ::ng-deep .mat-mdc-tab-body-wrapper{
+    min-height: 80vh !important;
+}

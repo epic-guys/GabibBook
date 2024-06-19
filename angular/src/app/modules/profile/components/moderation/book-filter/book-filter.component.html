@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Filters</h1>
+<div mat-dialog-content>
+    
+    <div>
+        <mat-form-field>
+            <mat-label>Owner:</mat-label>
+            <input matInput [(ngModel)]="data.owner" type="text">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>ISBN:</mat-label>
+            <input matInput [(ngModel)]="data.isbn" type="number">
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

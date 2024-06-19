@@ -23,7 +23,6 @@ export class InviteComponent {
     const observer = {
       next: (data: any) => {
         this.invites = data;
-        console.log(data);
       },
       error: (error: any) => {
         console.error(error);

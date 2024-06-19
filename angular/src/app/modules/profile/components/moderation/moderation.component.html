@@ -1,0 +1,18 @@
+<div class="container">
+    <mat-tab-group>
+        <mat-tab label="Auctions">
+            <app-book-search  (search)="searchBooksHook($event)"></app-book-search>
+            <div class="aution-results">
+                <app-loader color="#909ceb" position="relative" *ngIf="booksLoading"></app-loader>
+                <app-book-card-mod *ngFor="let book of books" [book]="book" (remove)="banBook($event)"></app-book-card-mod>
+            </div>
+        </mat-tab>
+        <mat-tab label="Users">
+            <app-user-search (search)="searchUsersHook($event)"></app-user-search>
+            <div class="users-results" *ngIf="!usersLoading">
+                <app-user-card *ngFor="let user of users" [user]="user" (ban)="banUser($event)"></app-user-card>
+            </div>
+            <app-loader color="#909ceb" position="relative" *ngIf="usersLoading"></app-loader>
+        </mat-tab>
+      </mat-tab-group>      
+</div>

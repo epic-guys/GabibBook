@@ -1,0 +1,16 @@
+<mat-card>
+    <div>
+        
+        <div class="body">
+            <h4 (click)="gotoBook(book._id)">
+                {{book.title}}
+            </h4>
+            <p>ISBN: <code>{{book.isbn}}</code></p>
+            <p>Owner: {{book.owner.nickname}}</p>
+        </div>
+
+        <button mat-raised-button (click)="banBook(book._id)">Ban 
+            <mat-icon>block</mat-icon>
+        </button>
+    </div>
+</mat-card>

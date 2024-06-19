@@ -15,11 +15,21 @@ export class BookService {
     return this.http.get(`${environment.apiBaseUrl}/books?last=${environment.LASTBOOKS}`);
   }
 
-  searchBooks(searchString: string, page: number, size: number) {
-    return this.http.get(`${environment.apiBaseUrl}/books?search=${searchString}&page=${page}&size=${size}`);
+  searchBooks(searchString: string, page: number = 0, size: number = 10) {
+    return this.http.get(`${environment.apiBaseUrl}/books`, {params: 
+      {
+        search: searchString, 
+        page: page.toString(), 
+        size: size.toString()
+      }
+    });
   }
 
   getBook(id: string) {
     return this.http.get(`${environment.apiBaseUrl}/books/${id}`);
+  }
+
+  deleteBook(id: string) {
+    return this.http.delete(`${environment.apiBaseUrl}/books/${id}`);
   }
 }

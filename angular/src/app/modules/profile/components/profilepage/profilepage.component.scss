@@ -17,3 +17,26 @@
         width: 57%;
     }
 }
+
+@media screen and (max-width: 1100px){
+    .container{
+        flex-direction: column;
+        height: calc(93% - 40px);
+        .menu-container{
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid #a0a0a0;
+            margin-left: 0 !important;
+            app-profile-menu{
+                width: 100%;
+                padding: 10px;
+                gap: 10px;
+                height: 100%;
+            }
+        }
+        .page-container{
+            width: 100%;
+        }
+    }
+    
+}

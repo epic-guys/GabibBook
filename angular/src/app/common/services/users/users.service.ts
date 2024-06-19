@@ -12,4 +12,12 @@ export class UsersService {
   public getUserInfo(uid: String){
     return this.http.get(`${environment.apiBaseUrl}/users/${uid}`);  
   }
+
+  public getUsers(filter: string = ''){
+    return this.http.get(`${environment.apiBaseUrl}/users`, {params: filter? {filter: filter} : {}});
+  }
+
+  public banUser(uid: String){
+    return this.http.delete(`${environment.apiBaseUrl}/users/${uid}`, {});
+  }
 }
