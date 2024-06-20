@@ -1,6 +1,6 @@
 import {NotificationType} from "./models/notification.model";
 import { notificationSocket } from "./socket";
 
-export default function notify(notification: NotificationType) {
-    notificationSocket.notifyUser(notification);
+export default async function notify(notification: NotificationType) {
+    await notificationSocket.notifyUser(notification);
 }

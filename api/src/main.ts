@@ -22,6 +22,7 @@ import { Purchase } from './models/purchase.model';
 import statsRouter from './routes/statistics.route';
 import { seedPurchases } from './seeds/purchase.seed';
 import { WebError } from './error';
+import notify from './notification';
 
 const cron = require('node-cron');
 const moment = require('moment');
@@ -141,9 +142,42 @@ cron.schedule('* * * * *', async () => { // This will run every minute
         logger.info('Book sold');
         book.is_order = true;
         await book.save();
-    });
 
-    await Promise.all(promises);
+        await Promise.all(promises);
+
+
+        // Notify book owner that the book has been sold
+        if (book.offers.length > 0 && book.offers[book.offers.length - 1].value >= book.reserve_price) {
+            notify({
+                id_user: book.owner,
+                message: `The book ${book.title} has been sold!`,
+                action: ''
+            });
+
+            // Notify the buyer that he was sold the book
+            notify({
+                id_user: book.offers[book.offers.length - 1].user!._id!,
+                message: `You have bought the book ${book.title} for ${book.offers[book.offers.length - 1].value}`,
+                action: ''
+            });
+        }
+        else {
+            notify({
+                id_user: book.owner,
+                message: `The book ${book.title} has not been sold!`,
+                action: ''
+            });
+
+            if (book.offers.length > 0) {
+                // Notify the buyer that he was not sold the book
+                notify({
+                    id_user: book.offers[book.offers.length - 1].user!._id!,
+                    message: `Reserve price not met for the book ${book.title}!`,
+                    action: ''
+                });
+            }
+        }
+    });
 });
 
 logger.info('Cron job started');
