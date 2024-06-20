@@ -39,10 +39,10 @@ app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next:
 
 mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
-    await seedUsers();
-    await seedBooks(); //this has to be synchronous now
-    await seedChats();
-    await seedPurchases();
+    //await seedUsers();
+    //await seedBooks(); //this has to be synchronous now
+    //await seedChats();
+    //await seedPurchases();
     //no need to seed purchases, they are created by the cron job
     mongoose.set('debug', true);
 }).catch((err: Error) => {
