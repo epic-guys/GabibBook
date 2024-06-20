@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import logger from '../logger'
 import { Book } from '../models/book.model'
 import fs from 'fs';
-import { User } from '../models/user.model';
-
 
 export async function seedBooks(): Promise<void> {
 
