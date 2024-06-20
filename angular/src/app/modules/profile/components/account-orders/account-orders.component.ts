@@ -8,8 +8,8 @@ import { LocalStorageService } from 'src/app/common/services/storage/local-stora
   styleUrls: ['./account-orders.component.scss']
 })
 export class AccountOrdersComponent {
-  purchases: any;
-  purchasesLoading = true;
+  data: any;
+  ajaxLoading = true;
   constructor(private purchaseService: PurchaseService, private localstorage: LocalStorageService) { }
 
   ngOnInit(){
@@ -18,8 +18,9 @@ export class AccountOrdersComponent {
 
     const buyerObserver = { 
       next : (res: any) => {
-        this.purchasesLoading = false;
-        this.purchases = res;
+        this.ajaxLoading = false;
+        this.data = res;
+          console.log(res);
       }, 
       error : (error: any) => {
         console.error(error);

@@ -1,4 +1,7 @@
 <div class="container">
-    <p>account-orders works!</p>
-    <p>{{ purchases | json }}</p>
+    <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
+    <div *ngIf="!ajaxLoading">
+        <!-- app-book-card-auctions *ngFor="let auction of data" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions -->
+    </div>
+    <p *ngIf="!ajaxLoading && data.length == 0" class="empty">You didn't make any order, yet 😉.</p>
 </div>

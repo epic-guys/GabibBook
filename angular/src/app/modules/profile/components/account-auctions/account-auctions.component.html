@@ -1,5 +1,8 @@
 <div class="container">
-    <p>account-auctions works!</p>
-    <p>{{ purchasesAsSeller | json }}</p>
-    <app-book-card-auctions *ngFor="let auction of purchasesAsSeller" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
+    <p>TODO: new auction card</p>
+    <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
+    <div *ngIf="!ajaxLoading">
+        <app-book-card-auctions *ngFor="let auction of data" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
+    </div>
+    <p *ngIf="!ajaxLoading && data.length == 0" class="empty">You didn't post any auction, start now clicking the button above!.</p>
 </div>

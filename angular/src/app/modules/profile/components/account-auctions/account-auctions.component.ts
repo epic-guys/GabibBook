@@ -8,8 +8,9 @@ import { LocalStorageService } from 'src/app/common/services/storage/local-stora
   styleUrls: ['./account-auctions.component.scss']
 })
 export class AccountAuctionsComponent {
-  purchasesAsSeller: any;
-  purchasesAsSellerLoading = true;
+  data: any;
+  ajaxLoading = true;
+
   constructor(private purchaseService: PurchaseService, private localstorage: LocalStorageService) { }
 
   statusChanged(event: any) {
@@ -22,8 +23,8 @@ export class AccountAuctionsComponent {
 
     const sellerObserver = { 
       next : (res: any) => {
-        this.purchasesAsSellerLoading = false;
-        this.purchasesAsSeller = res;
+        this.data = res;
+        this.ajaxLoading  = false;
       }, 
       error : (error: any) => {
         console.error(error);
