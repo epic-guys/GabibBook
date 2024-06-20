@@ -68,7 +68,7 @@ passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
         try {
             let user = await User.findOne({ email: email }, '+passwordHash').exec();
-            if (user == null) {
+            if (user == null || !user.enabled) {
                 done(null, undefined);
                 return;
             }
