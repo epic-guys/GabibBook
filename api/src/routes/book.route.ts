@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { getBook, updateBook, deleteBook, getBookList, createBook, createOffer } from '../controllers/book.controller';
+import { getBook, updateBook, deleteBook, getBookList, createBook, createOffer, getChatByBook } from '../controllers/book.controller';
 import { validateBook, validateOffer } from '../middleware/book.middleware';
 import passport from 'passport';
 import config from '../config';
@@ -61,6 +61,18 @@ router.post('/:id/offer', passport.authenticate('jwt', config.passportOptions), 
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
+);
+
+router.get('/:id/chats',
+           passport.authenticate('jwt', config.passportOptions),
+           authorize([Role.Student]),
+           async (req: Request<{id: string}, any, any, {buyerId?: string}>, res: Response) => {
+               try {
+                   return getChatByBook(req, res);
+               } catch (err: any) {
+                   res.status(500).json({ message: 'Internal Server Error' });
+               }
+           }
 );
 
 export default router;

@@ -3,6 +3,7 @@ import { Book } from '../models/book.model';
 import logger from '../logger';
 import {User, UserType} from '../models/user.model';
 import { bookSocket } from '../socket';
+import {Chat} from '../models/chat.model';
 
 export async function getBook(req: Request, res: Response) {
      let book = await Book.findById(req.params.id).select('-reserve_price').where({banned: false}).exec();
@@ -163,4 +164,53 @@ export async function deleteBook(req: Request, res: Response) {
           await book.save();
           return res.status(200).json({ message: 'Book deleted' });
      }
+}
+
+
+export async function getChatByBook(req: Request<{id: string}, any, any, {buyerId?: string}>, res: Response) {
+    try {
+        let bookId = req.params.id;
+        let buyerId = req.query.buyerId;
+        let chat = await Chat.findOne({
+            book: bookId,
+            // If buyerId is not set, we look for the public chat
+            buyer: buyerId
+        }, '-messages').exec();
+        // If chat does not exist, create a new one
+        if (!chat) {
+            let book = await Book.findById(bookId).exec();
+            // We create it only if the book exists
+            if (!book) {
+                res.status(404).json({message: 'Book not found'});
+                return;
+            }
+
+            // We check if the buyer is the owner
+            if (book.owner._id.toString() === buyerId) {
+                res.status(400).json({message: 'Owner cannot chat with himself'});
+                return;
+            }
+
+            // We check if the buyer exists
+            if (buyerId) {
+                let buyer = await User.findById(buyerId).exec();
+                if (!buyer) {
+                    res.status(404).json({message: 'Buyer not found'});
+                    return;
+                }
+            }
+
+            // We create the chat
+            chat = new Chat({
+                book: bookId,
+                buyer: buyerId,
+                messages: []
+            });
+            await chat.save();
+        }
+        res.status(200).json(chat);
+
+    } catch (e: any) {
+        res.status(500).json({message: e.message});
+    }
 }

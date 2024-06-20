@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import { seedUsers } from './seeds/user.seed';
 import userRouter from './routes/user.route';
 import bookRouter from './routes/book.route';
-import chatRouter from './routes/chat.route';
 import authRouter from './routes/auth.route';
 import inviteRouter from './routes/invite.route';
 import config from './config';
@@ -22,6 +21,7 @@ import { Book } from './models/book.model';
 import { Purchase } from './models/purchase.model';
 import statsRouter from './routes/statistics.route';
 import { seedPurchases } from './seeds/purchase.seed';
+import { WebError } from './error';
 
 const cron = require('node-cron');
 const moment = require('moment');
@@ -53,11 +53,15 @@ mongoose.connect(config.mongodbUri).then(async () => {
 
 app.use('/users', userRouter);
 app.use('/books', bookRouter);
-app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 app.use('/invites', inviteRouter);
 app.use('/purchases', purchaseRouter);
 app.use('/stats', statsRouter);
+
+app.use((err: any, req: Request, res: Response, next: Function) => {
+    res.status(err.status ?? 500).
+        json({ message: err.message ?? 'Internal Server Error'});
+});
 
 passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
@@ -90,7 +94,8 @@ passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (e
         let user = await User.findById(jwtPayload._id).select('-passwordHash').exec();
 
         if (user == null || user.enabled == false) {
-            throw "User not found";
+            done(new WebError(401, 'Unauthorized'));
+            return;
         }
         done(null, user);
     } catch (e) {
