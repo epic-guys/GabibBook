@@ -11,11 +11,13 @@ export async function seedChats(): Promise<void> {
   let chats = JSON.parse(fs.readFileSync('seed-data/chats/chats.json', 'utf8'));
   for (let i = 0; i < chats.length; i++) {
 
-      let owner = await User.findOne({nickname: chats[i].owner});
-      if (!owner) {
-          throw new Error(`🚫 Could not find user with nickname ${chats[i].owner}`);
+      if (chats[i].buyer) {
+          let buyer = await User.findOne({nickname: chats[i].buyer});
+          if (!buyer) {
+              throw new Error(`🚫 Could not find user with nickname ${chats[i].buyer}`);
+          }
+          chats[i].buyer = buyer._id;
       }
-      chats[i].owner = owner._id;
 
       for (let j = 0; j < chats[i].messages.length; j++) {
           let sender = await User.findOne({nickname: chats[i].messages[j].sender});

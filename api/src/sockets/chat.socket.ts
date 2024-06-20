@@ -49,7 +49,7 @@ export class ChatSocket {
                         throw new Error('Not authenticated');
                     }
                     let chat = await Chat.
-                        findOne({ book: event.chatId }).
+                        findById(event.chatId).
                         populate<Pick<PopulatedChatType, 'book' | 'buyer'>>('book').exec();
                     if (!chat) {
                         throw new Error('Chat not found');
@@ -72,7 +72,7 @@ export class ChatSocket {
                 }
             });
 
-            socket.on('sendMessage', async (event: any) => {
+            socket.on('message', async (event: any) => {
                 try {
                     if (!user) {
                         throw new Error('Not authenticated');
@@ -104,14 +104,12 @@ export class ChatSocket {
      * Instead, if it is specified, it sends only these messages.
      */
     public newMessages(chat: PopulatedChatType, messages?: Message[]) {
-        let event = {...chat};
-        if (messages) {
-            event.messages = messages;
-        }
-        this.chatIO.to(this.chatRoom(chat)).emit('receiveMessage', {
-            ...chat,
-            messages: messages
-        });
+        let event = {
+            _id: chat._id,
+            messages: (messages ?? chat.messages)
+        };
+
+        this.chatIO.to(this.chatRoom(chat)).emit('message', event);
     }
 
     private chatRoom(chat: PopulatedChatType): string {

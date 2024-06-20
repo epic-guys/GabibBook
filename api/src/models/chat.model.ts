@@ -3,18 +3,21 @@ import {BookType} from "./book.model"
 import {UserType} from "./user.model"
 
 export interface Message {
-     sender: mongoose.Types.ObjectId
-     text: string
-     date: Date
+    _id?: mongoose.Types.ObjectId
+    sender: mongoose.Types.ObjectId
+    text: string
+    date: Date
 }
 
 export interface ChatType {
-     book: mongoose.Types.ObjectId
-     buyer: mongoose.Types.ObjectId | null
-     messages: Array<Message>
+    _id?: mongoose.Types.ObjectId
+    book: mongoose.Types.ObjectId
+    buyer: mongoose.Types.ObjectId | null
+    messages: Array<Message>
 }
 
 export interface PopulatedChatType {
+    _id?: mongoose.Types.ObjectId,
     book: BookType,
     buyer: UserType | null,
     messages: Array<Message>
