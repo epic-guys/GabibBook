@@ -61,6 +61,7 @@ export async function getBookList(req: Request, res: Response) {
          ...(author && {author: {$regex: '.*' + author + '.*', $options: 'i'}}),
          ...(search && {title: {$regex: '.*' + search + '.*', $options: 'i'}}),
          ...(owner && {owner: ownerObject?._id}),
+         close_date: { $gt: new Date() },
          banned: false
      };
 
