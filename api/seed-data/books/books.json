@@ -69,10 +69,10 @@
         "isbn": "1557454130122",
         "start_price":20,
         "reserve_price":20,
-        "cover":"1984.jpg",
-        "degree_course":"Diritto dell'informatica",
+        "cover":"BD.jpg",
+        "degree_course":"Basi di dati",
         "open_date":"2024-06-20T00:00:00Z",
-        "close_date":"2024-06-20T15:00:00Z",
+        "close_date":"2024-06-20T15:20:00Z",
         "banned":false
     }
 ]

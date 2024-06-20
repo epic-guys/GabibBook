@@ -5,7 +5,7 @@ import { UserType } from '../models/user.model';
 
 export async function getAllOffers(req: Request, res: Response) {
     let user = req.user as UserType;
-    if (!user) return res.status(404).json({ message: 'Bad Request' });
+    if (!user) return res.status(404).json({ message: 'Not Found' });
     try {
         const auctionsParticipatedIn = await Book.find({ 'offers.user': user._id });
         res.status(200).json(auctionsParticipatedIn);
