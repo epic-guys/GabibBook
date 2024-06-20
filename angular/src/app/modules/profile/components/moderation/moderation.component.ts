@@ -3,7 +3,7 @@ import { Book } from 'src/app/common/models/book';
 import { UsersService } from 'src/app/common/services/users/users.service';
 import { BookService } from 'src/app/common/services/books/book.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { StatService } from 'src/app/common/services/stats/stat.service';
 
 @Component({
   selector: 'app-moderation',
@@ -17,16 +17,22 @@ export class ModerationComponent {
   usersLoading: boolean = true;
   users: any[] = [];
 
+  stats_success_loading: boolean = true;
+  stats_failed_loading: boolean = true;
+  successful: number = 0;
+  failed: number = 0;
+
   constructor(
     private usersservice: UsersService, 
     private booksservice: BookService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private statservice: StatService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.searchBooks();
     this.searchUsers();
+    this.getStats();
   }
 
   searchUsersHook($event: any){
@@ -100,7 +106,6 @@ export class ModerationComponent {
       next: (res: any) => {
         this.booksLoading = false;
         this.books = res.data;
-        console.log(this.books);
       },
       error: (error: any) => {
         this.booksLoading = false;
@@ -112,5 +117,37 @@ export class ModerationComponent {
     }
 
     this.booksservice.searchBooks(filter,0).subscribe(observer);
+  }
+
+  getStats(){
+    this.stats_success_loading = true;
+    this.stats_failed_loading = true;
+    
+    const success_observer = {
+      next: (res: any) => {
+        this.successful = res.count;
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.stats_success_loading = false;
+      }
+    }
+
+    const failed_observer = {
+      next: (res: any) => {
+        this.failed = res.count;
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.stats_failed_loading = false;
+      }
+    }
+
+    this.statservice.getStats('successful').subscribe(success_observer);
+    this.statservice.getStats('unsuccessful').subscribe(failed_observer);
   }
 }
