@@ -3,10 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from 'src/app/common/models/book';
 import { BookService } from 'src/app/common/services/books/book.service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
-import { PriceListener } from 'src/app/app.module';
+import { ChatSocket, PriceListener } from 'src/app/app.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from 'src/app/common/services/storage/local-storage.service';
-import { last } from 'rxjs';
 
 @Component({
   selector: 'app-book-details',
@@ -25,6 +24,10 @@ export class BookDetailsComponent {
   canBid = false;
   role: string = '';
   past = false;
+  publicChat: string | null = null;
+  privateChat: string | null = null;
+  publicChatMessages: any[] = [];
+  privateChatMessages: any[] = [];
 
   constructor(
     public bookService: BookService, 
@@ -33,6 +36,7 @@ export class BookDetailsComponent {
     public storage: LocalStorageService,
     public router: Router,
     private listen_price: PriceListener,
+    private chat: ChatSocket,
     private snackBar: MatSnackBar
   ) {
     this.isLoggedIn = this.auth.isAuthenticated();
@@ -47,6 +51,7 @@ export class BookDetailsComponent {
     const observer = {
       next: (book: any) => {
         this.book = book;
+        this.startChats();
         this.forcePrice();
         this.updateEndsInEverySecond();
       },
@@ -81,6 +86,7 @@ export class BookDetailsComponent {
 
   ngOnDestroy() {
     this.listen_price.disconnect();
+    this.chat.disconnect();
     clearInterval(this.holder);
   }
 
@@ -128,7 +134,7 @@ export class BookDetailsComponent {
     if(this.book.open_date > now){
       this.isOpen = false;
       return;
-    }
+    }this.book['_id']
 
     if(this.book.close_date < now){
       this.isOpen = false;
@@ -141,6 +147,10 @@ export class BookDetailsComponent {
 
   forcePrice(){
     setTimeout(() => {
+      this.sendPublicMessage({
+        chatId: this.publicChat || '',
+        text: 'ping'
+      });
       if(this.book){
         if(!this.lastBid){
 
@@ -184,4 +194,58 @@ export class BookDetailsComponent {
     this.bookService.deleteBook(String(this.book?._id)).subscribe(observer);
   }
 
+  startChats(){
+    if(!this.book){
+      return;
+    }
+
+    this.chat.emit('auth', {
+      jwt: this.storage.getAuth().accessToken.jwt
+    });
+
+    const observer = {
+      next: (data: any) => {
+        this.publicChat = data._id;
+        this.chat.emit('subscribeChat', {
+          chatId: this.publicChat
+        });
+
+        this.chat.on('message', (data: any) => {
+          console.log(data);
+          if(data._id === this.publicChat){
+            console.log('public chat');
+            this.publicChatMessages = [...this.publicChatMessages, ...data.messages];
+          }
+          else if(data._id === this.privateChat){
+            console.log('private chat');
+            this.privateChatMessages = [...this.privateChatMessages, ...data.messages];
+          }
+        });
+      },
+      error: (error: any) => {
+        console.error("could not get public chat");
+        console.error(error);
+      }
+    };
+
+    this.bookService.getChat(this.book._id).subscribe(observer);
+
+    if(!this.publicChat){
+      return;
+    }
+  }
+
+  sendPublicMessage(message: {
+    chatId: string,
+    text: string
+  }){
+    if(!this.publicChat){
+      console.error('no public chat');
+      return;
+    }
+
+    console.log('sending message');
+
+    this.chat.emit('message', message);
+  }
 }

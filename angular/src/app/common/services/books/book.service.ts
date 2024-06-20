@@ -36,4 +36,8 @@ export class BookService {
   bid(bookId: string, price: number) {
     return this.http.post(`${environment.apiBaseUrl}/books/${bookId}/offer`, {value: price});
   }
+
+  getChat(bookId: string, buyerId: string | null = null) {
+    return this.http.get(`${environment.apiBaseUrl}/books/${bookId}/chats`, {params: buyerId ? {buyerId: buyerId} : {}});
+  }
 }

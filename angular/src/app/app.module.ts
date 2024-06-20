@@ -28,6 +28,13 @@ export class PriceListener extends Socket {
   }
 }
 
+@Injectable()
+export class ChatSocket extends Socket {
+  constructor() {
+    super({ url: environment.SOCKET_URI + '/chats', options: {} });
+  }
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -48,6 +55,7 @@ export class PriceListener extends Socket {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     PriceListener,
+    ChatSocket
     //... more
   ],
   bootstrap: [AppComponent]
