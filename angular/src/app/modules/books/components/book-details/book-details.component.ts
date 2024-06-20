@@ -5,6 +5,8 @@ import { BookService } from 'src/app/common/services/books/book.service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { PriceListener } from 'src/app/app.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocalStorageService } from 'src/app/common/services/storage/local-storage.service';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-book-details',
@@ -18,11 +20,15 @@ export class BookDetailsComponent {
   book: Book | null = null;
   hasBid = false;
   lastBid: any;
+  isOpen = false;
+  holder: any;
+  canBid = false;
 
   constructor(
     public bookService: BookService, 
     public acRoute: ActivatedRoute, 
-    public auth: AuthService, 
+    public auth: AuthService,
+    public storage: LocalStorageService,
     public router: Router,
     private listen_price: PriceListener,
     private snackBar: MatSnackBar
@@ -31,10 +37,19 @@ export class BookDetailsComponent {
   }
 
   ngOnInit(): void {
+    if (this.isLoggedIn) {
+      const role = this.storage.getRole()
+      if(role !== 'student'){
+        this.canBid = false;
+      }else{
+        this.canBid = true;
+      }
+    }
+
     const observer = {
       next: (book: any) => {
-        
         this.book = book;
+        this.forcePrice();
         this.updateEndsInEverySecond();
       },
       error: (error: any) => {
@@ -68,6 +83,7 @@ export class BookDetailsComponent {
 
   ngOnDestroy() {
     this.listen_price.disconnect();
+    clearInterval(this.holder);
   }
 
 
@@ -79,7 +95,6 @@ export class BookDetailsComponent {
         this.snackBar.open('Bid successfully placed', 'Close', {
           duration: 2000,
           panelClass: ['mat-toolbar', 'mat-success']
-          
         });
       },
       error: (error: any) => {
@@ -104,9 +119,46 @@ export class BookDetailsComponent {
     this.ends_in = unixEnd - unixNow;
   }
 
+  updateisOpen() {
+    if (!this.book) {
+      this.isOpen = false;
+      return;
+    }
+
+    const now = new Date().toISOString();
+
+    if(this.book.open_date > now){
+      this.isOpen = false;
+      return;
+    }
+
+    if(this.book.close_date < now){
+      this.isOpen = false;
+      return;
+    }
+
+    this.isOpen = true;
+  }
+
+  forcePrice(){
+    setTimeout(() => {
+      if(this.book){
+        if(!this.lastBid){
+
+          const val = this.book.offers.length > 0 ? this.book.offers[this.book.offers.length - 1].value : this.book.start_price;
+
+          this.lastBid = {offer: {value: val}}
+          console.log('no bid');
+        }
+      }
+    }, 5000);
+  }
+
   updateEndsInEverySecond() {
-    setInterval(() => {
+    this.holder = setInterval(() => {
       this.endsInCalc();
+      this.updateisOpen();
     }, 1000);
   }
+
 }

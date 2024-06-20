@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom" *ngIf="book">
+        <div class="bottom" *ngIf="book && isOpen">
             <div class="action" *ngIf="isLoggedIn">
                 <app-offer-card [offer]="lastBid?.offer" (onBid)="onBid($event)"></app-offer-card>
             </div>

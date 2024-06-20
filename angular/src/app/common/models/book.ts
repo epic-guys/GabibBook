@@ -8,6 +8,7 @@ export interface Book {
     cover: string;
     degree_course: string;
     close_date: string;
+    open_date: string;
     owner: {
         _id: string;
         name: string;
