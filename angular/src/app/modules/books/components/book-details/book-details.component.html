@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom" *ngIf="book && isOpen">
+        <div class="bottom" *ngIf="book && isOpen && role === 'student'">
             <div class="action" *ngIf="isLoggedIn">
                 <app-offer-card [offer]="lastBid?.offer" (onBid)="onBid($event)"></app-offer-card>
             </div>
@@ -28,6 +28,10 @@
                 </div>
                 <button mat-raised-button color="primary" routerLink="/login">Login</button>
             </div>
+        </div>
+        <div class="bottom bottom-mod" *ngIf="book && role === 'moderator' && !past">
+            <h3>Moderate this book</h3>
+            TODO: implement edit book and delete book
         </div>
     </div>
     <div class="chat-container">

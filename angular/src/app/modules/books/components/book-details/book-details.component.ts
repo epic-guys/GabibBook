@@ -23,6 +23,8 @@ export class BookDetailsComponent {
   isOpen = false;
   holder: any;
   canBid = false;
+  role: string = '';
+  past = false;
 
   constructor(
     public bookService: BookService, 
@@ -38,12 +40,8 @@ export class BookDetailsComponent {
 
   ngOnInit(): void {
     if (this.isLoggedIn) {
-      const role = this.storage.getRole()
-      if(role !== 'student'){
-        this.canBid = false;
-      }else{
-        this.canBid = true;
-      }
+      this.role = this.storage.getRole()
+      
     }
 
     const observer = {
@@ -134,6 +132,7 @@ export class BookDetailsComponent {
 
     if(this.book.close_date < now){
       this.isOpen = false;
+      this.past = true;
       return;
     }
 
