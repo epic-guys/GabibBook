@@ -24,6 +24,8 @@ import { BookFilterComponent } from './components/moderation/book-filter/book-fi
 import { FormsModule } from '@angular/forms';
 import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
 import { BookCardAuctionsComponent } from './components/account-auctions/book-card-auctions/book-card-auctions.component';
+import { BookCardOrdersComponent } from './components/account-orders/book-card-orders/book-card-orders.component';
+import { BookCardOffersComponent } from './components/account-orders/book-card-offers/book-card-offers.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { BookCardAuctionsComponent } from './components/account-auctions/book-ca
     UserCardComponent,
     BookCardComponent,
     BookFilterComponent,
-    BookCardAuctionsComponent
+    BookCardAuctionsComponent,
+    BookCardOrdersComponent,
+    BookCardOffersComponent
   ],
   imports: [
     CommonModule,

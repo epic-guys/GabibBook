@@ -1,22 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-book-card-auctions',
-  templateUrl: './book-card-auctions.component.html',
-  styleUrls: ['./book-card-auctions.component.scss']
+  selector: 'app-book-card-orders',
+  templateUrl: './book-card-orders.component.html',
+  styleUrls: ['./book-card-orders.component.scss']
 })
-export class BookCardAuctionsComponent {
+export class BookCardOrdersComponent {
   @Input() purchase: any;
   @Output() statusChanged = new EventEmitter<
-  {
-    id: string;
-    status: string;
-  }
+    {
+      id: string;
+      status: string;
+    }
   >();
 
   status = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   mapStatus: { [key: string]: string } = {
     'reserve_price_not_met': 'Reserve price not met',
@@ -34,5 +35,9 @@ export class BookCardAuctionsComponent {
       id: this.purchase._id,
       status: this.status
     });
+  }
+
+  goToBook() {
+    this.router.navigate([`/books/${this.purchase.auction}`]);
   }
 }

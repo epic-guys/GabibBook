@@ -10,7 +10,10 @@ export class StatService {
   constructor(private http: HttpClient) { }
 
   getStats(result: string, count: boolean = true){
-    ///stats/auctions?result=(successful | unsuccessful)&?count=true
     return this.http.get(environment.apiBaseUrl + '/stats/auctions', { params: { result: result, count: count.toString() } });
+  }
+
+  getMyOffers(uid: string){
+    return this.http.get(environment.apiBaseUrl + '/stats/offers', { params: { uid: uid } });
   }
 }
