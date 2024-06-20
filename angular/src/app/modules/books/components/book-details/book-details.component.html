@@ -19,7 +19,7 @@
         </div>
         <div class="bottom" *ngIf="book">
             <div class="action" *ngIf="isLoggedIn">
-                <app-offer-card [offer]="lastBid.offer" (onBid)="onBid($event)"></app-offer-card>
+                <app-offer-card [offer]="lastBid?.offer" (onBid)="onBid($event)"></app-offer-card>
             </div>
             <div class="login" *ngIf="!isLoggedIn">
                 <div>

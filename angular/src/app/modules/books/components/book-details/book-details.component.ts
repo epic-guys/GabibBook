@@ -33,10 +33,8 @@ export class BookDetailsComponent {
   ngOnInit(): void {
     const observer = {
       next: (book: any) => {
+        
         this.book = book;
-        if(!this.hasBid){
-          this.lastBid = book.offers.length > 0 ? book.offers[book.offers.length - 1] : {offer: {price: book.start_price}};
-        }
         this.updateEndsInEverySecond();
       },
       error: (error: any) => {
@@ -54,8 +52,7 @@ export class BookDetailsComponent {
       if (data._id === id) {
         this.hasBid = true;
         if(data.offer){
-          console.log('has bid');
-          this.lastBid = data.offer;
+          this.lastBid = data;
         }
         else{
           console.log('no bid');

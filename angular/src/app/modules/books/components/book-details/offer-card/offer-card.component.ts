@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -7,7 +7,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
   templateUrl: './offer-card.component.html',
   styleUrls: ['./offer-card.component.scss']
 })
-export class OfferCardComponent {
+export class OfferCardComponent implements OnChanges {
   @Input() offer: any;
   @Output() onBid = new EventEmitter<number>();
 
@@ -28,6 +28,10 @@ export class OfferCardComponent {
       const price = parseInt(this.priceForm.value.price!);
       this.onBid.emit(price);
     }
+  }
+
+  ngOnChanges() {
+    if(this.offer && this.offer.value) this.priceForm.setValue({price: this.offer.value});
   }
   
 }

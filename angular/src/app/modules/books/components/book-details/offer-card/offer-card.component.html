@@ -1,5 +1,8 @@
 <div class="container">
-    <div class="pricing">
+    <div class="pricing" *ngIf="!this.offer">
+        <app-loader color="#ff0000" position="relative"></app-loader>
+    </div>
+    <div class="pricing" *ngIf="this.offer">
         <h3>Current price:</h3>
         <p>{{this.offer?.value }}</p>
     </div>
