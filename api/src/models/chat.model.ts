@@ -1,15 +1,23 @@
 import mongoose, { Schema, Model, model } from "mongoose"
+import {BookType} from "./book.model"
+import {UserType} from "./user.model"
 
 export interface Message {
-     sender: mongoose.Schema.Types.UUID
+     sender: mongoose.Types.ObjectId
      text: string
      date: Date
 }
 
 export interface ChatType {
-     book: mongoose.Schema.Types.UUID
-     buyer: mongoose.Schema.Types.UUID | null
+     book: mongoose.Types.ObjectId
+     buyer: mongoose.Types.ObjectId | null
      messages: Array<Message>
+}
+
+export interface PopulatedChatType {
+    book: BookType,
+    buyer: UserType | null,
+    messages: Array<Message>
 }
 
 const chatSchema = new Schema<ChatType>({

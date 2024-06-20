@@ -3,7 +3,7 @@ import { JwtPayload, verify } from "jsonwebtoken";
 import config from "../config";
 import { User, UserType } from "../models/user.model";
 import { Book, BookType } from "../models/book.model";
-import { Chat, ChatType, Message } from "../models/chat.model";
+import { Chat, ChatType, Message, PopulatedChatType } from "../models/chat.model";
 import { Request, Response } from "express";
 import passport from "passport";
 import { HydratedDocument } from "mongoose";
@@ -20,7 +20,7 @@ export class ChatSocket {
 
         this.chatIO.on('connection', async (socket: Socket) => {
             let user: UserType | null = null;
-            let openChats: {[chatId: string]: HydratedDocument<ChatType>} = {}
+            let openChats: {[chatId: string]: HydratedDocument<PopulatedChatType>} = {}
 
             socket.on('auth', async (event: any) => {
                 try {
@@ -48,7 +48,9 @@ export class ChatSocket {
                     if (!user) {
                         throw new Error('Not authenticated');
                     }
-                    let chat = await Chat.findOne({ book: event.chatId }).populate<{ book: BookType }>('book').exec();
+                    let chat = await Chat.
+                        findOne({ book: event.chatId }).
+                        populate<Pick<PopulatedChatType, 'book' | 'buyer'>>('book').exec();
                     if (!chat) {
                         throw new Error('Chat not found');
                     }
@@ -56,7 +58,7 @@ export class ChatSocket {
                     // If 'buyer' is not set, then the chat is public
                     // If 'buyer' is set, then only the buyer and the owner can access the chat
                     if (!chat?.buyer || chat?.buyer === socket.data['user']._id || chat?.book.owner === socket.data['user']._id) {
-                        socket.join(chatRoom(chat));
+                        socket.join(this.chatRoom(chat));
                         openChats[chat!._id.toString()] = chat;
                         // receiveMessage is from the perspective of the client, it's the client that receives the messages
                         this.newMessages(chat);
@@ -82,7 +84,7 @@ export class ChatSocket {
 
                     let chat = openChats[event.chatId];
                     let message: Message = {
-                        sender: user._id,
+                        sender: user._id!,
                         text: event!.text,
                         date: new Date()
                     }
@@ -101,7 +103,7 @@ export class ChatSocket {
      * If no messages parameter is specified, all the old messages are sent.
      * Instead, if it is specified, it sends only these messages.
      */
-    public newMessages(chat: ChatType, messages?: Message[]) {
+    public newMessages(chat: PopulatedChatType, messages?: Message[]) {
         let event = {...chat};
         if (messages) {
             event.messages = messages;
@@ -112,15 +114,11 @@ export class ChatSocket {
         });
     }
 
-    private chatRoom(chat: ChatType): string {
+    private chatRoom(chat: PopulatedChatType): string {
         // Chat rooms have the following format:
         // chat:<book_id>:[<buyer_id>]
         // where buyer_id is set only if the chat is private
-        return 'chat:' + chat.book.toString() + ':' + (chat.buyer?.toString() ?? '');
-    }
-
-    private validateChat(user: UserType, chat: ChatType) {
-
+        return 'chat:' + chat.book._id!.toString() + ':' + (chat.buyer?._id!.toString() ?? '');
     }
 }
 
