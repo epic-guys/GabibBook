@@ -18,8 +18,7 @@ export class ChatSocket {
         this.chatIO = this.io.of('/chats');
 
 
-        this.chatIO.on('connection', async (socket: Socket) => {
-            let user: UserType | null = null;
+        this.chatIO.on('connection', async (socket: Socket<any, any, any, {user?: UserType}>) => {
             let openChats: {[chatId: string]: HydratedDocument<PopulatedChatType>} = {}
 
             socket.on('auth', async (event: any) => {
@@ -30,11 +29,11 @@ export class ChatSocket {
                     }
                     // Tocca usare any perché nel tipo payload non c'è _id
                     let payload: any = verify(jwt, config.jwtSecret, { issuer: config.jwtIssuer });
-                    user = await User.findById(payload!._id).exec();
+                    let user = await User.findById(payload!._id).exec();
                     if (!user) {
                         throw new Error('User not found');
                     }
-
+                    socket.data.user = user;
                     socket.emit('auth', { 'message': 'Successfully authenticated' });
                 } catch (e: any) {
                     socket.emit('error', { 'message': e.message});
@@ -45,7 +44,7 @@ export class ChatSocket {
 
             socket.on('subscribeChat', async (event: any) => {
                 try {
-                    if (!user) {
+                    if (!socket.data.user) {
                         throw new Error('Not authenticated');
                     }
                     let chat = await Chat.
@@ -56,8 +55,11 @@ export class ChatSocket {
                     }
 
                     // If 'buyer' is not set, then the chat is public
-                    // If 'buyer' is set, then only the buyer and the owner can access the chat
-                    if (!chat?.buyer || chat?.buyer === socket.data['user']._id || chat?.book.owner === socket.data['user']._id) {
+                    if (!chat.buyer ||
+                        // If 'buyer' is set, then only the buyer and the owner can access the chat
+                        chat.buyer._id === socket.data.user!._id! ||
+                        chat.book.owner === socket.data.user!._id!
+                   ) {
                         socket.join(this.chatRoom(chat));
                         openChats[chat!._id.toString()] = chat;
                         // receiveMessage is from the perspective of the client, it's the client that receives the messages
@@ -74,7 +76,7 @@ export class ChatSocket {
 
             socket.on('message', async (event: any) => {
                 try {
-                    if (!user) {
+                    if (!socket.data.user) {
                         throw new Error('Not authenticated');
                     }
 
@@ -84,7 +86,7 @@ export class ChatSocket {
 
                     let chat = openChats[event.chatId];
                     let message: Message = {
-                        sender: user._id!,
+                        sender: socket.data.user._id!,
                         text: event!.text,
                         date: new Date()
                     }
