@@ -111,7 +111,12 @@ export async function createOffer(req:Request<{id: string}, any, {value: number}
     let book = await Book.findById(req.params.id).where({banned: false }).exec();
     let user = req.user as UserType;
     if (book == null) {
-        res.status(404).send({message: 'book not found'})
+        res.status(404).send({message: 'Book not found'})
+        return;
+    }
+
+    if (book.owner._id!.toString() === user._id!.toString()) {
+        res.status(400).json({message: 'Owner cannot offer'});
         return;
     }
 
