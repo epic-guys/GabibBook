@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { getAllOffers, getSuccessfulAuctions } from '../controllers/statistics.controller';
+import { getAllOffers, getAuctions } from '../controllers/statistics.controller';
 import passport from 'passport';
 import config from '../config';
 import { Role } from '../models/user.model';
@@ -21,7 +21,7 @@ statsRouter.get('/offers', passport.authenticate('jwt', config.passportOptions),
 statsRouter.get('/auctions', passport.authenticate('jwt', config.passportOptions), authorize([Role.Moderator]),
     async (req: Request, res: Response) => {
         try {
-            return getSuccessfulAuctions(req, res);
+            return getAuctions(req, res);
         } catch (err: any) {
             res.status(500).json({ message: 'Internal Server Error' });
         }

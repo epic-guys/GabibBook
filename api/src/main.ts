@@ -21,6 +21,7 @@ import purchaseRouter from './routes/purchase.route';
 import { Book } from './models/book.model';
 import { Purchase } from './models/purchase.model';
 import statsRouter from './routes/statistics.route';
+import { seedPurchases } from './seeds/purchase.seed';
 
 const cron = require('node-cron');
 const moment = require('moment');
@@ -41,6 +42,7 @@ mongoose.connect(config.mongodbUri).then(async () => {
     await seedUsers();
     await seedBooks(); //this has to be synchronous now
     await seedChats();
+    await seedPurchases();
     //no need to seed purchases, they are created by the cron job
     mongoose.set('debug', true);
 }).catch((err: Error) => {

@@ -25,7 +25,7 @@ const purchaseSchema = new mongoose.Schema({
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     seller_notified: { type: Boolean, required: true, default: false },
     buyer_notified: { type: Boolean, required: true, default: false },
-    auction: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+    auction: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true, unique: true },
     title: { type: String, required: true },
     isbn: { type: String, required: true },
     price: { type: Number, required: true },

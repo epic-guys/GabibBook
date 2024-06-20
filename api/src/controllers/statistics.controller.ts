@@ -14,7 +14,7 @@ export async function getAllOffers(req: Request, res: Response) {
     }
 }
 
-export async function getSuccessfulAuctions(req: Request, res: Response) {
+export async function getAuctions(req: Request, res: Response) {
     try {
         let result = req.query.result;
         if(result && (result == "successful" || result == "unsuccessful")) {
@@ -23,10 +23,14 @@ export async function getSuccessfulAuctions(req: Request, res: Response) {
             if (!count || count == "false") return res.status(500).json({ message: 'Not implemented' });
 
             let whereCondition = {};
-            if(result == "successful") whereCondition = { status: { $ne: "reserve_price_not_met" } };
-            else whereCondition = { status: "reserve_price_not_met" };
+            if(result == "successful") {
+                whereCondition = { status: { $ne: "reserve_price_not_met" } };
+            }
+            else{
+                whereCondition = { status: "reserve_price_not_met" };
+            }
 
-            const auctions_count = await Purchase.find(whereCondition).countDocuments();
+            const auctions_count = await Purchase.find().where(whereCondition).countDocuments();
             return res.status(200).json({ count: auctions_count });
         }
         else return res.status(404).json({ message: 'Bad Request' });
