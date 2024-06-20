@@ -1,7 +1,7 @@
 export const environment = {
-    apiBaseUrl: 'http://localhost:3000',
+    apiBaseUrl: 'http://192.168.241.86:3000',
     TOKEN_LIFETIME: 30000,
     production: false,
     LASTBOOKS: 50,
-    SOCKET_URI: 'ws://localhost:3000',
+    SOCKET_URI: 'ws://192.168.241.86:3000',
 };

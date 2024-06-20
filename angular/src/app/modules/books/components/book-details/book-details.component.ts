@@ -34,9 +34,8 @@ export class BookDetailsComponent {
     const observer = {
       next: (book: any) => {
         this.book = book;
-        console.log(book);
         if(!this.hasBid){
-          this.lastBid = book.offers.length > 0 ? book.offers[book.offers.length - 1] : null;
+          this.lastBid = book.offers.length > 0 ? book.offers[book.offers.length - 1] : {offer: {price: book.start_price}};
         }
         this.updateEndsInEverySecond();
       },
@@ -54,9 +53,14 @@ export class BookDetailsComponent {
     this.listen_price.on('priceUpdate', (data: any) => {
       if (data._id === id) {
         this.hasBid = true;
-        this.lastBid = data;
-        console.log('received price update');
-        console.log(data);
+        if(data.offer){
+          console.log('has bid');
+          this.lastBid = data.offer;
+        }
+        else{
+          console.log('no bid');
+          this.lastBid = {offer: {value: this.book!['start_price']}}
+        }
       }
     });
 
