@@ -160,4 +160,28 @@ export class BookDetailsComponent {
     }, 1000);
   }
 
+  onEdit() {
+    //this.router.navigate(['/books/edit', this.book!._id]);
+  }
+
+  onBan(){
+    
+    const observer = {
+      next: (res: any) => {
+        this.snackBar.open('Book banned', '', {
+          duration: 2000,
+        });
+        this.router.navigate(['/']);
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.router.navigate(['/']);
+      }
+    }
+
+    this.bookService.deleteBook(String(this.book?._id)).subscribe(observer);
+  }
+
 }

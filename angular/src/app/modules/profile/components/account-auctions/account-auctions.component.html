@@ -1,5 +1,5 @@
 <div class="container">
-    <p>TODO: new auction card</p>
+    <p> TODO: new auction card</p>
     <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
     <div *ngIf="!ajaxLoading">
         <app-book-card-auctions *ngFor="let auction of data" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
