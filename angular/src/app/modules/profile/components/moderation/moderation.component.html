@@ -1,6 +1,7 @@
 <div class="container">
     <mat-tab-group>
         <mat-tab label="Auctions">
+            <h2>Stats:</h2>
             <div class="stats" *ngIf="!stats_success_loading && !stats_failed_loading">
                 <div class="success">Successful auctions: {{successful}}</div>
                 <div class="failed">Failed auctions: {{failed}}</div>
