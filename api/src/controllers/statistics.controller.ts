@@ -7,7 +7,8 @@ export async function getAllOffers(req: Request, res: Response) {
     let user = req.user as UserType;
     if (!user) return res.status(404).json({ message: 'Not Found' });
     try {
-        const auctionsParticipatedIn = await Book.find({ 'offers.user': user._id });
+        //get only some infos about the book
+        const auctionsParticipatedIn = await Book.find({ 'offers.user': user._id }).select('_id title isbn author open_data close_date').exec();
         res.status(200).json(auctionsParticipatedIn);
     } catch (err: any) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -18,8 +19,6 @@ export async function getAuctions(req: Request, res: Response) {
     try {
         let result = req.query.result;
         if(result && (result == "successful" || result == "unsuccessful")) {
-
-            //TODO: check if is same user
 
             let count = req.query.count;
             if (!count || count == "false") return res.status(500).json({ message: 'Not implemented' });

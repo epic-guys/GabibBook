@@ -4,7 +4,6 @@ import passport from 'passport';
 import config from '../config';
 import { Role } from '../models/user.model';
 import { authorize } from '../middleware/authorization.middleware';
-import { isSameUser } from '../middleware/user.middleware';
 
 
 const statsRouter = Router();
