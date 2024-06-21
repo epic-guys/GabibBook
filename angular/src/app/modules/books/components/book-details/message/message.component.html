@@ -1,0 +1,4 @@
+<div class="message" [ngClass]="{'owner': isOwner, 'mine': isMe}" *ngIf="message?.text">
+    <p class="user"> {{isOwner ? "Seller - " : ""}} {{message?.sender}}</p>
+    <p class="text"> {{ message?.text }}</p>
+</div>

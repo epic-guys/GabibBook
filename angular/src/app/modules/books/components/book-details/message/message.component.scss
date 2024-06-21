@@ -1,0 +1,33 @@
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+
+    .user{
+        font-size: 12px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .text{
+        color: #333;
+        font-size: 14px;
+        font-weight: 400;
+    }
+}
+
+.owner {
+    background-color: #f0f9f4;
+    border-color: #b3e6cb;
+    color: #155724;
+}
+.mine {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

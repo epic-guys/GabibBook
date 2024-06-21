@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { ChatSocket, PriceListener } from 'src/app/app.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from 'src/app/common/services/storage/local-storage.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-details',
@@ -28,6 +29,16 @@ export class BookDetailsComponent {
   privateChat: string | null = null;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
+  user_uid = '';
+  publicChatForm: FormGroup = new FormGroup({
+    message: new FormControl('',
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(200)
+      ])
+    )
+  });
 
   constructor(
     public bookService: BookService, 
@@ -45,14 +56,14 @@ export class BookDetailsComponent {
   ngOnInit(): void {
     if (this.isLoggedIn) {
       this.role = this.storage.getRole()
-      
+      this.user_uid = this.storage.getUserId();
     }
 
     const observer = {
       next: (book: any) => {
         this.book = book;
         this.startChats();
-        this.forcePrice();
+        this.forceSockets();
         this.updateEndsInEverySecond();
       },
       error: (error: any) => {
@@ -145,12 +156,12 @@ export class BookDetailsComponent {
     this.isOpen = true;
   }
 
-  forcePrice(){
+  forceSockets(){
     setTimeout(() => {
-      this.sendPublicMessage({
-        chatId: this.publicChat || '',
-        text: 'ping'
-      });
+      //this.sendPublicMessage({
+      //  chatId: this.publicChat || '',
+      //  text: 'ping'
+      //});
       if(this.book){
         if(!this.lastBid){
 
@@ -159,6 +170,10 @@ export class BookDetailsComponent {
           this.lastBid = {offer: {value: val}}
           console.log('no bid');
         }
+      }
+
+      if(!this.publicChat || !this.privateChat){
+        this.startChats();
       }
     }, 5000);
   }
@@ -214,11 +229,25 @@ export class BookDetailsComponent {
           console.log(data);
           if(data._id === this.publicChat){
             console.log('public chat');
-            this.publicChatMessages = [...this.publicChatMessages, ...data.messages];
+            if(data.messages.length > 1){
+              this.publicChatMessages = [this.publicChatMessages, ...data.messages];
+            }
+            else{
+              console.log('adding messages');
+              this.publicChatMessages = [...new Set([...this.publicChatMessages, ...data.messages])];
+            }
+
+            setTimeout(() => {
+              const element = document.getElementById('public-chat');
+              if(element){
+                element.scrollTop = element.scrollHeight;
+              }
+            }, 100);
           }
           else if(data._id === this.privateChat){
             console.log('private chat');
-            this.privateChatMessages = [...this.privateChatMessages, ...data.messages];
+
+            this.privateChatMessages = [this.privateChatMessages];
           }
         });
       },
@@ -235,6 +264,19 @@ export class BookDetailsComponent {
     }
   }
 
+  onPublicChatSubmit(){
+    if(!this.publicChatForm.valid){
+      return;
+    }
+
+    this.sendPublicMessage({
+      chatId: this.publicChat!,
+      text: this.publicChatForm.value.message
+    });
+
+    this.publicChatForm.reset();
+  }
+
   sendPublicMessage(message: {
     chatId: string,
     text: string
@@ -243,8 +285,6 @@ export class BookDetailsComponent {
       console.error('no public chat');
       return;
     }
-
-    console.log('sending message');
 
     this.chat.emit('message', message);
   }

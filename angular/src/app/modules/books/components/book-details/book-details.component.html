@@ -37,9 +37,27 @@
             </div>
         </div>
     </div>
-    <div class="chat-container">
-        <h1>Chat:</h1>
-        <p> {{ publicChatMessages | json }} </p>
-        <!--app-chat [book]="book"></app-chat-->
+    <div class="chat">
+        <mat-tab-group>
+            <mat-tab label="Public chat">
+                <h1>Public chat:</h1>
+                <div class="chat-container" id="public-chat">
+                    <app-message *ngFor="let message of publicChatMessages" [message]="message" [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid" [ngClass]="{'mine': message.sender === user_uid}"></app-message>
+                </div>
+                <form class="chat_form" [formGroup]="publicChatForm" (ngSubmit)="onPublicChatSubmit()">
+                    <mat-form-field>
+                        <input class="send_textarea" matInput placeholder="Type a message" formControlName="message">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Send</button>
+                </form>
+            </mat-tab>
+            <mat-tab label="Private chat">
+                <h1>Private chat:</h1>
+                <div class="chat-container">
+                    <app-message *ngFor="let message of privateChatMessages" [message]="message" [isOwner]="message.sender === book.owner"></app-message>
+                </div>
+                //todo form
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

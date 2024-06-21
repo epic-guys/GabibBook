@@ -12,12 +12,14 @@ import { ComponentsModule } from 'src/app/common/components/components.module';
 import { OfferCardComponent } from './components/book-details/offer-card/offer-card.component';
 import { PipesModule } from 'src/app/common/pipes/pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageComponent } from './components/book-details/message/message.component';
 
 @NgModule({
   declarations: [
     BookspageComponent,
     BookDetailsComponent,
-    OfferCardComponent
+    OfferCardComponent,
+    MessageComponent
   ],
   imports: [
     CommonModule,
