@@ -14,7 +14,6 @@ export class BookCardOngoingComponent {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.auction);
     this.title = this.auction.title;
     this.isbn = this.auction.isbn;
     if(this.auction.offers.length > 0){
