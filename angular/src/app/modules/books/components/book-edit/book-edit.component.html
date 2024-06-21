@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<div class="card">
+    <div class="col-md-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" formControlName="title">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Author</mat-label>
+                    <input matInput type="text" formControlName="author">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>ISBN</mat-label>
+                    <input matInput type="text" formControlName="isbn">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Degree</mat-label>
+                    <input matInput type="text" formControlName="degree_course">
+                </mat-form-field>
+            </div>
+            <!-- <mat-form-field>
+                <mat-label>Cover</mat-label>
+                <input matInput type="text" formControlName="cover">
+            </mat-form-field> -->
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>

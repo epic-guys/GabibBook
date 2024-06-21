@@ -186,7 +186,7 @@ export class BookDetailsComponent {
   }
 
   onEdit() {
-    //this.router.navigate(['/books/edit', this.book!._id]);
+    this.router.navigate(['/books/edit', this.book!._id]);
   }
 
   onBan(){

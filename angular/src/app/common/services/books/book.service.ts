@@ -29,6 +29,14 @@ export class BookService {
     return this.http.get(`${environment.apiBaseUrl}/books/${id}`);
   }
 
+  createBook(book: any) {
+    return this.http.post(`${environment.apiBaseUrl}/books`, book);
+  }
+
+  updateBook(id: string, book: any) {
+    return this.http.put(`${environment.apiBaseUrl}/books/${id}`, book);
+  }
+
   deleteBook(id: string) {
     return this.http.delete(`${environment.apiBaseUrl}/books/${id}`);
   }

@@ -13,7 +13,7 @@ import { OfferCardComponent } from './components/book-details/offer-card/offer-c
 import { PipesModule } from 'src/app/common/pipes/pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessageComponent } from './components/book-details/message/message.component';
-import { BookEditorcreateComponent } from './components/book-editorcreate/book-editorcreate.component';
+import { BookEditComponent } from './components/book-edit/book-edit.component';
 import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
 import { isAdminGuard } from 'src/app/common/guards/is-admin.guard';
 import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
@@ -24,7 +24,7 @@ import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
     BookDetailsComponent,
     OfferCardComponent,
     MessageComponent,
-    BookEditorcreateComponent
+    BookEditComponent
   ],
   imports: [
     CommonModule,
@@ -41,14 +41,14 @@ import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
       },
       {
         path: 'edit/:uuid',
-        component: BookEditorcreateComponent,
+        component: BookEditComponent,
         canActivate: [isLoggedGuard, isAdminGuard]
       },
-      {
-        path: 'create',
-        component: BookEditorcreateComponent,
-        canActivate: [isLoggedGuard, isStudentGuard],
-      },
+      //{
+      //  path: 'create',
+      //  component: BookEditorcreateComponent,
+      //  canActivate: [isLoggedGuard, isStudentGuard],
+      //},
       {
         path: ':uuid',
         component: BookDetailsComponent
