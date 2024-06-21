@@ -17,6 +17,7 @@ import { BookEditComponent } from './components/book-edit/book-edit.component';
 import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
 import { isAdminGuard } from 'src/app/common/guards/is-admin.guard';
 import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
+import { BookCreateComponent } from './components/book-create/book-create.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
     BookDetailsComponent,
     OfferCardComponent,
     MessageComponent,
-    BookEditComponent
+    BookEditComponent,
+    BookCreateComponent
   ],
   imports: [
     CommonModule,
@@ -44,11 +46,11 @@ import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
         component: BookEditComponent,
         canActivate: [isLoggedGuard, isAdminGuard]
       },
-      //{
-      //  path: 'create',
-      //  component: BookEditorcreateComponent,
-      //  canActivate: [isLoggedGuard, isStudentGuard],
-      //},
+      {
+        path: 'create',
+        component: BookCreateComponent,
+        canActivate: [isLoggedGuard, isStudentGuard],
+      },
       {
         path: ':uuid',
         component: BookDetailsComponent

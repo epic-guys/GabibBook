@@ -29,6 +29,15 @@ export class BookDetailsComponent {
   privateChat: string | null = null;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
+  privateChats: Set<any> = new Set( 
+    [
+      {
+        _id: '',
+        buyer: '',
+        messages: []
+      }
+    ]
+  );
   user_uid = '';
   publicChatForm: FormGroup = new FormGroup({
     message: new FormControl('',
@@ -158,10 +167,6 @@ export class BookDetailsComponent {
 
   forceSockets(){
     setTimeout(() => {
-      //this.sendPublicMessage({
-      //  chatId: this.publicChat || '',
-      //  text: 'ping'
-      //});
       if(this.book){
         if(!this.lastBid){
 
