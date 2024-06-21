@@ -9,7 +9,7 @@ import { isSameUser } from '../middleware/user.middleware';
 
 const statsRouter = Router();
 
-statsRouter.get('/offers', passport.authenticate('jwt', config.passportOptions), authorize([Role.Student]), isSameUser,
+statsRouter.get('/offers', passport.authenticate('jwt', config.passportOptions), authorize([Role.Student]),
     async (req: Request, res: Response) => {
         try {
             return getAllOffers(req, res);

@@ -19,6 +19,8 @@ export async function getAuctions(req: Request, res: Response) {
         let result = req.query.result;
         if(result && (result == "successful" || result == "unsuccessful")) {
 
+            //TODO: check if is same user
+
             let count = req.query.count;
             if (!count || count == "false") return res.status(500).json({ message: 'Not implemented' });
 
