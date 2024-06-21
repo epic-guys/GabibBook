@@ -55,6 +55,7 @@ export async function getBookList(req: Request, res: Response) {
         ownerObject = await User.findOne({ nickname: owner }).exec();
     }
 
+    const now = new Date();
 
     let whereConditions: any = {
         ...(isbn && { isbn: isbn }),
@@ -62,7 +63,8 @@ export async function getBookList(req: Request, res: Response) {
         ...(author && { author: { $regex: '.*' + author + '.*', $options: 'i' } }),
         ...(search && { title: { $regex: '.*' + search + '.*', $options: 'i' } }),
         ...(owner && { owner: ownerObject?._id }),
-        close_date: { $gt: new Date() },
+        close_date: { $gt: now },
+        open_date: { $lt: now },
         banned: false
     };
 
@@ -108,7 +110,7 @@ export async function createBook(req: Request, res: Response) {
 
 export async function createOffer(req: Request<{ id: string }, any, { value: number }>, res: Response) {
     let now = new Date();
-    let book = await Book.findById(req.params.id).where({ banned: false }).exec();
+    let book = await Book.findById(req.params.id).where({ banned: false, close_date: { $gt: now }, open_date: { $lt: now } }).exec();
     let user = req.user as UserType;
     if (book == null) {
         res.status(404).send({ message: 'Book not found' })
