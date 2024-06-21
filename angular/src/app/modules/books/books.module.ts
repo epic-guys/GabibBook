@@ -13,13 +13,18 @@ import { OfferCardComponent } from './components/book-details/offer-card/offer-c
 import { PipesModule } from 'src/app/common/pipes/pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessageComponent } from './components/book-details/message/message.component';
+import { BookEditorcreateComponent } from './components/book-editorcreate/book-editorcreate.component';
+import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
+import { isAdminGuard } from 'src/app/common/guards/is-admin.guard';
+import { isStudentGuard } from 'src/app/common/guards/is-student.guard';
 
 @NgModule({
   declarations: [
     BookspageComponent,
     BookDetailsComponent,
     OfferCardComponent,
-    MessageComponent
+    MessageComponent,
+    BookEditorcreateComponent
   ],
   imports: [
     CommonModule,
@@ -35,9 +40,19 @@ import { MessageComponent } from './components/book-details/message/message.comp
         component: BookspageComponent
       },
       {
+        path: 'edit/:uuid',
+        component: BookEditorcreateComponent,
+        canActivate: [isLoggedGuard, isAdminGuard]
+      },
+      {
+        path: 'create',
+        component: BookEditorcreateComponent,
+        canActivate: [isLoggedGuard, isStudentGuard],
+      },
+      {
         path: ':uuid',
         component: BookDetailsComponent
-      }
+      },
     ])
   ]
 })

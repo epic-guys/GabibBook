@@ -1,9 +1,15 @@
 <div class="container">
-    <p> TODO: new auction card</p>
-    <p> TODO: get ongoing auctions</p>
-    <app-loader color="#909ceb" position="relative" *ngIf="ajaxLoading"></app-loader>
-    <div *ngIf="!ajaxLoading">
+    <app-loader color="#909ceb" position="relative" *ngIf="ordersLoading || ongoingLoading"></app-loader>
+    <div *ngIf="!ordersLoading && !ongoingLoading">
+        <mat-card class="add-card" routerLink="/books/create">
+            <mat-icon>add</mat-icon>
+            <h3>Sell a book!</h3>
+        </mat-card>
+        <h1 *ngIf="ongoing.length > 0">Ongoing: </h1>
+        {{ongoing | json}}
+        <app-book-card-auctions *ngFor="let auction of ongoing" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
+        <h1 *ngIf="data.length > 0">Concluded:</h1>
         <app-book-card-auctions *ngFor="let auction of data" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
     </div>
-    <p *ngIf="!ajaxLoading && data.length == 0" class="empty">You didn't post any auction, start now clicking the button above!.</p>
+    <p *ngIf="!ordersLoading && !ongoingLoading && data.length == 0 && ongoing.length == 0" class="empty">You didn't post any auction, start now clicking the button above!.</p>
 </div>
