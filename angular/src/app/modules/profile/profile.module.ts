@@ -26,6 +26,7 @@ import { isLoggedGuard } from 'src/app/common/guards/is-logged.guard';
 import { BookCardAuctionsComponent } from './components/account-auctions/book-card-auctions/book-card-auctions.component';
 import { BookCardOrdersComponent } from './components/account-orders/book-card-orders/book-card-orders.component';
 import { BookCardOffersComponent } from './components/account-orders/book-card-offers/book-card-offers.component';
+import { BookCardOngoingComponent } from './components/account-auctions/book-card-ongoing/book-card-ongoing.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { BookCardOffersComponent } from './components/account-orders/book-card-o
     BookFilterComponent,
     BookCardAuctionsComponent,
     BookCardOrdersComponent,
-    BookCardOffersComponent
+    BookCardOffersComponent,
+    BookCardOngoingComponent
   ],
   imports: [
     CommonModule,

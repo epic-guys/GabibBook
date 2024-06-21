@@ -6,8 +6,7 @@
             <h3>Sell a book!</h3>
         </mat-card>
         <h1 *ngIf="ongoing.length > 0">Ongoing: </h1>
-        {{ongoing | json}}
-        <app-book-card-auctions *ngFor="let auction of ongoing" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
+        <app-book-card-ongoing *ngFor="let auction of ongoing" [auction]="auction"></app-book-card-ongoing>
         <h1 *ngIf="data.length > 0">Concluded:</h1>
         <app-book-card-auctions *ngFor="let auction of data" [purchase]="auction" (statusChanged)="statusChanged($event)"></app-book-card-auctions>
     </div>

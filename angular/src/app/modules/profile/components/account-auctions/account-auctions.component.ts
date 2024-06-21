@@ -43,8 +43,8 @@ export class AccountAuctionsComponent {
         console.error(error);
       }
     }
-
-    const filter = "OWNER::" + uid;
+    const nickname = this.localstorage.getAuthInfo().nickname;
+    const filter = "OWNER::" + nickname;
 
     this.purchaseService.getPurchasesAsSeller(uid).subscribe(sellerObserver);
     this.booksservice.searchBooks(filter,0).subscribe(ongoingObserver);

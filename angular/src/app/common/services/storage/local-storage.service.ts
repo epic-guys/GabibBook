@@ -25,7 +25,8 @@ export class LocalStorageService {
   }
 
   getAuthInfo() {
-    const authInfo = this.localStorage.get(this.STORAGE_KEYS.auth);
+    let authInfo = this.localStorage.get(this.KEY_AUTH);
+    authInfo = this.decodeToken(authInfo.accessToken.jwt);
     return authInfo || null;
   }
 
