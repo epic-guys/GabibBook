@@ -4,7 +4,9 @@ import {ChatSocket} from './sockets/chat.socket';
 import {NotificationSocket} from './sockets/notification.socket';
 
 
-export const io = new Server();
+export const io = new Server(
+    {cors: {origin: '*'}}
+);
 
 export const bookSocket = new BookSocket(io);
 export const chatSocket = new ChatSocket(io);
