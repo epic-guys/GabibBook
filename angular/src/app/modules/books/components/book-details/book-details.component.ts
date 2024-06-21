@@ -29,15 +29,7 @@ export class BookDetailsComponent {
   privateChat: string | null = null;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
-  privateChats: Set<any> = new Set( 
-    [
-      {
-        _id: '',
-        buyer: '',
-        messages: []
-      }
-    ]
-  );
+  privateChats: {[id: string]: any} = {};
   user_uid = '';
   publicChatForm: FormGroup = new FormGroup({
     message: new FormControl('',
@@ -240,10 +232,14 @@ export class BookDetailsComponent {
           }
         }, 100);
       }
-      else if(data._id === this.privateChat){
-        console.log('private chat');
-
-        this.privateChatMessages = [this.privateChatMessages];
+      else {
+        if (!(data._id in this.privateChats)) {
+          this.privateChats[data._id] = data;
+        }
+        else {
+          let oldMessages = this.privateChats[data._id].messages;
+          this.privateChats[data._id].messages = [...oldMessages, ...data.messages];
+        }
       }
     });
 
