@@ -41,11 +41,15 @@
                     <mat-label>Start Price</mat-label>
                     <input matInput type="text" formControlName="start_price">
                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Reserve Price</mat-label>
+                    <input matInput type="text" formControlName="reserve_price">
+                </mat-form-field>
             </div>
 
             <div draggable="true" class="dragArea">
                 <div class="row">
-                    <input type="file" #file [multiple]="false" accept="image/*"                        (change)="onFileChange($event)">
+                    <input type="file" #file [multiple]="false" accept="image/*" (change)="onFileChange($event)">
                     <p>Drag file here</p>
                 </div>
             </div>
