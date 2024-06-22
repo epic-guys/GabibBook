@@ -29,15 +29,7 @@ export class BookDetailsComponent {
   privateChat: string | null = null;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
-  privateChats: Set<any> = new Set( 
-    [
-      {
-        _id: '',
-        buyer: '',
-        messages: []
-      }
-    ]
-  );
+  privateChats: {[id: string]: any} = {};
   user_uid = '';
   publicChatForm: FormGroup = new FormGroup({
     message: new FormControl('',
@@ -177,9 +169,9 @@ export class BookDetailsComponent {
         }
       }
 
-      if(!this.publicChat || !this.privateChat){
-        this.startChats();
-      }
+      // if(!this.publicChat || !this.privateChat){
+      //   this.startChats();
+      // }
     }, 5000);
   }
 
@@ -216,57 +208,55 @@ export class BookDetailsComponent {
 
   startChats(){
     if(!this.book){
+      console.log('Missing book');
       return;
     }
 
+    this.chat.on('message', (data: any) => {
+      console.log(data);
+      if(!data.buyer){
+        console.log('public chat');
+        this.publicChat = data._id;
+        if(data.messages.length > 1){
+          this.publicChatMessages = [this.publicChatMessages, ...data.messages];
+        }
+        else{
+          console.log('adding messages');
+          this.publicChatMessages = [...new Set([...this.publicChatMessages, ...data.messages])];
+        }
+
+        setTimeout(() => {
+          const element = document.getElementById('public-chat');
+          if(element){
+            element.scrollTop = element.scrollHeight;
+          }
+        }, 100);
+      }
+      else {
+        if (!(data._id in this.privateChats)) {
+          this.privateChats[data._id] = data;
+        }
+        else {
+          let oldMessages = this.privateChats[data._id].messages;
+          this.privateChats[data._id].messages = [...oldMessages, ...data.messages];
+        }
+      }
+    });
+
+    this.chat.on('auth', (data: any) => {
+      console.log(data.message);
+      this.chat.emit('subscribeBook', {
+        bookId: this.book!._id
+      });
+    });
+
+    this.chat.on('error', (data: any) => {
+      console.error(data.message);
+    });
+    
     this.chat.emit('auth', {
       jwt: this.storage.getAuth().accessToken.jwt
     });
-
-    const observer = {
-      next: (data: any) => {
-        this.publicChat = data._id;
-        this.chat.emit('subscribeChat', {
-          chatId: this.publicChat
-        });
-
-        this.chat.on('message', (data: any) => {
-          console.log(data);
-          if(data._id === this.publicChat){
-            console.log('public chat');
-            if(data.messages.length > 1){
-              this.publicChatMessages = [this.publicChatMessages, ...data.messages];
-            }
-            else{
-              console.log('adding messages');
-              this.publicChatMessages = [...new Set([...this.publicChatMessages, ...data.messages])];
-            }
-
-            setTimeout(() => {
-              const element = document.getElementById('public-chat');
-              if(element){
-                element.scrollTop = element.scrollHeight;
-              }
-            }, 100);
-          }
-          else if(data._id === this.privateChat){
-            console.log('private chat');
-
-            this.privateChatMessages = [this.privateChatMessages];
-          }
-        });
-      },
-      error: (error: any) => {
-        console.error("could not get public chat");
-        console.error(error);
-      }
-    };
-
-    this.bookService.getChat(this.book._id).subscribe(observer);
-
-    if(!this.publicChat){
-      return;
-    }
   }
 
   onPublicChatSubmit(){
