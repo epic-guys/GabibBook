@@ -26,7 +26,7 @@ export class BookDetailsComponent {
   role: string = '';
   past = false;
   publicChat: string | null = null;
-  privateChat: string | null = null;
+  privateChat = false;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
   privateChats: {[id: string]: any} = {};
@@ -244,6 +244,7 @@ export class BookDetailsComponent {
         }, 100);
       }
       else {
+        this.privateChat = true;
         if (!(data._id in this.privateChats)) {
           this.privateChats[data._id] = data;
         }

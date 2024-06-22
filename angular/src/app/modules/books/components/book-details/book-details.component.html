@@ -39,8 +39,7 @@
     </div>
     <div class="chat" *ngIf="role === 'student'">
         <app-loader *ngIf="!publicChat " color="#ff0000" position="relative"></app-loader>
-        <!--TODO: change if or privateChat -->
-        <mat-tab-group *ngIf="publicChat"> <!--TODO: change if && privateChat-->
+        <mat-tab-group *ngIf="publicChat && privateChat">
             <mat-tab label="Public chat">
                 <h1>Public chat:</h1>
                 <div class="chat-container" id="public-chat">
@@ -65,9 +64,6 @@
                                     Chat {{item.key}}
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    <!--app-message *ngFor="let message of item.value.messages" [message]="message"
-                                    [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid"
-                                    [ngClass]="{'mine': message.sender === user_uid}"></app-message-->
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
                             <app-message *ngFor="let message of item.value.messages" [message]="message"
