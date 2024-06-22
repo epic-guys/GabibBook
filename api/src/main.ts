@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import { seedUsers } from './seeds/user.seed';
 import userRouter from './routes/user.route';
 import bookRouter from './routes/book.route';
-import chatRouter from './routes/chat.route';
 import authRouter from './routes/auth.route';
 import inviteRouter from './routes/invite.route';
 import config from './config';
@@ -21,13 +20,16 @@ import purchaseRouter from './routes/purchase.route';
 import { Book } from './models/book.model';
 import { Purchase } from './models/purchase.model';
 import statsRouter from './routes/statistics.route';
+import { seedPurchases } from './seeds/purchase.seed';
+import { WebError } from './error';
+import notify from './notification';
 
 const cron = require('node-cron');
 const moment = require('moment');
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb'}));
 
 app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next: () => void) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -38,9 +40,10 @@ app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next:
 
 mongoose.connect(config.mongodbUri).then(async () => {
     logger.info('🟢 The database is connected.');
-    await seedUsers();
-    await seedBooks(); //this has to be synchronous now
-    await seedChats();
+    //await seedUsers();
+    //await seedBooks(); //this has to be synchronous now
+    //await seedChats();
+    //await seedPurchases();
     //no need to seed purchases, they are created by the cron job
     mongoose.set('debug', true);
 }).catch((err: Error) => {
@@ -51,17 +54,21 @@ mongoose.connect(config.mongodbUri).then(async () => {
 
 app.use('/users', userRouter);
 app.use('/books', bookRouter);
-app.use('/chats', chatRouter);
 app.use('/auth', authRouter);
 app.use('/invites', inviteRouter);
 app.use('/purchases', purchaseRouter);
 app.use('/stats', statsRouter);
 
+app.use((err: any, req: Request, res: Response, next: Function) => {
+    res.status(err.status ?? 500).
+        json({ message: err.message ?? 'Internal Server Error'});
+});
+
 passport.use(new BasicStrategy(
     async (email: string, password: string, done: (error: any, user?: UserType) => void) => {
         try {
             let user = await User.findOne({ email: email }, '+passwordHash').exec();
-            if (user == null) {
+            if (user == null || !user.enabled) {
                 done(null, undefined);
                 return;
             }
@@ -88,7 +95,8 @@ passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: JwtPayload, done: (e
         let user = await User.findById(jwtPayload._id).select('-passwordHash').exec();
 
         if (user == null || user.enabled == false) {
-            throw "User not found";
+            done(new WebError(401, 'Unauthorized'));
+            return;
         }
         done(null, user);
     } catch (e) {
@@ -134,8 +142,40 @@ cron.schedule('* * * * *', async () => { // This will run every minute
         logger.info('Book sold');
         book.is_order = true;
         await book.save();
-    });
 
+        // Notify book owner that the book has been sold
+        if (book.offers.length > 0 && book.offers[book.offers.length - 1].value >= book.reserve_price) {
+            notify({
+                id_user: book.owner,
+                message: `The book ${book.title} has been sold!`,
+                action: ''
+            });
+
+            // Notify the buyer that he was sold the book
+            notify({
+                id_user: book.offers[book.offers.length - 1].user!._id!,
+                message: `You have bought the book ${book.title} for ${book.offers[book.offers.length - 1].value}`,
+                action: ''
+            });
+        }
+        else {
+            notify({
+                id_user: book.owner,
+                message: `The book ${book.title} has not been sold!`,
+                action: ''
+            });
+
+            if (book.offers.length > 0) {
+                // Notify the buyer that he was not sold the book
+                notify({
+                    id_user: book.offers[book.offers.length - 1].user!._id!,
+                    message: `Reserve price not met for the book ${book.title}!`,
+                    action: ''
+                });
+            }
+        }
+
+    });
     await Promise.all(promises);
 });
 

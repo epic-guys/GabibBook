@@ -25,7 +25,7 @@ export interface UserType {
      city: string
      nation: string
      role: Role
-     enabled?: boolean
+     enabled: boolean
      paymentMethods: PaymentMethod[] | []
 }
 

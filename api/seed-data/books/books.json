@@ -48,5 +48,31 @@
         "open_date": "2024-05-10T00:00:00Z",
         "close_date": "2024-05-20T00:00:00Z",
         "banned": true
+    },
+    {
+        "owner": "rossi.parenzo",
+        "title": "1984",
+        "author": "George Orwell",
+        "isbn": "0667454105824",
+        "start_price":20,
+        "reserve_price":20,
+        "cover":"1984.jpg",
+        "degree_course":"Diritto dell'informatica",
+        "open_date":"2024-06-22T00:00:00Z",
+        "close_date":"2024-06-24T00:00:00Z",
+        "banned":false
+    },
+    {
+        "owner": "rossi.parenzo",
+        "title": "Fondamenti di basi di dati",
+        "author": "Non mi ricordo",
+        "isbn": "1557454130122",
+        "start_price":20,
+        "reserve_price":20,
+        "cover":"BD.jpg",
+        "degree_course":"Basi di dati",
+        "open_date":"2024-06-20T00:00:00Z",
+        "close_date":"2024-06-20T15:20:00Z",
+        "banned":false
     }
 ]
