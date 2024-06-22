@@ -59,25 +59,29 @@
                 <h1>Private chat:</h1>
                 <div class="chat-container">
                     <mat-accordion *ngFor="let item of privateChats | keyvalue">
-                        <mat-expansion-panel>
+                        <mat-expansion-panel (opened)="onPrivateChatOpen(item.key)">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     Chat {{item.key}}
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    <app-message *ngFor="let message of item.value.messages" [message]="message"
+                                    <!--app-message *ngFor="let message of item.value.messages" [message]="message"
                                     [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid"
-                                    [ngClass]="{'mine': message.sender === user_uid}"></app-message>
+                                    [ngClass]="{'mine': message.sender === user_uid}"></app-message-->
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <app-message *ngFor="let message of privateChatMessages" [message]="message"
-                        [isOwner]="message.sender === book.owner"></app-message>
+                            <app-message *ngFor="let message of item.value.messages" [message]="message"
+                                    [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid"
+                                    [ngClass]="{'mine': message.sender === user_uid}"></app-message>
                         </mat-expansion-panel>
-                    </mat-accordion>
-
-                    
+                    </mat-accordion>                   
                 </div>
-                //todo form
+                <form class="chat_form" [formGroup]="privateChatForm" (ngSubmit)="onPrivateChatSubmit()">
+                    <mat-form-field>
+                        <input class="send_textarea" matInput placeholder="Type a private message" formControlName="message">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Send</button>
+                </form>
             </mat-tab>
         </mat-tab-group>
     </div>

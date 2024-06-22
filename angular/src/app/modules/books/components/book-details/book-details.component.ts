@@ -40,6 +40,17 @@ export class BookDetailsComponent {
       ])
     )
   });
+  privateChatForm: FormGroup = new FormGroup({
+    message: new FormControl('',
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(200)
+      ])
+    )
+  });
+
+  activePrivateChat: string | null = null;
 
   constructor(
     public bookService: BookService, 
@@ -278,6 +289,43 @@ export class BookDetailsComponent {
   }){
     if(!this.publicChat){
       console.error('no public chat');
+      return;
+    }
+
+    this.chat.emit('message', message);
+  }
+
+  onPrivateChatOpen(id: string){
+    this.activePrivateChat = id;
+  }
+
+  onPrivateChatSubmit(){
+    if(!this.privateChatForm.valid){
+      return;
+    }
+
+    if(!this.activePrivateChat){
+      console.error('no active private chat');
+      this.snackBar.open('Open a chat to send a private message', 'Close', {
+        duration: 2000
+      });
+      return;
+    }
+
+    this.sendPrivateMessage({
+      chatId: this.activePrivateChat!,
+      text: this.privateChatForm.value.message
+    });
+
+    this.privateChatForm.reset();
+  }
+
+  sendPrivateMessage(message: {
+    chatId: string,
+    text: string
+  }){
+    if(!this.activePrivateChat){
+      console.error('no active private chat');
       return;
     }
 
