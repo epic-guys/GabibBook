@@ -1,70 +1,17 @@
 [
     {
-        "_id": "222222222222222222222222",
-        "book": "222222222222222222222222",
-        "buyer": "rossi.parenzo",
-        "messages": []
-    },
-    {
-        "_id": "111111111111111111111111",
         "book": "111111111111111111111111",
         "buyer": null,
         "messages": [
             {
-                "sender": "macciocapatonda",
-                "text": "Salve a tutti, vorrei iniziare l'asta per 'La Sacra Bibbia'. È un libro davvero speciale, pieno di saggezza divina.",
-                "date": "2024-06-17T09:00:00Z"
+                "sender": "SuperMario",
+                "text": "Inizio l'asta per il libro 'A Brief History of Time'. Partenza da 15€",
+                "date": "2024-05-02T08:00:00.00Z"
             },
             {
-                "sender": "rossi.parenzo",
-                "text": "Assolutamente, 'La Sacra Bibbia' è una guida essenziale per la nostra fede. Inizio l'offerta con 50 euro.",
-                "date": "2024-06-17T09:05:00Z"
-            },
-            {
-                "sender": "pietrosmusi",
-                "text": "Sono d'accordo, è un tesoro inestimabile. Offro 60 euro.",
-                "date": "2024-06-17T09:10:00Z"
-            },
-            {
-                "sender": "macciocapatonda",
-                "text": "Grazie per le vostre offerte. Ricordate che ogni pagina di questo libro è un passo verso la salvezza.",
-                "date": "2024-06-17T09:15:00Z"
-            },
-            {
-                "sender": "rossi.parenzo",
-                "text": "Offro 70 euro, è un'opportunità unica di avere una copia così ben conservata.",
-                "date": "2024-06-17T09:20:00Z"
-            },
-            {
-                "sender": "pietrosmusi",
-                "text": "80 euro, sento che questo libro mi avvicinerà ancora di più a Dio.",
-                "date": "2024-06-17T09:25:00Z"
-            },
-            {
-                "sender": "macciocapatonda",
-                "text": "Le vostre parole mostrano una grande devozione. Chiudiamo l'asta alle 90 euro?",
-                "date": "2024-06-17T09:30:00Z"
-            },
-            {
-                "sender": "rossi.parenzo",
-                "text": "Accetto, 90 euro per 'La Sacra Bibbia'.",
-                "date": "2024-06-17T09:35:00Z"
-            },
-            {
-                "sender": "macciocapatonda",
-                "text": "Congratulazioni, 'La Sacra Bibbia' è tua per 90 euro. Possa essa guidarti sempre.",
-                "date": "2024-06-17T09:40:00Z"
-            }
-        ]
-    },
-    {
-        "book": "111111111111111111111111",
-        "buyer": "pietrosmusi",
-        "messages": [
-            {
-                "sender": "pietrosmusi",
-                "date": "2024-06-21T19:30",
-                "text": "My name is Pietro"
+                "sender": "GreenLuigi",
+                "text": "Vorrei avere più informazioni sul libro, è in buone condizioni?",
+                "date": "2024-05-05T08:00:00.00Z"
             }
         ]
     }
