@@ -30,7 +30,7 @@ export class AccountOrdersComponent {
 
   ngOnInit(){
 
-    const uid = this.localstorage.getUserId();
+    const uid = this.localstorage.getUserId()
 
     const buyerObserver = { 
       next : (res: any) => {
@@ -57,6 +57,6 @@ export class AccountOrdersComponent {
     }
 
     this.purchaseService.getPurchasesAsBuyer(uid).subscribe(buyerObserver);
-    this.statsService.getMyOffers(uid).subscribe(offerObserver);
+    this.statsService.getMyOffers().subscribe(offerObserver);
   }
 }

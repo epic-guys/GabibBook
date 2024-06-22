@@ -62,7 +62,7 @@ export class LocalStorageService {
   getUserId() {
     const auth = this.getAuth();
     if (auth) {
-      return this.decodeToken(auth.accessToken.jwt)._id;
+      return this.decodeToken(auth.accessToken.jwt)._id
     }
     return null;
   }

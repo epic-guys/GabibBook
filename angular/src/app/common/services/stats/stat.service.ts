@@ -13,7 +13,7 @@ export class StatService {
     return this.http.get(environment.apiBaseUrl + '/stats/auctions', { params: { result: result, count: count.toString() } });
   }
 
-  getMyOffers(uid: string){
-    return this.http.get(environment.apiBaseUrl + '/stats/offers', { params: { uid: uid } });
+  getMyOffers(){
+    return this.http.get(environment.apiBaseUrl + '/stats/offers');
   }
 }
