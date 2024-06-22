@@ -29,7 +29,7 @@ export class BookDetailsComponent {
   privateChat = false;
   publicChatMessages: any[] = [];
   privateChatMessages: any[] = [];
-  privateChats: {[id: string]: any} = {};
+  privateChats: { [id: string]: any } = {};
   user_uid = '';
   publicChatForm: FormGroup = new FormGroup({
     message: new FormControl('',
@@ -53,8 +53,8 @@ export class BookDetailsComponent {
   activePrivateChat: string | null = null;
 
   constructor(
-    public bookService: BookService, 
-    public acRoute: ActivatedRoute, 
+    public bookService: BookService,
+    public acRoute: ActivatedRoute,
     public auth: AuthService,
     public storage: LocalStorageService,
     public router: Router,
@@ -92,12 +92,12 @@ export class BookDetailsComponent {
     this.listen_price.on('priceUpdate', (data: any) => {
       if (data._id === id) {
         this.hasBid = true;
-        if(data.offer){
+        if (data.offer) {
           this.lastBid = data;
         }
-        else{
+        else {
           console.log('no bid');
-          this.lastBid = {offer: {value: this.book!['start_price']}}
+          this.lastBid = { offer: { value: this.book!['start_price'] } }
         }
       }
     });
@@ -116,7 +116,7 @@ export class BookDetailsComponent {
 
   onBid(price: number) {
     const id = this.acRoute.snapshot.paramMap.get('uuid');
-    
+
     const observer = {
       next: (data: any) => {
         this.snackBar.open('Bid successfully placed', 'Close', {
@@ -154,12 +154,12 @@ export class BookDetailsComponent {
 
     const now = new Date().toISOString();
 
-    if(this.book.open_date > now){
+    if (this.book.open_date > now) {
       this.isOpen = false;
       return;
-    }this.book['_id']
+    } this.book['_id']
 
-    if(this.book.close_date < now){
+    if (this.book.close_date < now) {
       this.isOpen = false;
       this.past = true;
       return;
@@ -168,21 +168,21 @@ export class BookDetailsComponent {
     this.isOpen = true;
   }
 
-  forceSockets(){
+  forceSockets() {
     setTimeout(() => {
-      if(this.book){
-        if(!this.lastBid){
+      if (this.book) {
+        if (!this.lastBid) {
 
           const val = this.book.offers.length > 0 ? this.book.offers[this.book.offers.length - 1].value : this.book.start_price;
 
-          this.lastBid = {offer: {value: val}}
+          this.lastBid = { offer: { value: val } }
           console.log('no bid');
         }
       }
 
-      // if(!this.publicChat || !this.privateChat){
-      //   this.startChats();
-      // }
+      if (!this.publicChat || !this.privateChat) {
+        this.startChats();
+      }
     }, 5000);
   }
 
@@ -197,8 +197,8 @@ export class BookDetailsComponent {
     this.router.navigate(['/books/edit', this.book!._id]);
   }
 
-  onBan(){
-    
+  onBan() {
+
     const observer = {
       next: (res: any) => {
         this.snackBar.open('Book banned', '', {
@@ -217,28 +217,28 @@ export class BookDetailsComponent {
     this.bookService.deleteBook(String(this.book?._id)).subscribe(observer);
   }
 
-  startChats(){
-    if(!this.book){
+  startChats() {
+    if (!this.book) {
       console.log('Missing book');
       return;
     }
 
     this.chat.on('message', (data: any) => {
       console.log(data);
-      if(!data.buyer){
+      if (!data.buyer) {
         console.log('public chat');
         this.publicChat = data._id;
-        if(data.messages.length > 1){
+        if (data.messages.length > 1) {
           this.publicChatMessages = [this.publicChatMessages, ...data.messages];
         }
-        else{
+        else {
           console.log('adding messages');
           this.publicChatMessages = [...new Set([...this.publicChatMessages, ...data.messages])];
         }
 
         setTimeout(() => {
           const element = document.getElementById('public-chat');
-          if(element){
+          if (element) {
             element.scrollTop = element.scrollHeight;
           }
         }, 100);
@@ -252,6 +252,13 @@ export class BookDetailsComponent {
           let oldMessages = this.privateChats[data._id].messages;
           this.privateChats[data._id].messages = [...oldMessages, ...data.messages];
         }
+
+        setTimeout(() => {
+          const element = document.getElementById('private-chat');
+          if (element) {
+            element.scrollTop = element.scrollHeight;
+          }
+        }, 100);
       }
     });
 
@@ -265,14 +272,14 @@ export class BookDetailsComponent {
     this.chat.on('error', (data: any) => {
       console.error(data.message);
     });
-    
+
     this.chat.emit('auth', {
       jwt: this.storage.getAuth().accessToken.jwt
     });
   }
 
-  onPublicChatSubmit(){
-    if(!this.publicChatForm.valid){
+  onPublicChatSubmit() {
+    if (!this.publicChatForm.valid) {
       return;
     }
 
@@ -287,8 +294,8 @@ export class BookDetailsComponent {
   sendPublicMessage(message: {
     chatId: string,
     text: string
-  }){
-    if(!this.publicChat){
+  }) {
+    if (!this.publicChat) {
       console.error('no public chat');
       return;
     }
@@ -296,16 +303,16 @@ export class BookDetailsComponent {
     this.chat.emit('message', message);
   }
 
-  onPrivateChatOpen(id: string){
+  onPrivateChatOpen(id: string) {
     this.activePrivateChat = id;
   }
 
-  onPrivateChatSubmit(){
-    if(!this.privateChatForm.valid){
+  onPrivateChatSubmit() {
+    if (!this.privateChatForm.valid) {
       return;
     }
 
-    if(!this.activePrivateChat){
+    if (!this.activePrivateChat) {
       console.error('no active private chat');
       this.snackBar.open('Open a chat to send a private message', 'Close', {
         duration: 2000
@@ -324,8 +331,8 @@ export class BookDetailsComponent {
   sendPrivateMessage(message: {
     chatId: string,
     text: string
-  }){
-    if(!this.activePrivateChat){
+  }) {
+    if (!this.activePrivateChat) {
       console.error('no active private chat');
       return;
     }

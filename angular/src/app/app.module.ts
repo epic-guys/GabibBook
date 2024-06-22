@@ -35,6 +35,14 @@ export class ChatSocket extends Socket {
   }
 }
 
+@Injectable()
+export class NotificationListener extends Socket {
+  constructor() {
+    super({ url: environment.SOCKET_URI + '/notifications', options: {} });
+  }
+}
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -55,8 +63,8 @@ export class ChatSocket extends Socket {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     PriceListener,
-    ChatSocket
-    //... more
+    ChatSocket,
+    NotificationListener
   ],
   bootstrap: [AppComponent]
 })

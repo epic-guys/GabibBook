@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-card-auctions',
@@ -16,7 +17,9 @@ export class BookCardAuctionsComponent {
 
   status = '';
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   mapStatus: { [key: string]: string } = {
     'reserve_price_not_met': 'Reserve price not met',
@@ -34,5 +37,9 @@ export class BookCardAuctionsComponent {
       id: this.purchase._id,
       status: this.status
     });
+  }
+
+  goToBook() {
+    this.router.navigate([`/books/${this.purchase.auction}`]);
   }
 }

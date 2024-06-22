@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MyMaterialModule } from 'src/app/common/my-material/my-material.module';
 import { RouterModule } from '@angular/router';
+import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    NotificationDialogComponent
   ],
   imports: [
     CommonModule,

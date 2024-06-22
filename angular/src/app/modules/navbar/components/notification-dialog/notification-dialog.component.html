@@ -1,0 +1,19 @@
+<div class="main">
+    <div class="nonotifications" *ngIf="data.length === 0">
+        <span>You have 0 notifications</span>
+    </div>
+    <div class="row" *ngFor="let notification of data">
+        <div class="col-12">
+            <div class="notification">
+                <div class="notification-content">
+                    <div class="notification-message">
+                        <span>{{notification.message}}</span>
+                    </div>
+                </div>
+                <div>
+                    <mat-icon color="accent" (click)="pop(notification._id)">close</mat-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

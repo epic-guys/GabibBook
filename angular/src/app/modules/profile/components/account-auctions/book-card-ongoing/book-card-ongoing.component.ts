@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-card-ongoing',
@@ -11,7 +12,9 @@ export class BookCardOngoingComponent {
   isbn: string = '';
   price: number = 0;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.title = this.auction.title;
@@ -21,5 +24,9 @@ export class BookCardOngoingComponent {
     }else{
       this.price = this.auction.start_price;
     }
+  }
+
+  goToBook() {
+    this.router.navigate([`/books/${this.auction._id}`]);
   }
 }
