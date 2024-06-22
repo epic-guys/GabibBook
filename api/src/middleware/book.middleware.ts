@@ -3,6 +3,8 @@ import Joi from 'joi';
 
 export async function validateBook(req: Request, res: Response, next: Function) {
 
+     const today = new Date( new Date().setHours(0,0,0,0) );
+
      const baseSchema = Joi.object({
           title: Joi.string().min(2).max(50),
           isbn: Joi.string().pattern(new RegExp('^[0-9]{13}$')),
@@ -11,7 +13,7 @@ export async function validateBook(req: Request, res: Response, next: Function) 
           reserve_price: Joi.number().min(Joi.ref('start_price')),
           cover: Joi.string().min(2),
           degree_course: Joi.string().min(2),
-          open_date: Joi.date().iso().min('now'),
+          open_date: Joi.date().min(today.toISOString()),
           close_date: Joi.date().iso().min(Joi.ref('open_date'))
      });
 
