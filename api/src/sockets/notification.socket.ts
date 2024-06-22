@@ -4,6 +4,7 @@ import { JwtPayload, verify } from "jsonwebtoken";
 import config from "../config";
 import { User, UserType } from "../models/user.model";
 import {Notification, NotificationType} from "../models/notification.model";
+import logger from "../logger";
 
 
 export class NotificationSocket {
@@ -36,6 +37,15 @@ export class NotificationSocket {
                     socket.emit('auth', { 'message': 'Successfully authenticated' });
                     this.connectedUsers[user._id!.toString()] = socket;
                     socket.data.user = user;
+
+                    let notifications = await Notification.find({ id_user: user._id }).exec();
+                    notifications.forEach((notification) => {
+                        socket.emit('notification', notification);
+                    });
+                    let ids = notifications.map((n) => n._id);
+                    await Notification.deleteMany({ _id: { $in: ids } }).exec();
+
+                    
                 } catch (e: any) {
                     socket.emit('error', { 'message': e.message});
                     socket.disconnect();
@@ -60,9 +70,11 @@ export class NotificationSocket {
     public async notifyUser(notification: NotificationType) {
         let userId = notification.id_user.toString();
         if (this.isUserConnected(userId)) {
+            logger.info(`Sending notification to user ${userId}`);
             this.connectedUsers[userId].emit('notification', notification);
         }
         else {
+            logger.info(`User ${userId} is not connected, saving notification to database`);
             await new Notification(notification).save();
         }
     }

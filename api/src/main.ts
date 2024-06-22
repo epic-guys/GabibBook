@@ -143,9 +143,6 @@ cron.schedule('* * * * *', async () => { // This will run every minute
         book.is_order = true;
         await book.save();
 
-        await Promise.all(promises);
-
-
         // Notify book owner that the book has been sold
         if (book.offers.length > 0 && book.offers[book.offers.length - 1].value >= book.reserve_price) {
             notify({
@@ -177,7 +174,9 @@ cron.schedule('* * * * *', async () => { // This will run every minute
                 });
             }
         }
+
     });
+    await Promise.all(promises);
 });
 
 logger.info('Cron job started');
