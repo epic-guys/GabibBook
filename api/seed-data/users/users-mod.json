@@ -1,86 +1,107 @@
 [
     {
-        "name": "Mod",
-        "surname": "Mod",
-        "nickname": "mod",
-        "email": "mod@gmail.com",
-        "passwordHash": "mod",
-        "address": "Via da Qua 69",
-        "city": "Mestre",
-        "nation": "Fantabosco",
+        "name": "Wario",
+        "surname": "Gold",
+        "nickname": "GoldWario",
+        "email": "wario.gold@example.com",
+        "passwordHash": "Wario",
+        "address": "456 Diamond City St",
+        "city": "Diamond City",
+        "nation": "Diamond Kingdom",
+        "role": "moderator",
         "enabled": true,
         "paymentMethods": [
             {
-                "name": "visa",
-                "number": "1234567890",
-                "expiration": "12/22",
-                "type": "visa",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "mastercard",
-                "number": "0987654321",
-                "expiration": "12/23",
-                "fullName": "John Doe",
-                "type": "mastercard"
-            },
-            {
-                "name": "amex",
-                "number": "1357924680",
-                "expiration": "12/24",
-                "type": "amex",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "discover",
-                "number": "2468013579",
+                "name": "Credit Card 1",
+                "fullName": "Wario Gold",
+                "number": "1111222233334444",
                 "expiration": "12/25",
-                "type": "discover",
-                "fullName": "John Doe"
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Wario Gold",
+                "number": "5555666677778888",
+                "expiration": "01/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Wario Gold",
+                "number": "9999000011112222",
+                "expiration": "02/27",
+                "type": "American Express"
             }
-        ],
-        "role": "moderator"
+        ]
     },
     {
-        "name": "Super",
-        "surname": "Admin",
-        "nickname": "XdiskX",
-        "email": "mod@mod.com",
-        "passwordHash": "mod",
-        "address": "Via delle vie, 42 interno 0",
-        "city": "Manfredonia",
-        "nation": "Principato di Foggia",
+        "name": "Waluigi",
+        "surname": "Purple",
+        "nickname": "PurpleWaluigi",
+        "email": "waluigi.purple@example.com",
+        "passwordHash": "Waluigi",
+        "address": "789 Diamond City St",
+        "city": "Diamond City",
+        "nation": "Diamond Kingdom",
+        "role": "moderator",
         "enabled": true,
         "paymentMethods": [
             {
-                "name": "visa",
-                "number": "1234567890",
-                "expiration": "12/22",
-                "type": "visa",
-                "fullName": "John Doe"
+                "name": "Credit Card 1",
+                "fullName": "Waluigi Purple",
+                "number": "4444555566667777",
+                "expiration": "06/25",
+                "type": "Visa"
             },
             {
-                "name": "mastercard",
-                "number": "0987654321",
-                "expiration": "12/23",
-                "fullName": "John Doe",
-                "type": "mastercard"
+                "name": "Credit Card 2",
+                "fullName": "Waluigi Purple",
+                "number": "5555666677778888",
+                "expiration": "07/26",
+                "type": "MasterCard"
             },
             {
-                "name": "amex",
-                "number": "1357924680",
-                "expiration": "12/24",
-                "type": "amex",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "discover",
-                "number": "2468013579",
-                "expiration": "12/25",
-                "type": "discover",
-                "fullName": "John Doe"
+                "name": "Credit Card 3",
+                "fullName": "Waluigi Purple",
+                "number": "6666777788889999",
+                "expiration": "08/27",
+                "type": "American Express"
             }
-        ],
-        "role": "moderator"
+        ]
+    },
+    {
+        "name": "Bowser",
+        "surname": "Koopa",
+        "nickname": "KingBowser",
+        "email": "bowser.koopa@example.com",
+        "passwordHash": "Bowser",
+        "address": "123 Koopa Kingdom St",
+        "city": "Koopa Kingdom",
+        "nation": "Koopa Kingdom",
+        "role": "moderator",
+        "enabled": true,
+        "paymentMethods": [
+            {
+                "name": "Credit Card 1",
+                "fullName": "Bowser Koopa",
+                "number": "7777888899990000",
+                "expiration": "09/25",
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Bowser Koopa",
+                "number": "8888999900001111",
+                "expiration": "10/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Bowser Koopa",
+                "number": "9999000011112222",
+                "expiration": "11/27",
+                "type": "American Express"
+            }
+        ]
     }
 ]

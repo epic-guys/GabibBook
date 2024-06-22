@@ -1,99 +1,177 @@
 [
     {
-        "name": "povero",
-        "surname": "stronzo",
-        "nickname": "rossi.parenzo",
-        "email": "rossi.parenzo@gmail.com",
-        "passwordHash": "user",
-        "address": "Via da Qua 69",
-        "city": "Mestre",
-        "nation": "Fantabosco",
+        "name": "Mario",
+        "surname": "Rossi",
+        "nickname": "SuperMario",
+        "email": "mario.rossi@example.com",
+        "passwordHash": "Mario",
+        "address": "123 Mushroom Kingdom St",
+        "city": "Toad Town",
+        "nation": "Mushroom Kingdom",
+        "role": "student",
         "enabled": true,
         "paymentMethods": [
             {
-                "name": "visa",
-                "number": "1234567890",
-                "expiration": "12/22",
-                "type": "visa",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "mastercard",
-                "number": "0987654321",
-                "expiration": "12/23",
-                "fullName": "John Doe",
-                "type": "mastercard"
-            },
-            {
-                "name": "amex",
-                "number": "1357924680",
-                "expiration": "12/24",
-                "type": "amex",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "discover",
-                "number": "2468013579",
+                "name": "Credit Card 1",
+                "fullName": "Mario Rossi",
+                "number": "1111222233334444",
                 "expiration": "12/25",
-                "type": "discover",
-                "fullName": "John Doe"
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Mario Rossi",
+                "number": "5555666677778888",
+                "expiration": "01/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Mario Rossi",
+                "number": "9999000011112222",
+                "expiration": "02/27",
+                "type": "American Express"
             }
-        ],
-        "role": "student"
+        ]
     },
     {
-        "name": "mario",
-        "surname": "capatonda",
-        "nickname": "macciocapatonda",
-        "email": "mod@utente.com",
-        "passwordHash": "mod",
-        "address": "Via delle vie, 42 interno 0",
-        "city": "Manfredonia",
-        "nation": "Principato di Foggia",
+        "name": "Luigi",
+        "surname": "Verdi",
+        "nickname": "GreenLuigi",
+        "email": "luigi.verdi@example.com",
+        "passwordHash": "Luigi",
+        "address": "456 Mushroom Kingdom St",
+        "city": "Toad Town",
+        "nation": "Mushroom Kingdom",
+        "role": "student",
         "enabled": true,
         "paymentMethods": [
             {
-                "name": "visa",
-                "number": "1234567890",
-                "expiration": "12/22",
-                "type": "visa",
-                "fullName": "John Doe"
+                "name": "Credit Card 1",
+                "fullName": "Luigi Verdi",
+                "number": "1111333355557777",
+                "expiration": "03/25",
+                "type": "Visa"
             },
             {
-                "name": "mastercard",
-                "number": "0987654321",
-                "expiration": "12/23",
-                "fullName": "John Doe",
-                "type": "mastercard"
+                "name": "Credit Card 2",
+                "fullName": "Luigi Verdi",
+                "number": "2222444466668888",
+                "expiration": "04/26",
+                "type": "MasterCard"
             },
             {
-                "name": "amex",
-                "number": "1357924680",
-                "expiration": "12/24",
-                "type": "amex",
-                "fullName": "John Doe"
-            },
-            {
-                "name": "discover",
-                "number": "2468013579",
-                "expiration": "12/25",
-                "type": "discover",
-                "fullName": "John Doe"
+                "name": "Credit Card 3",
+                "fullName": "Luigi Verdi",
+                "number": "3333555577779999",
+                "expiration": "05/27",
+                "type": "American Express"
             }
-        ],
-        "role": "student"
+        ]
     },
     {
-        "name": "Pietro",
-        "surname": "Smusi",
-        "nickname": "pietrosmusi",
-        "email": "pietro.smusi@arma3.com",
-        "passwordHash": "mynameispietro",
-        "address": "Via delle vie, 42 interno 0",
-        "city": "Manfredonia",
-        "nation": "Principato di Foggia",
+        "name": "Peach",
+        "surname": "Pink",
+        "nickname": "PrincessPeach",
+        "email": "peach.pink@example.com",
+        "passwordHash": "Peach",
+        "address": "789 Mushroom Kingdom St",
+        "city": "Toad Town",
+        "nation": "Mushroom Kingdom",
+        "role": "student",
         "enabled": true,
-        "paymentMethods": [],
-        "role": "student"
+        "paymentMethods": [
+            {
+                "name": "Credit Card 1",
+                "fullName": "Peach Pink",
+                "number": "4444555566667777",
+                "expiration": "06/25",
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Peach Pink",
+                "number": "5555666677778888",
+                "expiration": "07/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Peach Pink",
+                "number": "6666777788889999",
+                "expiration": "08/27",
+                "type": "American Express"
+            }
+        ]
+    },
+    {
+        "name": "Yoshi",
+        "surname": "Dino",
+        "nickname": "YoshiTheDino",
+        "email": "yoshi.dino@example.com",
+        "passwordHash": "Yoshi",
+        "address": "101 Yoshi's Island St",
+        "city": "Dinosaur Land",
+        "nation": "Mushroom Kingdom",
+        "role": "student",
+        "enabled": true,
+        "paymentMethods": [
+            {
+                "name": "Credit Card 1",
+                "fullName": "Yoshi Dino",
+                "number": "7777888899990000",
+                "expiration": "09/25",
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Yoshi Dino",
+                "number": "8888999900001111",
+                "expiration": "10/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Yoshi Dino",
+                "number": "9999000011112222",
+                "expiration": "11/27",
+                "type": "American Express"
+            }
+        ]
+    },
+    {
+        "name": "Toad",
+        "surname": "Mushroom",
+        "nickname": "Toadstool",
+        "email": "toad.mushroom@example.com",
+        "passwordHash": "Toad",
+        "address": "202 Toad Town St",
+        "city": "Toad Town",
+        "nation": "Mushroom Kingdom",
+        "role": "student",
+        "enabled": true,
+        "paymentMethods": [
+            {
+                "name": "Credit Card 1",
+                "fullName": "Toad Mushroom",
+                "number": "0000111122223333",
+                "expiration": "12/25",
+                "type": "Visa"
+            },
+            {
+                "name": "Credit Card 2",
+                "fullName": "Toad Mushroom",
+                "number": "1111222233334444",
+                "expiration": "01/26",
+                "type": "MasterCard"
+            },
+            {
+                "name": "Credit Card 3",
+                "fullName": "Toad Mushroom",
+                "number": "2222333344445555",
+                "expiration": "02/27",
+                "type": "American Express"
+            }
+        ]
     }
 ]
