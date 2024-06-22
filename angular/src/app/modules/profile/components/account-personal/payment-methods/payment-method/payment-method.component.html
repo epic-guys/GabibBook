@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card" *ngIf="paymentMethod" [ngClass]="paymentMethod.name">
+    <div class="card" *ngIf="paymentMethod" [ngClass]="paymentMethod.type">
         <div class="data">
             <p class="number">
                 <span><div *ngFor="let i of [].constructor(12);" class="circle"></div></span>

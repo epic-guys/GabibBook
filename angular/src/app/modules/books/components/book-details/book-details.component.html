@@ -38,8 +38,7 @@
         </div>
     </div>
     <div class="chat" *ngIf="role === 'student'">
-        <app-loader *ngIf="!publicChat " color="#ff0000" position="relative"></app-loader>
-        <mat-tab-group *ngIf="publicChat && privateChat">
+        <mat-tab-group>
             <mat-tab label="Public chat">
                 <h1>Public chat:</h1>
                 <div class="chat-container" id="public-chat">

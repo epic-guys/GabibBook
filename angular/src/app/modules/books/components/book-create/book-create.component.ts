@@ -15,7 +15,7 @@ export class BookCreateComponent {
 
   form: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    isbn : new FormControl('', [Validators.required]),
+    isbn : new FormControl('', [Validators.required, Validators.pattern(/^(?:\d{10}|\d{13})$/)]),
     author: new FormControl('', [Validators.required]),
     start_price: new FormControl('', [Validators.required]),
     reserve_price: new FormControl('', [Validators.required]),

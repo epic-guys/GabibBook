@@ -16,21 +16,21 @@
                 "fullName": "Wario Gold",
                 "number": "1111222233334444",
                 "expiration": "12/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Wario Gold",
                 "number": "5555666677778888",
                 "expiration": "01/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Wario Gold",
                 "number": "9999000011112222",
                 "expiration": "02/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -51,21 +51,21 @@
                 "fullName": "Waluigi Purple",
                 "number": "4444555566667777",
                 "expiration": "06/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Waluigi Purple",
                 "number": "5555666677778888",
                 "expiration": "07/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Waluigi Purple",
                 "number": "6666777788889999",
                 "expiration": "08/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -86,21 +86,21 @@
                 "fullName": "Bowser Koopa",
                 "number": "7777888899990000",
                 "expiration": "09/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Bowser Koopa",
                 "number": "8888999900001111",
                 "expiration": "10/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Bowser Koopa",
                 "number": "9999000011112222",
                 "expiration": "11/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     }

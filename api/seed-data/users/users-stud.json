@@ -16,21 +16,21 @@
                 "fullName": "Mario Rossi",
                 "number": "1111222233334444",
                 "expiration": "12/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Mario Rossi",
                 "number": "5555666677778888",
                 "expiration": "01/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Mario Rossi",
                 "number": "9999000011112222",
                 "expiration": "02/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -51,21 +51,21 @@
                 "fullName": "Luigi Verdi",
                 "number": "1111333355557777",
                 "expiration": "03/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Luigi Verdi",
                 "number": "2222444466668888",
                 "expiration": "04/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Luigi Verdi",
                 "number": "3333555577779999",
                 "expiration": "05/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -86,21 +86,21 @@
                 "fullName": "Peach Pink",
                 "number": "4444555566667777",
                 "expiration": "06/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Peach Pink",
                 "number": "5555666677778888",
                 "expiration": "07/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Peach Pink",
                 "number": "6666777788889999",
                 "expiration": "08/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -121,21 +121,21 @@
                 "fullName": "Yoshi Dino",
                 "number": "7777888899990000",
                 "expiration": "09/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Yoshi Dino",
                 "number": "8888999900001111",
                 "expiration": "10/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Yoshi Dino",
                 "number": "9999000011112222",
                 "expiration": "11/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     },
@@ -156,21 +156,21 @@
                 "fullName": "Toad Mushroom",
                 "number": "0000111122223333",
                 "expiration": "12/25",
-                "type": "Visa"
+                "type": "visa"
             },
             {
                 "name": "Credit Card 2",
                 "fullName": "Toad Mushroom",
                 "number": "1111222233334444",
                 "expiration": "01/26",
-                "type": "MasterCard"
+                "type": "mastercard"
             },
             {
                 "name": "Credit Card 3",
                 "fullName": "Toad Mushroom",
                 "number": "2222333344445555",
                 "expiration": "02/27",
-                "type": "American Express"
+                "type": "amex"
             }
         ]
     }
