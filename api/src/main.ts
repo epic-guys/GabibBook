@@ -29,7 +29,7 @@ const moment = require('moment');
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb'}));
 
 app.use((req: any, res: { header: (arg0: string, arg1: string) => void; }, next: () => void) => {
     res.header('Access-Control-Allow-Origin', '*');
