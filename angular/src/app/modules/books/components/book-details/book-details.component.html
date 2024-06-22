@@ -12,14 +12,14 @@
                 <p>ISBN: <code>{{book.isbn}}</code></p>
                 <p>Degree Course: {{book.degree_course}}</p>
                 <div class="ends-in">
-                    <p class="countdown">{{ends_in | unixToHumanDate }}</p>
+                    <p class="countdown">{{ends_in | unixToHumanDate}}</p>
                     <p>Until the end</p>
                 </div>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom" *ngIf="book && isOpen && role === 'student'">
             <div class="action" *ngIf="isLoggedIn">
-                <!--offer-card [price]="book.current_offer.value" [isCurrentUser]="book.current_offer.user.id === user.id"></offer-card-->
+                <app-offer-card [offer]="lastBid?.offer" (onBid)="onBid($event)"></app-offer-card>
             </div>
             <div class="login" *ngIf="!isLoggedIn">
                 <div>
@@ -29,21 +29,60 @@
                 <button mat-raised-button color="primary" routerLink="/login">Login</button>
             </div>
         </div>
+        <div class="bottom bottom-mod" *ngIf="book && role === 'moderator' && !past">
+            <h3>Moderate this book</h3>
+            <div class="moderate">
+                <button mat-raised-button class="edit" (click)="onEdit()">Edit <mat-icon>edit</mat-icon></button>
+                <button mat-raised-button class="ban" (click)="onBan()">Ban <mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
     </div>
-    <div class="chat-container">
-        <h1>Chat:</h1>
-        <p>
-            Messaggio dal venditore:
-            <span>Mi piacciono i piedi</span>
-        </p>
-        <p>
-            Messaggio dall'acquirente:
-            <span>Io ho i piedi</span>
-        </p>
-        <p>
-            Messaggio dal venditore:
-            <span>Perfetto, allora possiamo fare affari</span>
-        </p>
-        <!--app-chat [book]="book"></app-chat-->
+    <div class="chat" *ngIf="role === 'student'">
+        <app-loader *ngIf="!publicChat " color="#ff0000" position="relative"></app-loader>
+        <mat-tab-group *ngIf="publicChat && privateChat">
+            <mat-tab label="Public chat">
+                <h1>Public chat:</h1>
+                <div class="chat-container" id="public-chat">
+                    <app-message *ngFor="let message of publicChatMessages" [message]="message"
+                        [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid"
+                        [ngClass]="{'mine': message.sender === user_uid}"></app-message>
+                </div>
+                <form class="chat_form" [formGroup]="publicChatForm" (ngSubmit)="onPublicChatSubmit()">
+                    <mat-form-field>
+                        <input class="send_textarea" matInput placeholder="Type a message" formControlName="message">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Send</button>
+                </form>
+            </mat-tab>
+            <mat-tab label="Private chat">
+                <h1>Private chat:</h1>
+                <div class="chat-container">
+                    <mat-accordion *ngFor="let item of privateChats | keyvalue">
+                        <mat-expansion-panel (opened)="onPrivateChatOpen(item.key)">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Chat {{item.key}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <app-message *ngFor="let message of item.value.messages" [message]="message"
+                                    [isOwner]="message.sender === book.owner" [isMe]="message.sender === user_uid"
+                                    [ngClass]="{'mine': message.sender === user_uid}"></app-message>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+                <form class="chat_form" [formGroup]="privateChatForm" (ngSubmit)="onPrivateChatSubmit()">
+                    <mat-form-field>
+                        <input class="send_textarea" matInput placeholder="Type a private message"
+                            formControlName="message">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Send</button>
+                </form>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="chat" *ngIf="role === 'moderator'">
+        <h1>Sorry, chat is not available for moderators.</h1>
     </div>
 </div>

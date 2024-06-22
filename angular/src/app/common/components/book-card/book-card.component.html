@@ -11,7 +11,7 @@
             }"
             /> 
     <mat-card-footer>
-        <p>Current offer: {{book.current_offer.value}}$</p>
+        <p>Current offer: {{book.offers.length === 0 ? book.start_price : book.offers[0].value}}$</p>
     </mat-card-footer>
 </mat-card>
   

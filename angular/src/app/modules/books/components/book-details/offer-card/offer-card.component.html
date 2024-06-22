@@ -1,1 +1,19 @@
-<p>offer-card works!</p>
+<div class="container">
+    <div class="pricing" *ngIf="!this.offer">
+        <app-loader color="#ff0000" position="relative"></app-loader>
+    </div>
+    <div class="pricing" *ngIf="this.offer">
+        <h3>Current price:</h3>
+        <p>{{this.offer?.value }}</p>
+    </div>
+
+    <form [formGroup]="priceForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label>Bid: </mat-label>
+                <input matInput type="number" class="form-control" id="price" formControlName="price">
+            </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit" [disabled]="priceForm.invalid">Submit</button>
+    </form>
+</div>

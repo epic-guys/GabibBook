@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { SocketIoModule, SocketIoConfig, Socket } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+
+const config: SocketIoConfig = { url: environment.SOCKET_URI, options: {} };
+
+@Injectable()
+export class PriceListener extends Socket {
+  constructor() {
+    super({ url: environment.SOCKET_URI + '/books', options: {} });
+  }
+}
+
+@Injectable()
+export class ChatSocket extends Socket {
+  constructor() {
+    super({ url: environment.SOCKET_URI + '/chats', options: {} });
+  }
+}
+
+@Injectable()
+export class NotificationListener extends Socket {
+  constructor() {
+    super({ url: environment.SOCKET_URI + '/notifications', options: {} });
+  }
+}
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -29,11 +56,15 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     ProfileModule,
     NotFoundModule,
     RegisterModule,
+    SocketIoModule,
     BrowserAnimationsModule,
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    PriceListener,
+    ChatSocket,
+    NotificationListener
   ],
   bootstrap: [AppComponent]
 })

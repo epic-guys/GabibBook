@@ -7,6 +7,15 @@
                 <mat-icon>person</mat-icon>
                 <span>Sign in</span>
             </button>
+            <button mat-stroked-button *ngIf="this.LoggedIn" 
+                    class="notification-button" 
+                    (matBadge)="notifications.length" 
+                    matBadgePosition="before" 
+                    matBadgeColor="accent" 
+                    (click)="openNotificationDialog($event)"
+                    >
+                <mat-icon>notifications</mat-icon>
+            </button>
             <button mat-stroked-button routerLink="/profile" *ngIf="this.LoggedIn">
                 <mat-icon>person</mat-icon>
                 <span>{{this.username}}</span>

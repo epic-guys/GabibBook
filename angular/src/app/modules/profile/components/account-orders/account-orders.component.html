@@ -1,4 +1,11 @@
 <div class="container">
-    <p>account-orders works!</p>
-    <p>{{ purchases | json }}</p>
+    <mat-slide-toggle [labelPosition]='"before"' [checked]="showOffers" (change)="onToggleChange($event)">Visualizza tutte le offerte</mat-slide-toggle>
+    <app-loader color="#909ceb" position="relative" *ngIf="PurchasesLoading"></app-loader>
+    <div *ngIf="!PurchasesLoading && !showOffers">
+        <app-book-card-orders *ngFor="let purchase of purchases" [purchase]="purchase" (statusChanged)="statusChanged($event)"></app-book-card-orders>
+    </div>
+    <div *ngIf="!offersLoading && showOffers">
+        <app-book-card-offers *ngFor="let offer of offers" [offer]="offer"></app-book-card-offers>
+    </div>
+    <p *ngIf="!PurchasesLoading && purchases.length == 0 && !showOffers" class="empty">You didn't make any order, yet 😉.</p>
 </div>

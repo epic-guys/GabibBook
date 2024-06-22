@@ -1,10 +1,19 @@
 <div class="container">
     <mat-tab-group>
         <mat-tab label="Auctions">
-            <app-book-search  (search)="searchBooksHook($event)"></app-book-search>
+            <h2>Stats:</h2>
+            <div class="stats" *ngIf="!stats_success_loading && !stats_failed_loading">
+                <div class="success">Successful auctions: {{successful}}</div>
+                <div class="failed">Failed auctions: {{failed}}</div>
+            </div>
+            <div class="stats">
+                <app-loader color="#909ceb" position="relative" *ngIf="stats_success_loading || stats_failed_loading"></app-loader>
+            </div>
+            <app-book-search (search)="searchBooksHook($event)"></app-book-search>
             <div class="aution-results">
                 <app-loader color="#909ceb" position="relative" *ngIf="booksLoading"></app-loader>
-                <app-book-card-mod *ngFor="let book of books" [book]="book" (remove)="banBook($event)"></app-book-card-mod>
+                <app-book-card-mod *ngFor="let book of books" [book]="book"
+                    (remove)="banBook($event)"></app-book-card-mod>
             </div>
         </mat-tab>
         <mat-tab label="Users">
@@ -14,5 +23,5 @@
             </div>
             <app-loader color="#909ceb" position="relative" *ngIf="usersLoading"></app-loader>
         </mat-tab>
-      </mat-tab-group>      
+    </mat-tab-group>
 </div>

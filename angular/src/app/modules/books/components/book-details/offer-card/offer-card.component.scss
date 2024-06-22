@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+
+    h3{
+        color: #969696;
+    }
+    p{
+        margin: 0;
+        font-size: 4rem;
+        color: #252525;
+    }
+
+    button{
+        background-color: #f5f5f5;
+        color: #fff;
+                background-color: #bd1010;
+                transition: 0.3s;
+                text-align: center;
+
+                &:disabled{
+                    background-color: #ccc;
+                    color: #fff;
+                }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container{
+        margin: 0 !important;
+    }
+}

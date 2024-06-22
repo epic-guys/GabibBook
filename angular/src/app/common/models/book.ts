@@ -1,15 +1,14 @@
 export interface Book {
-    uuid: string;
+    _id: string;
     title: string;
     isbn: string;
     author: string;
-    current_offer: {
-        value: number;
-        id: string;
-    }
+    start_price: number;
+    offers: any[];
     cover: string;
     degree_course: string;
     close_date: string;
+    open_date: string;
     owner: {
         _id: string;
         name: string;
