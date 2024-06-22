@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { BookService } from 'src/app/common/services/books/book.service';
 
 @Component({
@@ -51,6 +52,10 @@ export class BookCreateComponent {
       return;
     }
 
+    const diff = (new Date().getTimezoneOffset()) * -1;
+    const open = new Date(new Date(this.form.value.open_date).getTime() + (diff * 60000));
+    const close = new Date(new Date(this.form.value.close_date).getTime() + (diff * 60000));
+
     let cover_base64 = null;
 
     if(this.coverfile) {
@@ -62,8 +67,8 @@ export class BookCreateComponent {
       isbn: this.form.value.isbn,
       author: this.form.value.author,
       degree_course: this.form.value.degree_course,
-      close_date: this.form.value.close_date,
-      open_date: this.form.value.open_date,
+      close_date: close,
+      open_date: open,
       start_price: this.form.value.start_price,
       reserve_price: this.form.value.reserve_price,
       cover: cover_base64 ? cover_base64 : '',
