@@ -22,6 +22,17 @@ export async function seedBooks(): Promise<void> {
         }
 
         let owner = await mongoose.connection.db.collection('users').findOne({ nickname: books[i].owner });
+        
+        if(books[i].offers) {
+            for (let j = 0; j < books[i].offers.length; j++) {
+                let offerer = await mongoose.connection.db.collection('users').findOne({ nickname: books[i].offers[j].user });
+                if (offerer) {
+                    books[i].offers[j].user = offerer._id;
+                } else {
+                    logger.error(`🚫 Could not find user with nickname ${books[i].offers[j].user}`);
+                }
+            }
+        }
 
         if (owner) {
             books[i].owner = owner._id;
