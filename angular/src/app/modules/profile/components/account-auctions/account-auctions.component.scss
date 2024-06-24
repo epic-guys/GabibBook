@@ -20,3 +20,13 @@
         cursor: pointer;
     }
 }
+
+@media screen and (max-width: 1000px){
+    .container{
+        margin-left: 0;
+    }
+
+    .add-card{
+        width: 100%;
+    }
+}

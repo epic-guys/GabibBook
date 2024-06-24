@@ -175,47 +175,47 @@
             }
         }
     }
+}
 
-    @media screen and (max-width: 1000px) {
-        .container {
-            flex-direction: column;
+@media screen and (max-width: 1000px) {
+    .container {
+        flex-direction: column;
 
-            div.left {
-                width: 100%;
-                border-right: none;
+        div.left {
+            width: 100%;
+            border-right: none;
 
-                .top {
-                    height: auto;
-                    flex-direction: column;
+            .top {
+                height: auto;
+                flex-direction: column;
 
-                    .image-container {
-                        max-width: 100% !important;
+                .image-container {
+                    max-width: 100% !important;
 
-                        img {
-                            max-width: 80%;
-                        }
-                    }
-
-                    .details-container {
-                        padding: 20px 0;
-                        text-align: center;
+                    img {
+                        max-width: 80%;
                     }
                 }
 
-                .bottom {
-                    height: auto;
-                    padding-top: 20px;
-                    padding-bottom: 40px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
+                .details-container {
+                    padding: 20px 0;
+                    text-align: center;
                 }
             }
 
-            .chat-container {
-                display: none;
+            .bottom {
+                height: auto;
+                padding-top: 20px;
+                padding-bottom: 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
+        }
+
+        .chat {
+            display: none;
         }
     }
 }

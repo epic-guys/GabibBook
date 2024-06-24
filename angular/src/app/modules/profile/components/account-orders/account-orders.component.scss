@@ -6,3 +6,19 @@
         margin-bottom: 20px;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        margin-left: 0;
+        .info{
+            .row{
+                margin-left: 0;
+                p{
+                    font-size: 100%;
+                }
+            }
+        }
+    }
+    
+}

@@ -50,7 +50,13 @@ mat-card{
             }
             color: white;
             font-weight: bold;
-            width: max-content;
+            width: 104%;
         }
+    }
+}
+
+@media screen and (max-width: 1000px){
+    mat-card{
+        width: 100%;
     }
 }

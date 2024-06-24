@@ -1,59 +1,62 @@
 <app-navbar></app-navbar>
-<div class="card">
-    <div class="col-md-12">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <mat-form-field>
-                    <mat-label>Title</mat-label>
-                    <input matInput type="text" formControlName="title">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Author</mat-label>
-                    <input matInput type="text" formControlName="author">
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field>
-                    <mat-label>ISBN</mat-label>
-                    <input matInput type="text" formControlName="isbn">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Degree</mat-label>
-                    <input matInput type="text" formControlName="degree_course">
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field>
-                    <mat-label>Start Date:</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="open_date">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>End Date:</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="close_date">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field>
-                    <mat-label>Start Price</mat-label>
-                    <input matInput type="number" formControlName="start_price">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Reserve Price</mat-label>
-                    <input matInput type="number" formControlName="reserve_price">
-                </mat-form-field>
-            </div>
+<div class="container">
 
-            <div draggable="true" class="dragArea">
+    <div class="card">
+        <div class="col-md-12">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="row">
-                    <input type="file" #file [multiple]="false" accept="image/*" (change)="onFileChange($event)">
-                    <p>Drag file here</p>
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" formControlName="title">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Author</mat-label>
+                        <input matInput type="text" formControlName="author">
+                    </mat-form-field>
                 </div>
-            </div>
-            <button mat-raised-button color="primary" type="submit">Submit</button>
-        </form>
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>ISBN</mat-label>
+                        <input matInput type="text" formControlName="isbn">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Degree</mat-label>
+                        <input matInput type="text" formControlName="degree_course">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>Start Date:</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="open_date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>End Date:</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="close_date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field>
+                        <mat-label>Start Price</mat-label>
+                        <input matInput type="number" formControlName="start_price">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Reserve Price</mat-label>
+                        <input matInput type="number" formControlName="reserve_price">
+                    </mat-form-field>
+                </div>
+
+                <div draggable="true" class="dragArea">
+                    <div class="row">
+                        <input type="file" #file [multiple]="false" accept="image/*" (change)="onFileChange($event)">
+                        <p>Drag file here</p>
+                    </div>
+                </div>
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </div>

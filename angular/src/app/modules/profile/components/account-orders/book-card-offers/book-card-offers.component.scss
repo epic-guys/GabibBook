@@ -52,3 +52,9 @@ mat-card{
         }
     }
 }
+
+@media screen and (max-width: 1000px){
+    mat-card{
+        width: 100%;
+    }
+}

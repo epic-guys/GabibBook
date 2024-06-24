@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="chat" *ngIf="role === 'student'">
+    <div *ngIf="role === 'student'" class="chat">
         <mat-tab-group>
             <mat-tab label="Public chat">
                 <h1>Public chat:</h1>
@@ -81,7 +81,7 @@
             </mat-tab>
         </mat-tab-group>
     </div>
-    <div class="chat" *ngIf="role === 'moderator'">
+    <div *ngIf="role === 'moderator'" class="chat">
         <h1>Sorry, chat is not available for moderators.</h1>
     </div>
 </div>
